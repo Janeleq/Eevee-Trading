@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Emotions w/ Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link rel="icon" type="image/x-icon" href="../logo.png">
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        #top {
+        background: linear-gradient(to right, #0e2e43, #19393e);
+        }
+
+        .nav-link {
+            color: rgb(198, 186, 186);
+        }
+
+        .col-12 {
+            height: 200px;
+            align-items: center;
+        }
+
+        .col-10 {
+            font-size: 15px;
+        }
+
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        th {
+            width: 50%;
+        }
+
+        h5 {
+            color: lightseagreen
+        }
+
+        .card-img-top {
+            height: 200px;
+
+        }
+
+        .card {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="top" class="navbar navbar-expand-lg bg-light sticky-top">
+        <div class="container-fluid" id="header">
+            <a class="navbar-brand text-white" href="../../homepageWithLogin/homepageWithLogin.html"><img src="../logo.png" width="30"
+                    height="30" class="d-inline-block align-top" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="../guide.html">Guides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../../coins/simulatorhome.html">Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../../coins/profilepage.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" id="logout">Sign-out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class='container-fluid mx-10 px-0'>
+
+        <div class="row mx-auto " style="background-image: url('emote.jpg');height:100%;padding-bottom:3%">
+            <h1 class="mx-auto align-middle"
+                style="color:white;text-align:center;width:50%;font-size:4rem;padding-left:10%;padding-top:40px;height:100%">
+                Here's why controlling emotions is important when trading crypto</h1>
+        </div>
+        <div class="container mx-10">
+            <a id="emotions"></a>
+            <div class="row mx-10">
+                <div class="col-8 " style="padding-top:60px">
+
+                    <div class="row">
+
+
+                    </div>
+                    <div class="row">
+                        <div class="card" style="margin-bottom:10px">
+                            <div class="card-body">
+                                <h3 class="card-title">How do our emotions get involved?</h3>
+                                <p class="card-text"><span style="font-style: italic;font-size:20px">Flight or fight
+                                        responses: </span>These are common emotions that stocks / cryptocurrency
+                                    traders experience daily.
+                                    <br>
+                                    When the market is up, that adrenaline rush and excitement indirectly creates fear of missing out(FOMO)
+                                    to users who hav
+                                    not invested in it.
+                                    When prices fall due to an economic crash or a global pandemic, it is both hard
+                                    for people to enter the market and people may start panic selling as a way to
+                                    minimise losses.
+                                    <br>
+                                    When emotions go into self-defence mode, your brain naturally takes immediate
+                                    actions without putting much thought into it. This is why a lot of people massively buy at
+                                    the top and sell at the bottom because emotions are getting the better of them.
+                                    <br>
+                                    The issue lies within media presence about cryptocurrency trading. Majority of
+                                    reported stories show the overtly positive exceptions: “Person has earned US$2
+                                    million in like 4 months”, giving a false impression and fallacy of creating the
+                                    “get rich quick” mindset with unrealistic expectations.
+                                    <br>
+                                    This compounds with the existence of <span
+                                        style="font-style: italic;font-size:20px">“gurus” </span> and <span
+                                        style="font-style: italic;font-size:20px">“experts”</span> coming in abundance
+                                    within social media, posting technical analysis and know-hows, telling people which
+                                    is the next coin that is “going to the moon”. It is very hard to know who's well
+                                    qualified, and who is just posting public charts and giving bad trading advice.
+                                    There is also the possibility of them looking to earn quick bucks by promoting their
+                                    alt coins. All these factors drastically affect the way people trade and end
+                                    up in huge negatives.
+                                    <br>
+                                    When people do a losing trade, they adopt the mindset of a gambler, trying to win back
+                                    their losses. People call this suicide trading. Whatever is lost needs to be won
+                                    back multiple times to break-even, leading you to trade bigger sums and take riskier
+                                    approaches, eventually losing it all.
+                                </p>
+
+                            </div>
+                        </div>
+
+                        <a id="psych" style="padding-top:60px;margin-bottom:10px"></a>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">What is Trading Psychology?</h3>
+                                <p class="card-text">
+                                    Trading Psychology is about controlling your emotions. Knowing where the market
+                                    sentiment is currently at as well as your individual emotions and sentiments is important.
+                                    <br>
+                                    Therefore you need to come up with a trading plan. A trading plan consists of a
+                                    strategy with a set of rules that you follow every time you place a trade. This
+                                    strategy should be based on a set of rules to make it easy to follow, which allows
+                                    for an easier way to control your emotions better and to help make more consistent and
+                                    better decisions in the long run.
+                                    <br>
+                                    Trading Psychology is not what you do while you are in a trade. It is what you do
+                                    before you pressed the “BUY” button on the trading platform.
+                                </p>
+
+                            </div>
+                        </div>
+                        <a id="Methods" style="padding-top:60px;"></a>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Methods to practising Trading Psychology</h3>
+                                <h5 class="card-text">1) Adopting trading strategies from well qualified traders</h5>
+                                <p class="card-text">
+                                    Building up a trading plan comes with experience. The more experience you
+                                    gain from trading, the more robust your set of rules will be to follow to help with
+                                    emotions.<br>
+                                    Therefore, start out by adopting a trading plan from a well-known trader.<br>
+                                    Always research on markets and prominent people.
+                                    <br> Make an accurate judgements before following their proposed trading plan.
+                                </p>
+                                <h5 class="card-text">2) Backtest your strategy countless times </h5>
+                                <p class="card-text">
+                                    Take your trading plan and test it with the historical charts of the market.
+                                    Backtesting gives confidence to your strategy and naturally disciplines your
+                                    emotions to not determine decisions. <br>
+                                    Results from one single trade are unpredictable.
+                                    Therefore, backtest your strategy with small costs repeatedly. <br>
+                                    Example: Starting out with 100 trades of 10 cents, then increase slowly to 1000,
+                                    10000 and so on.
+                                    <br>
+                                    These large sample size tests will indicate whether your strategy is making you
+                                    money. Through backtests, you gain more experience with trading. With this
+                                    experience, you can modify your existing trading plan or come up with a new trading
+                                    plan that suits you best to give you the highest probability for profits.
+
+                                </p>
+                                <h5 class="card-text">3) Have a Solid Risk Management Plan</h5>
+                                <p class="card-text">
+                                    <span class="" style="font-size:2rem;color:grey;">
+                                        Ask yourself this question:
+                                        “How much am I comfortable with losing on this trade?”
+                                    </span>
+                                    <br>Losses are inevitable from time to time. Get yourself mentally prepared and
+                                    always assume that whatever money you are willing to trade with will be lost.
+                                    <br>
+                                    Approach each trade with caution and risk assessment, so you will not have yourself
+                                    going into the “fear mode”, rest is self-explanatory.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="col-3">
+                    <div style="width:300px;z-index:1;position:sticky;top:50px;margin-top:80px" id="sidebar" m>
+                        <ul class="nav flex-column mx-1 ">
+                            <li class=" nav-item bg-secondary">
+                                <a class="nav-link" href="#emotions">How do our emotions get involved?</a>
+                            </li>
+                            <li class="nav-item bg-secondary">
+                                <a class="nav-link" href="#psych">What is Trading Psychology?</a>
+                            </li>
+                            <li class="nav-item bg-secondary">
+                                <a class="nav-link" href="#Methods">Methods to practising Trading Psychology</a>
+                            </li>
+                           <li class="nav-item bg-secondary">
+                                <a class="nav-link" href="#Quiz">Quiz</a>
+                            
+                        </ul>
+                        <div>
+                            <ul class="d-flex text-wrap" style="padding:0%;margin-top:20px;">
+                                <a href='' class="list-group-item list-group-item-action border-white">
+                                    <img src="fb.png" style="width:40px" alt="">
+                                </a>
+                                <a href="" class="list-group-item list-group-item-action border-white">
+                                    <img src="ig.png" style="width:40px" alt="">
+                                </a>
+                                <a href="" class="list-group-item list-group-item-action border-white">
+                                    <img src="linkedin.jpg" style="width:40px" alt="">
+                                </a>
+                                <a href="https://discord.gg/8G7jwgav"
+                                    class="list-group-item list-group-item-action border-white">
+                                    <img src="dc.png" style="width: 55px;transform: translateY(-4px)" alt="">
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div id="app">
+            <a id="Quiz"></a>
+            <div v-if="start">
+                <div class="container" style="margin: auto;width:80%;">
+                    <h2>Word Scramble</h2>
+                    <div class="content">
+                        <p class="word"></p>
+                        <div class="details">
+                            <p class="hint">Hint: <span></span></p>
+                            <p class="time">Time Left: <span><b>30</b>s</span></p>
+                        </div>
+                        <input type="text" spellcheck="false" placeholder="Enter a valid word">
+                        <div class="buttons">
+                            <button class="refresh-word">Refresh Word</button>
+                            <button class="check-word">Check Word</button>
+                        </div>
+                    </div>
+                </div>
+                <button @click="endgame()" type="button" class="btn btn-info p-4 mx-auto d-flex ">End Quiz</button>
+
+            </div>
+            <div v-else class="d-flex justify-content-center py-5 bg-light">
+                <button @click="startgame()" type="button" class="btn btn-info p-4 d-flex ">Start Quiz!</button>
+            </div>
+            <div id="game">
+
+            </div>
+        </div>
+
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        start: false
+                    };
+                },
+                methods: {
+                    startgame() {
+                        this.start = true
+                        var s = document.createElement("script");
+                        s.src = "js/words.js";
+                        document.getElementById("game").appendChild(s);
+                        var s = document.createElement("script");
+                        s.src = "js/script.js";
+                        document.getElementById("game").appendChild(s);
+
+
+
+                    },
+                    endgame() {
+                        this.start = false
+                        window.location.reload()
+
+                    }
+                }
+            });
+            const vm = app.mount('#app');
+        </script>
+    </script>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-10">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/thinking.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Introduction</h4>
+                        <p class="card-text">Start off with the basic knowledge of Cryptocurrencies!
+                            <br><br>
+                        </p>
+                        <a href="../GuidePage1/Intro.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/dexcex.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">CEX vs DEX</h4>
+                        <p class="card-text">Differences between Centralised and Decentralised platforms.
+                            <br><br>
+                        </p>
+                        <a href="../GuidePage2/DEXCEX.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/powposimg.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">PoW vs PoS</h4>
+                        <p class="card-text">IMPORTANT TOPIC!! Very cruical to understand the crypto landscape.
+                            <br><br>
+                        </p>
+                        <a href="../GuidePage3/pow.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+                <p>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/cryptotraders.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Trading Websites</h4>
+                        <p class="card-text">Some trading Recommendations for Beginners!</p>
+                        <a href="../GuidePage6/recommendation.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/emote.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Emotions w/ Trading</h4>
+                        <p class="card-text">Understand how emotions affect trading.</p>
+                        <a href="../GuidePage4/emo.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../Guidepics/ta.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Technical Analysis</h4>
+                        <p class="card-text">Learn about the basics of graph analysis!</p>
+                        <a href="../GuidePage5/TA.html" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+                </p>
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <script src="emo.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CEX vs DEX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="../logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .card-img-top {
+            height: 200px;
+
+        }
+
+        .card {
+            display: inline-block;
+            text-align: center;
+        }
+
+        #top {
+            background: linear-gradient(to right, #0e2e43, #19393e);
+        }
+
+        .nav-link {
+            color: rgb(198, 186, 186);
+        }
+
+        h1 {
+            text-align: center;
+            padding-top: 30px;
+            padding-bottom: 40px;
+        }
+
+        #thinking {
+            max-width: 40%;
+            max-height: 40%;
+        }
+
+        #intro {
+            padding-top: 20px;
+            padding-bottom: 500px;
+            text-align: center;
+        }
+
+        table {
+            box-shadow: 3px 5px;
+        }
+
+        h3 {
+            padding: 10px;
+            padding-top: 55px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="top" class="navbar navbar-expand-lg bg-light sticky-top">
+        <div class="container-fluid" id="header">
+            <a class="navbar-brand text-white" href="../../homepageWithLogin/homepageWithLogin.html"><img src="../logo.png" width="30"
+                    height="30" class="d-inline-block align-top" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="../guide.html">Guides</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../../coins/simulatorhome.html">Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../../coins/profilepage.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" id="logout">Sign-out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class='container mx-10'>
+        <h1 class="d-flex justify-content-center mt-5">Which is a better exchange?</h1>
+        <div class='row mx-auto mb-5 d-flex justify-content-center'>
+
+            <div class='col-12 d-flex justify-content-center' style="height:60%">
+                <img id='dexvscex' class="m-auto" style="padding-bottom:300px" src="dexcex.jpg" alt="">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-8">
+                <a id="DC"></a>
+
+                <div class="row">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row ms-3">
+                                <h3>What are DEXs?</h3>
+                                <p>A Decentralised Crypto Exchange (DEX) is a peer-to-peer (P2P) marketplace that connects cryptocurrency buyers and sellers</p>
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="row ms-3">
+                                <h3>What are CEXs?</h3>
+                                <p>A Centralised Crypto Exchange(CEX) is an exchange that is created and run by one
+                                    company that oversees all the transactions and sets the exchange's rules and fees.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-around">
+                        <div class="card" style="width: 18rem; border-width: 5px;">
+                            <div class="card-body">
+                                <h5 class="card-title">DEXs</h5>
+                                <ul>
+                                    <li>Uses smart contract blockchain coins.
+                                        🡪Examples: ETH - Ethereum / BSC - Binance Smart Chain</li>
+                                    <li>Operates on a DAPP (Decentralised Application) or protocol</li>
+                                    <li>No central operator</li>
+
+                                    <li>Exchange tokens instead of “trading” with other users</li>
+                                    <li>Low fees (0.05%)</li>
+                                    <li>Must use a crypto wallet
+                                        Examples:
+                                        🡪 UniSwap (runs on ETH)
+                                        🡪 PancakeSwap (runs on BSC
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 18rem; border-width: 5px;">
+                            <div class="card-body">
+                                <h5 class="card-title">CEXs</h5>
+                                <ul>
+                                    <li>Uses custodial crypto wallet</li>
+                                    <li>Centralised-One company oversees all the transactions and sets rules and fees
+                                    </li>
+                                    <li>Faster trading times</li>
+                                    <li>Good Trading Tools</li>
+                                    <li> Increased level of security</li>
+                                    <li> Don't have the private keys that give you direct control over the crypto</li>
+
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <a id="DEX"></a>
+                    <div class="row">
+                        <h3>Pros and Cons of DEXs</h3>
+                    </div>
+                    <table class="table table-info">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pros</th>
+                                <th scope="col">Cons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Decentralized</td>
+                                <td>Security concerns - Rug pulls / Scam coins</td>
+                            </tr>
+                            <tr>
+                                <td>Low Cost</td>
+                                <td>Slow Trading</td>
+
+                            </tr>
+                            <tr>
+                                <td>Offers staking and rewards to increase liquidity</td>
+                                <td>
+                                    No charts or order book
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Earn trading commission being an Liquidity Provider</td>
+                                <td>Difficult to learn</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row ">
+                    <a id="CEX"></a>
+                    <div class="row">
+                        <h3>Pros and Cons of CEXs</h3>
+                    </div>
+                    <table class="table table-info">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pros</th>
+                                <th scope="col">Cons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fast Trading </td>
+                                <td>Still has security concerns, not as bad as DEXs
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>User-friendly experience, easier to use
+                                    🡪 Better UI and Displaying of information
+                                </td>
+                                <td>Company owns the coins until you withdraw
+                                    🡪 Potential risk of losing everything if company shuts down
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>High liquidity </td>
+                                <td>
+                                    Withdrawal limits
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-3">
+                <div style="width:300px;z-index:1;position:sticky;top:50px" id="sidebar">
+                    <ul class="nav flex-column mx-1 ">
+                        <li class=" nav-item bg-secondary">
+                            <a class="nav-link" href="#DC">What are DEX / CEX?</a>
+                        </li>
+                        <li class="nav-item bg-secondary">
+                            <a class="nav-link" href="#DEX">Pros and Cons of DEX</a>
+                        </li>
+                        <li class="nav-item bg-secondary">
+                            <a class="nav-link" href="#CEX">Pros and Cons of CEX</a>
+                        </li>
+                        <li class="nav-item bg-secondary">
+                            <a class="nav-link" href="#Quiz">Quiz</a>
+                        </li>
+                    </ul>
+                    <div>
+                        <ul class="d-flex text-wrap" style="padding:0%;margin-top:20px;">
+                            <a href='' class="list-group-item list-group-item-action border-white">
+                                <img src="fb.png" style="width:40px" alt="">
+                            </a>
+                            <a href="" class="list-group-item list-group-item-action border-white">
+                                <img src="ig.png" style="width:40px" alt="">
+                            </a>
+                            <a href="" class="list-group-item list-group-item-action border-white">
+                                <img src="linkedin.jpg" style="width:40px" alt="">
+                            </a>
+                            <a href="https://discord.gg/8G7jwgav"
+                                class="list-group-item list-group-item-action border-white">
+                                <img src="dc.png" style="width: 55px;transform: translateY(-4px)" alt="">
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-9">
+
+            </div>
+        </div>
+
+        <div id="app">
+            <a id="Quiz"></a>
+            <div v-if="start">
+                <div class="container" style="margin: auto;width:80%;">
+                    <h2>Word Scramble</h2>
+                    <div class="content">
+                        <p class="word"></p>
+                        <div class="details">
+                            <p class="hint">Hint: <span></span></p>
+                            <p class="time">Time Left: <span><b>30</b>s</span></p>
+                        </div>
+                        <input type="text" spellcheck="false" placeholder="Enter a valid word">
+                        <div class="buttons">
+                            <button class="refresh-word">Refresh Word</button>
+                            <button class="check-word">Check Word</button>
+                        </div>
+                    </div>
+                </div>
+                <button @click="endgame()" type="button" class="btn btn-info p-4 mx-auto d-flex ">End Quiz</button>
+
+            </div>
+            <div v-else class="d-flex justify-content-center py-5 bg-light">
+                <button @click="startgame()" type="button" class="btn btn-info p-4 d-flex ">Start Quiz!</button>
+            </div>
+            <div id="game">
+
+            </div>
+        </div>
+
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        start: false
+                    };
+                },
+                methods: {
+                    startgame() {
+                        this.start = true
+                        var s = document.createElement("script");
+                        s.src = "js/words.js";
+                        document.getElementById("game").appendChild(s);
+                        var s = document.createElement("script");
+                        s.src = "js/script.js";
+                        document.getElementById("game").appendChild(s);
+
+
+
+                    },
+                    endgame() {
+                        this.start = false
+                        window.location.reload()
+
+                    }
+                }
+            });
+            const vm = app.mount('#app');
+        </script>
+        </script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/thinking.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Introduction</h4>
+                    <p class="card-text">Start off with the basic knowledge of Cryptocurrencies!
+                        <br><br>
+                    </p>
+                    <a href="../GuidePage1/Intro.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/dexcex.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">CEX vs DEX</h4>
+                    <p class="card-text">Differences between Centralised and Decentralised platforms.
+                        <br><br>
+                    </p>
+                    <a href="../GuidePage2/DEXCEX.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/powposimg.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">PoW vs PoS</h4>
+                    <p class="card-text">IMPORTANT TOPIC!! Very cruical to understand the crypto landscape.
+                        <br><br>
+                    </p>
+                    <a href="../GuidePage3/pow.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            <p>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/cryptotraders.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Trading Websites</h4>
+                    <p class="card-text">Some trading Recommendations for Beginners!</p>
+                    <a href="../GuidePage6/recommendation.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/emote.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Emotions w/ Trading</h4>
+                    <p class="card-text">Understand how emotions affect trading.</p>
+                    <a href="../GuidePage4/emo.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="../Guidepics/ta.webp" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Technical Analysis</h4>
+                    <p class="card-text">Learn about the basics of graph analysis!</p>
+                    <a href="../GuidePage5/TA.html" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+            </p>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+            </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+        <script src="DEXCEX.js" type="module"></script>
+</body>
+
+</html>
