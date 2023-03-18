@@ -5,13 +5,13 @@
 
 <div align="center"  style="background-color:white;">
   <a href="https://github.com/qwtan98/DJMV-IS216Project">
-    <img src="mikro-app/src/assets/ui/mikro_logo.png" width="300" height="300" title="Mikro logo">
+    <img src="[mikro-app/src/assets/ui/mikro_logo.png](https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png)" width="250" height="280" title="Eevee logo">
   </a>
 
 <!--<h3 align="center">Mikro</h3> -->
 
   <p align="center">
-    Mikro is a one-stop knowledge investment platform to increase financial inclsuion and literacy among migrant workers in Singapore, that helps to kickstart and improve their knowledge on investing. 
+    EEVEE is a one-stop knowledge investment platform to increase financial inclsuion and literacy among migrant workers in Singapore, that helps to kickstart and improve their knowledge on investing. 
     <br />
     <a href="https://github.com/qwtan98/DJMV-IS216Project"><strong>Explore the docs »</strong></a>
     <br />
