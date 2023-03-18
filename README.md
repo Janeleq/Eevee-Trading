@@ -30,10 +30,11 @@
 | Members               | School Email     | Email                           | LinkedIn                                                     |
 | --------------------- | ---------------- | ------------------------------- | ------------------------------------------------------------ |
 | Jane Lim Enqi         | janelim.2021     | janelim2001@gmail.com           | [@LinkedIn](https://sg.linkedin.com/in/limenqi01)            |
-| Tan Quan Wah          | quanwah.tan.2021 | qwtan98@gmail.com               | [@LinkedIn](https://sg.linkedin.com/in/qwtan98)              |
 | Sim Jia Cheng Malcolm | malcolm.sim.2021 | malcolmsim7@hotmail.com         | [@LinkedIn](https://sg.linkedin.com/in/malcolm-sim-protocrux) |
-| Weng Jia Yang Peter | jyweng.2021  | jyweng.2021@scis.smu.edu.sg | [@LinkedIn](https://www.linkedin.com/in/peter-wengjiayang/) |
 | Tan Jia Jin | jiajin.tan.2021  | jiajin.tan.2021@scis.smu.edu.sg | [@LinkedIn](https://www.linkedin.com/in/tan-jia-jin/) |
+| Tan Quan Wah          | quanwah.tan.2021 | qwtan98@gmail.com               | [@LinkedIn](https://sg.linkedin.com/in/qwtan98)              |
+| Weng Jia Yang Peter | jyweng.2021  | jyweng.2021@scis.smu.edu.sg | [@LinkedIn](https://www.linkedin.com/in/peter-wengjiayang/) |
+
 
 
 <!-- TABLE OF CONTENTS -->
