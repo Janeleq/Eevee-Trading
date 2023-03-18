@@ -4,7 +4,7 @@
 # IS213 - G4T4 EEVEE
 
 <div align="center"  style="background-color:white;>
-  <a href="https://github.com/qwtan98/DJMV-IS216Project">
+  <a href="https://github.com/Janeleq/G4T4-Eevee">
     <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo" id="is213">
   </a>
 
@@ -16,11 +16,11 @@
     <a href="https://github.com/qwtan98/DJMV-IS216Project"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/qwtan98/DJMV-IS216Project">View Demo</a>
+    <a href="https://github.com/Janeleq/G4T4-Eevee">View Demo</a>
     ·
     <a href="https://github.com/qwtan98/DJMV-IS216Project/issues">Report Bug</a>
     ·
-    <a href="https://github.com/qwtan98/DJMV-IS216Project/issues">Request Feature</a>
+    <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>
   </p>
 
 </div>
