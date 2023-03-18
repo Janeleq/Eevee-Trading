@@ -11,7 +11,7 @@
 <!--<h3 align="center">Mikro</h3> -->
 
   <p align="center">
-    EEVEE is a one-stop knowledge investment platform to increase financial inclsuion and literacy among migrant workers in Singapore, that helps to kickstart and improve their knowledge on investing. 
+    EEVEE is a project to make a enteprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
     <br />
     <a href="https://github.com/qwtan98/DJMV-IS216Project"><strong>Explore the docs »</strong></a>
     <br />
@@ -129,7 +129,10 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 | Library | Description                                                | Link                             |
 | ------- | ---------------------------------------------------------- | -------------------------------- |
+| Flask  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
 | NodeJS  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
+| WampServer  | consolidated package to provide the necessary programming language support | [NodeJS](https://nodejs.org/en/)|
+| Docker  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
 
 ### Version Control
 
