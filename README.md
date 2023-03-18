@@ -3,9 +3,9 @@
 
 # IS213 - G4T4 EEVEE
 
-<div align="center"  style="background-color:white;">
+<div align="center"  style="background-color:white; id="is213">
   <a href="https://github.com/qwtan98/DJMV-IS216Project">
-    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo" id="is213">
+    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo">
   </a>
 
 <!--<h3 align="center">Mikro</h3> -->
@@ -47,7 +47,7 @@
 
 ## Project Overview
 
-[Go To Top](#is216---g6t6-mikro)
+[Go To Top](#is213)
 
 ### Our Problem Statement
 
@@ -103,7 +103,7 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 ## Technologies Used
 
-[Go To Top](#is216---g6t6-mikro)
+[Go To Top](#is213)
 
 ### Front End Development (Core Libraries)
 
@@ -216,7 +216,7 @@ We chose these devices as the phones are inexpensive and not modern, which are t
 
 ## How to Use Our Web Application
 
-[Go To Top](#is216---g6t6-mikro)
+[Go To Top](#is213)
 
 When users visit the site for the first time, this is the screen they will see:
 
@@ -257,4 +257,4 @@ Settings:
 
 <img src='mikro-app/img/Settings.jpeg' alt='...'>
 
-[Go To Top](#is216---g6t6-mikro)
+[Go To Top](#is213)
