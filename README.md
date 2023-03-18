@@ -5,7 +5,7 @@
 
 <div align="center"  style="background-color:white;">
   <a href="https://github.com/qwtan98/DJMV-IS216Project">
-    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo">
+    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo" id="is213">
   </a>
 
 <!--<h3 align="center">Mikro</h3> -->
@@ -143,16 +143,20 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 | Library / Tool       | Description                                          | Link                                                         |
 | -------------------- | ---------------------------------------------------- | ------------------------------------------------------------ |
-| Alpha Vantage API    | Provide stock articles news and information          | [Alpha Vantage API](https://www.alphavantage.co/documentation) |
+| Stripe Payment API    | Provide stock articles news and information          | [Alpha Vantage API](https://www.alphavantage.co/documentation) |
 | ExchangeRate API     | Provide latest exchange rates                        | [ExchangeRate API](https://app.exchangerate-api.com/dashboard) |
 | Google Firebase      | Real-time Database and Authentication                | [Google Firebase](https://firebase.google.com)               |
 | vue-google-translate | Translate content corresponding to selected language | [vue-google-translate](https://www.npmjs.com/package/vue-google-translate) |
 | Bootstrap Studio     | Drag and Drop designing of pages                     | [Bootstrap Studio](https://bootstrapstudio.io)               |
 | Typora               | README Editing and Formatting                        | [Typora](https://typora.io)                                  |
 
+### External API Gateways
+
+### External Messaging Brokers
+
 ## How to Install and Run Our Web Application (for Developers) ##
 
-[Go To Top](#is216---g6t6-mikro)
+[Go To Top](#is213)
 
 ### Project Setup
 
