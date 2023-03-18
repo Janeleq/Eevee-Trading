@@ -2,12 +2,19 @@ import os
 from flask import Flask, redirect, render_template, url_for
 
 
-app = Flask(__name__, template_folder='../Frontend/templates')
+app = Flask(__name__, template_folder='../Frontend/templates', static_url_path='/coins/static')
 
 @app.route("/")
-def home():
+def main():
     return render_template('index.html')
 
+@app.route("/login")
+def login():
+    return render_template('Login+Register Page/Login.html')
+
+@app.route("/home")
+def home():
+    return render_template('homepageWithLogin/homepageWithLogin.html')
 
 @app.route("/binance")
 def binance():
@@ -34,7 +41,7 @@ def profile():
     return render_template('coins/profilepage.html')
 
 
-@app.route("/simulatorhome")
+@app.route("/simulator")
 def simulator():
     return render_template('coins/simulatorhome.html')
 
