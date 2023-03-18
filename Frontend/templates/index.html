@@ -10,11 +10,11 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 		<link rel="icon" type="image/x-icon" href="../images/logo.png">
-	<link rel="stylesheet" type="text/css" href="./Login+Register Page/styles.css">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/homepageWithLogin.css')}}">
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
-	<script type="module" src="register.js"></script>
+	<script type="module" src="{{url_for('static', filename='js/register.js')}}"></script>
 </head>
 
 <body>
