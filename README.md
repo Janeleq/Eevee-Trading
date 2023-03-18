@@ -3,9 +3,9 @@
 
 # IS213 - G4T4 EEVEE
 
-<div align="center"  style="background-color:white; id="is213">
+<div align="center"  style="background-color:white;>
   <a href="https://github.com/qwtan98/DJMV-IS216Project">
-    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo">
+    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo" id="is213">
   </a>
 
 <!--<h3 align="center">Mikro</h3> -->
