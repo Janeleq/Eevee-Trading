@@ -2,7 +2,7 @@ import os
 from flask import Flask, redirect, render_template, url_for
 
 
-app = Flask(__name__, template_folder='../Frontend/templates', static_url_path='/coins/static')
+app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 
 @app.route("/")
 def main():

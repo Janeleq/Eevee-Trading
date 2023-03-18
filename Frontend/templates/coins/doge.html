@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
   <title>DOGE Coin</title>
-  <link rel="stylesheet" href="./Light-Dark.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
   <!-- Bootstrap CSS -->
@@ -52,7 +52,7 @@
   <nav id="nav" class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid" id="header">
       <a class="navbar-brand text-white" href="/login"><img
-          src="../images/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+          src="{{url_for('static', filename='images/coins/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
