@@ -203,19 +203,6 @@ Open a browser (preferably Google Chrome) and enter http://localhost:8080/ to ac
 | ------------- | -------- |
 | ape@gmail.com | apeape   |
 
-### Preferred Devices
-
-Samsung Galaxy S8/S9
-
-- System: Android
-- Viewport (width x height): 360px x 740px
-
-iPhone 7 and iPhone 8
-
-- System: IOS
-- Viewport (width x height): 375px x 667px 
-
-We chose these devices as the phones are inexpensive and not modern, which are the conditions common amongst the phones of our target user base of Foreign Domestic Workers (FDW).
 
 ## How to Use Our Web Application
 
