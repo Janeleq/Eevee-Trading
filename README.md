@@ -170,30 +170,16 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 | ------ | -------------------------------------------------- |
 | NodeJS | [Download NodeJS](https://nodejs.org/en/download/) |
 
-### Installing Libraries
-
-##### Front End (Vue)
-
-```
-# From Project Root Change Directory to the mikro-app folder (The Folder with package.json)
-
-cd mikro-app
-
-# Install Dependencies for npm
-
-npm i
-```
-
 ### Running the Development Server
 
 ```
-# From Project Root Change Directory to the mikro-app folder (The Folder with package.json)
+# From Project Root Change Directory to the Backend folder
 
-cd mikro-app
+cd backend
 
-# Start the development server
+# Download the necessary dependencies to start the development server
 
-npm run serve
+pip install -r requirements.txt
 ```
 
 Open a browser (preferably Google Chrome) and enter http://localhost:8080/ to access Mikro!
