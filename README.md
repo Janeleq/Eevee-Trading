@@ -111,10 +111,10 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 | Library   | Description                           | Link                                   |
 | --------- | ------------------------------------- | -------------------------------------- |
-| VUE-CLI   | Framework                             | [Vue CLI](https://cli.vuejs.org/)      |
+| Flask     | Web Framework                             | [Vue CLI](https://cli.vuejs.org/)      |
 | Vuex      | State Management                      | [Vuex](https://next.vuex.vuejs.org/)   |
 | Bootstrap | Tooltips, Toasts, Offcanvas, Carousel | [Bootstrap](https://getbootstrap.com/) |
-| Jinja2 | Templating for Dyanmic Webpages | [Bootstrap](https://getbootstrap.com/) |
+| Jinja2 | Templating for Dynamic Webpages | [Bootstrap](https://getbootstrap.com/) |
 
 ### Front End Styling
 
