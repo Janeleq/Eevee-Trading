@@ -26,25 +26,25 @@ def login():
 def home():
     return render_template('homepageWithLogin/homepageWithLogin.html')
 
-@app.route("/binance")
+@app.route("/BNB")
 def binance():
-    return render_template('coins/binance.html')
+    return render_template('coins/bnb.html')
 
-@app.route("/bitcoin")
+@app.route("/BTC")
 def bitcoin():
-    return render_template('coins/bitcoin.html')
+    return render_template('coins/btc.html')
 
-@app.route("/cardano")
+@app.route("/ADA")
 def cardano():
-    return render_template('coins/cardano.html')
+    return render_template('coins/ada.html')
 
-@app.route("/doge")
+@app.route("/DOGE")
 def doge():
     return render_template('coins/doge.html')
 
-@app.route("/ethereum")
+@app.route("/ETH")
 def ethereum():
-    return render_template('coins/ethereum.html')
+    return render_template('coins/eth.html')
 
 @app.route("/profile")
 def profile():
@@ -56,9 +56,9 @@ def simulator():
     return render_template('coins/simulatorhome.html')
 
 
-@app.route("/solana")
+@app.route("/SOL")
 def solanaa():
-    return render_template('coins/solana.html')
+    return render_template('coins/sol.html')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
