@@ -1,5 +1,4 @@
 # Pricing Microservice
-
 import requests
 
 # invoke Crytocompare API to get different pricing according to specific CC
