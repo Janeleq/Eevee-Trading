@@ -1,6 +1,7 @@
 import os
 import socket 
-from flask import Flask, redirect, render_template, url_for
+from invokes import invoke_http
+from flask import Flask, redirect, render_template, url_for, request
 # from invokes import invoke_http
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
@@ -16,11 +17,15 @@ def fetchDetails():
 @app.route("/")
 def main():
     hostname, host_ip = fetchDetails()
-    return render_template('index.html', HOSTNAME=hostname, IP=host_ip)
+    return render_template('starterpage.html', HOSTNAME=hostname, IP=host_ip)
 
 @app.route("/login")
 def login():
     return render_template('Login+Register Page/Login.html')
+
+@app.route("/register")
+def register():
+    return render_template('Register.html')
 
 @app.route("/home")
 def home():
@@ -53,12 +58,31 @@ def profile():
 
 @app.route("/simulator")
 def simulator():
-    return render_template('coins/simulatorhome.html')
+    status = '\n --- Invoking pricing microservice to display various CC prices ---'
+    print(status)
+    return render_template('coins/simulatorhome.html', data = status)
 
 
+# SOLANA
 @app.route("/SOL")
-def solanaa():
+def solana():
     return render_template('coins/sol.html')
+
+@app.route("/SOL/buy")
+def buySolana():
+    status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/SOL/sell")
+def sellSolana():
+    status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
