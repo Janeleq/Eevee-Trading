@@ -173,9 +173,32 @@
     the trends there.
   </footer>
   <script>
+    const get_all_prices = "http://localhost:5000/price";
+    var coinInfoUrl = 'https://min-api.cryptocompare.com/data/all/coinlist?';
 
-    var coinInfoUrl = 'https://min-api.cryptocompare.com/data/all/coinlist?'
+    function getAllPrices () {
+      const response =
+            fetch(get_all_prices)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(response);
+                    if (data.code === 404) {
+                        // no response from CryptoCompare API
+                        this.message = data.message;
+                    } else {
+                      print("Sucessful retrieval!")
+                        // this.books = data.data.books;
+                    }
+                })
+                .catch(error => {
+                    // Errors when calling the service; such as network error, 
+                    // service offline, etc
+                    console.log(this.message + error);
 
+                });
+
+    }
+    
     function generateRow(name, assetWebsite, whitepaper, coinName, proofType, symbol) {
       console.log(symbol)
       document.getElementById(name).innerHTML = `

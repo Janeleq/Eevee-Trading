@@ -1,7 +1,5 @@
 # Complex Wallet Microservice
 
-# from app import p
-
 
 
 def checkWallet():

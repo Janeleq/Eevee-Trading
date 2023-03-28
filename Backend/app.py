@@ -17,15 +17,20 @@ def fetchDetails():
 @app.route("/")
 def main():
     hostname, host_ip = fetchDetails()
+    print(hostname, host_ip)
     return render_template('starterpage.html', HOSTNAME=hostname, IP=host_ip)
 
 @app.route("/login")
 def login():
-    return render_template('Login+Register Page/Login.html')
+    hostname, host_ip = fetchDetails()
+    print(hostname, host_ip)
+    return render_template('Login+Register Page/Login.html', HOSTNAME=hostname, IP=host_ip)
 
 @app.route("/register")
 def register():
-    return render_template('Register.html')
+    hostname, host_ip = fetchDetails()
+    print(hostname, host_ip)
+    return render_template('Register.html', HOSTNAME=hostname, IP=host_ip)
 
 @app.route("/home")
 def home():
