@@ -1,5 +1,5 @@
 html,body{
-background-image: "{{url_for('static', filename='images/Login+Register Page/crypto.jpg')}}";
+background-image: url("../images/homepageWithLogin/home.jpg");
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;

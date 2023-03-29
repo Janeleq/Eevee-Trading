@@ -19,7 +19,7 @@ body {
 
 
 #top {
-  background-image: "{{url_for('static', filename='images/Login+Register Page/crypto.jpg')}}";
+  background-image: url("../images/homepageWithLogin/home.jpg");
   background-size: cover;
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
@@ -28,7 +28,7 @@ body {
 
 #content {
   background-size: cover;
-  background-image: url("./crypto.jpg");
+  background-image: url("../images/homepageWithLogin/home.jpg");
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
 }

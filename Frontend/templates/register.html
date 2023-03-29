@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 		integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 		<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/coins/logo.png')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/homepageWithLogin.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/Login+Register Page.css')}}">
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
@@ -27,14 +27,14 @@
 					<form>
 						<div class="input-group form-group" id="forms">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><img src="static/images/user-solid.svg" id="icon"></span>
+								<span class="input-group-text"><img src="{{url_for('static', filename='images/Login+Register Page/images/user-solid.svg')}}" id="icon"></span>
 							</div>
 							<input type="text" class="form-control" placeholder="Email" id="email">
 
 						</div>
 						<div class="input-group form-group" id="forms">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><img src="static/images/key-solid.svg" id="icon"></span>
+								<span class="input-group-text"><img src="{{url_for('static', filename='images/Login+Register Page/images/key-solid.svg')}}" id="icon"></span>
 							</div>
 							<input type="password" class="form-control" placeholder="Password" id="password">
 						</div>
