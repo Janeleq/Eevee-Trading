@@ -1,5 +1,5 @@
 html,body{
-background-image: url('https://wallpaper.dog/large/20525427.jpg');
+background-image: "{{url_for('static', filename='images/Login+Register Page/crypto.jpg')}}";
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;

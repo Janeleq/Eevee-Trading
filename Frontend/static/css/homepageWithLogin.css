@@ -19,7 +19,7 @@ body {
 
 
 #top {
-  background-image: url("./nlights.jpg");
+  background-image: "{{url_for('static', filename='images/Login+Register Page/crypto.jpg')}}";
   background-size: cover;
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
