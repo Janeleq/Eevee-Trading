@@ -61,11 +61,11 @@ def profile():
     return render_template('coins/profilepage.html')
 
 
-@app.route("/simulator")
+@app.route("/marketplace")
 def simulator():
     status = '\n --- Invoking pricing microservice to display various CC prices ---'
     print(status)
-    return render_template('coins/simulatorhome.html', data = status)
+    return render_template('coins/marketplace.html', data = status)
 
 
 # SOLANA
@@ -77,7 +77,8 @@ def solana():
 def buySolana():
     status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
     print(status)
-    return(status)
+    
+    return status
     # result = invoke_http("http:localhost:5000/transaction", method='POST')
     # print(result)
 
@@ -86,6 +87,13 @@ def sellSolana():
     status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
     print(status)
     return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/topup")
+def topUpWallet():
+    status = '\n --- Bringing you to top-up page ---'
+    return redirect("https://buy.stripe.com/test_00g5nJ2nW3GC1zO288")
     # result = invoke_http("http:localhost:5000/transaction", method='POST')
     # print(result)
 

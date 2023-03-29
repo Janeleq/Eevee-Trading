@@ -1,6 +1,9 @@
 # Complex Wallet Microservice
+import stripe 
 
+stripe.api_key = "sk_test_4eC39HqLyjWDarjtT1zdp7dc"
 
+topUpWalletURL = "http://localhost:5004/topup"
 
 def checkWallet():
     # if wallet enough $$, make the transaction by calling UpdateWallet function and notify user of sucess
@@ -12,7 +15,7 @@ def checkWallet():
                 "code": 200,
                 "data":
                 {
-                    "status": "suce"
+                    "status": ""
                 }
                 "message": "Sucessful Transaction!"
             }
@@ -27,4 +30,5 @@ def checkWallet():
     )
     
 
-def UpdateWallet():
+def topUpWallet():
+    invoke
