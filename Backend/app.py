@@ -2,10 +2,11 @@ import os
 import socket 
 from invokes import invoke_http
 from flask import Flask, redirect, render_template, url_for, request
+from flask_cors import CORS
 # from invokes import invoke_http
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
-
+CORS(app)
 
 # function to fetch hostname and ip to check different instances currently running 
 def fetchDetails():
