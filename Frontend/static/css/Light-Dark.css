@@ -4,14 +4,16 @@
 }
 
 body {
-	background: linear-gradient(to right, #0e2e43, #19393e, #066270);
+	background-image: url("../images/homepageWithLogin/home.jpg");
 	animation: run 30s ease infinite;
 	background-size: 400% 400%;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #nav {
-	background: linear-gradient(to right, #0e2e43, #0e2e43);
+	background-image: url("../images/homepageWithLogin/home.jpg");
+	animation: run 30s ease infinite;
+	background-size: 400% 0%;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 

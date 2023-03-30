@@ -1,0 +1,20 @@
+version: "3.8"
+
+volumes:
+  rabbitmq_data:
+
+services:
+  ##################################
+  # Price: The Price microservice
+  ##################################
+  price:
+    build:
+      context: ./
+      dockerfile: price.Dockerfile
+    image: <dockerid>/price:eevee
+    restart: always
+    environment:
+      price_URL: http://price:5000/price
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5000"
