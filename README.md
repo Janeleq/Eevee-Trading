@@ -170,19 +170,16 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 | ------ | -------------------------------------------------- |
 | NodeJS | [Download NodeJS](https://nodejs.org/en/download/) |
 
-### Running the Development Server
-
-```
-# From Project Root Change Directory to the Backend folder
-
-cd backend
+1. Run Docker
+2. Run MAMP / WAMP
+3. Open 1 terminal (cd backend and run docker-compose up) 
+4. Visit the webpage by opening a browser (preferably Google Chrome) and enter http://localhost:5000
 
 # Download the necessary dependencies to start the development server
 
 pip install -r requirements.txt
 ```
 
-Open a browser (preferably Google Chrome) and enter http://localhost:8080/ to access Mikro!
 
 ##### Login Credentials
 
@@ -192,46 +189,5 @@ Open a browser (preferably Google Chrome) and enter http://localhost:8080/ to ac
 
 
 ## How to Use Our Web Application
-
-[Go To Top](#is213)
-
-When users visit the site for the first time, this is the screen they will see:
-
-<img src='mikro-app/img/Landing.jpeg' alt='...'>
-
-Followed by Log In or Register depending on their status as a user:
-<img src='mikro-app/img/Login.jpeg' alt='...'>
-
-<img src='mikro-app/img/Register.jpeg' alt='...'>
-
-After successfully logging into through our Firebase Authentication, users will get to the Home Page:
-
-<img src='mikro-app/img/Home.jpeg' alt='...'>
-
-> Here, they are greeted by the headlines in the financial industry and events in their community
-
-On the left of the Home Page, you can open up our Navigation Bar to access the other features:
-
-<img src='mikro-app/img/Nav.jpeg' alt='...'>
-
-Such as our Financial Academy:
-
-<img src='mikro-app/img/Academy.jpeg' alt='...'>
-
-User Progress:
-
-<img src='mikro-app/img/Progress.jpeg' alt='...'>
-
-Financial Articles:
-
-<img src='mikro-app/img/Articles.jpeg' alt='...'>
-
-Live Currency Converter Calculator:
-
-<img src='mikro-app/img/Currency.jpeg' alt='...'>
-
-Settings:
-
-<img src='mikro-app/img/Settings.jpeg' alt='...'>
 
 [Go To Top](#is213)
