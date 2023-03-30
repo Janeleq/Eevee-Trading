@@ -5,7 +5,6 @@ from flask import Flask, redirect, render_template, url_for
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 
-
 # function to fetch hostname and ip to check different instances currently running 
 def fetchDetails():
     hostname = socket.gethostname()
