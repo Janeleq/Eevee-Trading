@@ -37,25 +37,6 @@ def register():
 def home():
     return render_template('homepageWithLogin/homepageWithLogin.html')
 
-@app.route("/BNB")
-def binance():
-    return render_template('coins/bnb.html')
-
-@app.route("/BTC")
-def bitcoin():
-    return render_template('coins/btc.html')
-
-@app.route("/ADA")
-def cardano():
-    return render_template('coins/ada.html')
-
-@app.route("/DOGE")
-def doge():
-    return render_template('coins/doge.html')
-
-@app.route("/ETH")
-def ethereum():
-    return render_template('coins/eth.html')
 
 @app.route("/profile")
 def profile():
