@@ -35,11 +35,17 @@ def swap():
     #Status of successful swap
     else:
         #AMQP activity
+
         return {
             "code": 400,
             'conversion_amount': conversion_amount
         }
     
+def getConvertedAmount(conversion_amount):
+    return {
+        "amount" : conversion_amount
+    }
+
 #Obtain rates from price.py and calculates ratio of swap (to rate / from rate)
 def getRatio(origin, target):
     origin_price = invoke_http(price_URL, method='GET', json=(origin))
