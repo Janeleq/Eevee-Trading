@@ -49,7 +49,7 @@ def getBNBSinglePrice():
             {
                 "code": 200,
                 "data": {
-                    "price": price.json()
+                    "price": price
                 }
             }
         )
@@ -168,6 +168,7 @@ with app.app_context():
      print(getADASinglePrice())
      print(getDOGESinglePrice())
      print(getBTCSinglePrice())
+     print(getBNBSinglePrice())
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) + " for placing an order...")

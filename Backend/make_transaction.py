@@ -20,149 +20,75 @@ CORS(app)
 # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 # channel = connection.channel()
 # channel.queue_declare(queue='buy_order_queue')
-
 marketplace_URL = "http://localhost:5000/marketplace"
-price_URL =  "http://localhost:5001/price" 
+price_URL =  "http://127.0.0.1:5001" 
 # buy_transaction_URL =  "http://localhost:5004/" 
 # sell_transaction_URL =  "http://localhost:5004/" 
 
-# #BINANCE
-@app.route("/BNB")
-def binance():
-    return render_template('coins/bnb.html')
-
-@app.route("/BNB/buy")
-def buyBinance():
-
-    status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-    print(status)
-    price = invoke_http('', 'GET', json=None)
-    print(price)
-
-    return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
-
-@app.route("/BNB/sell")
-def sellBinance():
-    status = '\n --- Invoking transaction microservice to settle Binance sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+def buycc(coin, qty):
+    price_URL = price_URL + "/" +coin + "/price"
+    response = requests.get(price_URL)
+    buy_price = 0
     
-#BITCOIN
-@app.route("/BTC")
-def bitcoin():
-    return render_template('coins/btc.html')
+    totalamount = buy_price * qty
 
-@app.route("/BTC/buy")
-def buyBitcoin():
-    status = '\n --- Invoking transaction microservice to settle Bitcoin buy order ---'
-    print(status)
+    #retrieve wallet balance
+    #if total amount more than wallet balance --> error
+    #else: update wallet, update transaction log(?)
     
-    return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
 
-@app.route("/BTC/sell")
-def sellBitcoin():
-    status = '\n --- Invoking transaction microservice to settle Bitcoin sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    return response.json()
 
-#CARDANO
-@app.route("/ADA")
-def cardano():
-    return render_template('coins/ada.html')
+def sellcc(coin, qty):
+    price_URL = price_URL + "/" +coin + "/price"
+    response = requests.get(price_URL)
+    sell_price = 0
 
-@app.route("/ADA/buy")
-def buyCardano():
-    status = '\n --- Invoking transaction microservice to settle Cardano buy order ---'
-    print(status)
-    price = invoke_http('localhost:5003/price', 'GET')
-    print(price)
-    return price
-    return status
-    result = invoke_http("http:localhost:5000/transaction", method='POST')
-    print(result)
+    #if qty sold > qty owned --> error
+    #else:
+    totalamount = sell_price * qty
+    #update wallet, transaction log
 
-@app.route("/ADA/sell")
-def sellCardano():
-    status = '\n --- Invoking transaction microservice to settle Cardano sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    return response.json()
 
-#DOGE
-@app.route("/DOGE")
-def doge():
-    return render_template('coins/doge.html')
 
-@app.route("/DOGE/buy")
-def buyDoge():
-    status = '\n --- Invoking transaction microservice to settle DOGE buy order ---'
-    print(status)
+def buyordercc(coin, qty, boprice):
+    price_URL = price_URL + "/" +coin + "/price"
+    response = requests.get(price_URL)
     
-    return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    #get buy price
 
-@app.route("/DOGE/sell")
-def sellDoge():
-    status = '\n --- Invoking transaction microservice to settle DOGE sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    #get wallet balance
 
-#ETHEREUM
-@app.route("/ETH")
-def ethereum():
-    return render_template('coins/eth.html')
+    total_amount = boprice * qty
 
-@app.route("/ETH/buy")
-def buyEth():
-    status = '\n --- Invoking transaction microservice to settle Ethereum buy order ---'
-    print(status)
-    
-    return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    #if total_amount > wallet balance --> error
+    #else: placed order --> message queue
+        #if boprice < buy_price:
+        #carry on with transaction, update wallet and transaction log
+        #else pass
+    return response.json()
 
-@app.route("/ETH/sell")
-def sellEth():
-    status = '\n --- Invoking transaction microservice to settle Ethereum sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+def sellordercc(coin, qty, soprice):
+    price_URL = price_URL + "/" +coin + "/price"
+    response = requests.get(price_URL)
 
-# SOLANA
-@app.route("/SOL")
-def solana():
-    return render_template('coins/sol.html')
+     #get sell price
 
-@app.route("/SOL/buy")
-def buySolana():
-    status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
-    print(status)
-    
-    return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    #get wallet balance
 
-@app.route("/SOL/sell")
-def sellSolana():
-    status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
-    print(status)
-    return(status)
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
-    
+    #if qty sold > qty owned --> error
+
+
+    #else: placed order --> message queue
+        #total_amount = soprice * qty
+        #if soprice > sell_price:
+        #carry on with transaction, update wallet and transaction log
+        #else pass
+        
+    return response.json()
+
+
 
 if __name__ == '__main__':
     app.run(port=5003, debug=True)
@@ -178,26 +104,142 @@ if __name__ == '__main__':
 
 
 
+# #BINANCE
+# @app.route("/BNB")
+# def binance():
+#     return render_template('coins/bnb.html')
 
+# @app.route("/BNB/buy")
+# def buyBinance():
 
+#     status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
+#     print(status)
+#     price = invoke_http(price_URL, 'GET', json=None)
+#     print(price)
 
+#     return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# @app.route("/BNB/sell")
+# def sellBinance():
+#     status = '\n --- Invoking transaction microservice to settle Binance sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
+    
+# #BITCOIN
+# @app.route("/BTC")
+# def bitcoin():
+#     return render_template('coins/btc.html')
 
+# @app.route("/BTC/buy")
+# def buyBitcoin():
+#     status = '\n --- Invoking transaction microservice to settle Bitcoin buy order ---'
+#     print(status)
+    
+#     return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# @app.route("/BTC/sell")
+# def sellBitcoin():
+#     status = '\n --- Invoking transaction microservice to settle Bitcoin sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# #CARDANO
+# @app.route("/ADA")
+# def cardano():
+#     return render_template('coins/ada.html')
 
+# @app.route("/ADA/buy")
+# def buyCardano():
+#     status = '\n --- Invoking transaction microservice to settle Cardano buy order ---'
+#     print(status)
+#     price = invoke_http('localhost:5003/price', 'GET')
+#     print(price)
+#     # return 1
+#     # return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# @app.route("/ADA/sell")
+# def sellCardano():
+#     status = '\n --- Invoking transaction microservice to settle Cardano sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# #DOGE
+# @app.route("/DOGE")
+# def doge():
+#     return render_template('coins/doge.html')
 
+# @app.route("/DOGE/buy")
+# def buyDoge():
+#     status = '\n --- Invoking transaction microservice to settle DOGE buy order ---'
+#     print(status)
+    
+#     return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# @app.route("/DOGE/sell")
+# def sellDoge():
+#     status = '\n --- Invoking transaction microservice to settle DOGE sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# #ETHEREUM
+# @app.route("/ETH")
+# def ethereum():
+#     return render_template('coins/eth.html')
 
+# @app.route("/ETH/buy")
+# def buyEth():
+#     status = '\n --- Invoking transaction microservice to settle Ethereum buy order ---'
+#     print(status)
+    
+#     return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# @app.route("/ETH/sell")
+# def sellEth():
+#     status = '\n --- Invoking transaction microservice to settle Ethereum sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
+# # SOLANA
+# @app.route("/SOL")
+# def solana():
+#     return render_template('coins/sol.html')
 
+# @app.route("/SOL/buy")
+# def buySolana():
+#     status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
+#     print(status)
+    
+#     return status
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
-
-
+# @app.route("/SOL/sell")
+# def sellSolana():
+#     status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
+#     print(status)
+#     return(status)
+#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
+#     # print(result)
 
 # @app.route("/ADA/buy", methods=['POST'])
 # def buyADA():
