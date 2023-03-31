@@ -53,15 +53,51 @@ def buyBNB():
     data = request.json
     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
     price = response.json()['USD']
 
     total_cost = quantity * price
     
     return jsonify({'total_cost': total_cost})
 
-@app.route("//buy", methods=['POST'])
-def buyADA():
+@app.route("/DOGE/buy", methods=['POST'])
+def buyDOGE():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
+
+@app.route("/ETH/buy", methods=['POST'])
+def buyETH():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
+
+@app.route("/SOL/buy", methods=['POST'])
+def buySOL():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
+
+@app.route("/ADA/sell", methods=['POST'])
+def sellADA():
     data = request.json
     quantity = data.get('amount')
 
@@ -72,30 +108,65 @@ def buyADA():
     
     return jsonify({'total_cost': total_cost})
 
-@app.route("/ADA/buy", methods=['POST'])
-def buyADA():
+@app.route("/BTC/sell", methods=['POST'])
+def sellBTC():
     data = request.json
     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BTC')
     price = response.json()['USD']
 
     total_cost = quantity * price
     
     return jsonify({'total_cost': total_cost})
 
-@app.route("/ADA/buy", methods=['POST'])
-def buyADA():
+@app.route("/BNB/sell", methods=['POST'])
+def sellBNB():
     data = request.json
     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
     price = response.json()['USD']
 
     total_cost = quantity * price
     
     return jsonify({'total_cost': total_cost})
 
+@app.route("/DOGE/sell", methods=['POST'])
+def sellDOGE():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
+
+@app.route("/ETH/sell", methods=['POST'])
+def sellETH():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
+
+@app.route("/SOL/sell", methods=['POST'])
+def sellSOL():
+    data = request.json
+    quantity = data.get('amount')
+
+    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
+    price = response.json()['USD']
+
+    total_cost = quantity * price
+    
+    return jsonify({'total_cost': total_cost})
 
 
 
