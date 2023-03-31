@@ -46,20 +46,24 @@
   </nav>
 
   <div class="container-fluid">
-    <form action="POST">
+    <form method="GET">
         <div class="form-label text-light">
             <div>
                 <div class="form-label">Amount: </div>
                 <input class="form-input" type="number" name="from_amount">
-
-                <div class="dropdown">
+                <div class="form-label">From Currency: </div>
+                <input class="form-input" type="text" name="from_currency">
+                <div class="form-label">To Currency: </div>
+                <input class="form-input" type="text" name="to_currency">
+                
+                <!-- <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       From Currency
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Ether</a>
-                      <a class="dropdown-item" href="#">Bitcoin</a>
-                      <a class="dropdown-item" href="#">Ada</a>
+                      <a class="dropdown-item" href="#">BNB</a>
+                      <a class="dropdown-item" href="#">ADA</a>
+                      <a class="dropdown-item" href="#">SOL</a>
                     </div>
                 </div>
 
@@ -68,10 +72,14 @@
                       To Currency
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Ether</a>
-                      <a class="dropdown-item" href="#">Bitcoin</a>
-                      <a class="dropdown-item" href="#">Ada</a>
+                       <a class="dropdown-item" href="#">BNB</a>
+                      <a class="dropdown-item" href="#">ADA</a>
+                      <a class="dropdown-item" href="#">SOL</a>
                     </div>
+                </div> -->
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Swap</button>
                 </div>
             </div>
 

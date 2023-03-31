@@ -18,3 +18,15 @@ services:
       PYTHONUNBUFFERED: 1
     ports:
       - "5000:5000"
+
+  swap:
+    build: 
+      context: ./
+      dockerfile: swap.Dockerfile
+    image: <dockerid>/swap:eevee
+    restart: always
+    environment:
+      price_URL: http://price:5000/swap
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5001"
