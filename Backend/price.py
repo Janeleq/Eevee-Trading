@@ -8,45 +8,9 @@ app = Flask(__name__, template_folder='../Frontend/templates', static_folder='..
 CORS(app)
 
 # invoke Crytocompare API to get different pricing according to specific CC
-
-@app.route("/BNB")
-def binance():
-    return render_template('coins/bnb.html')
-
-@app.route("/BTC")
-def bitcoin():
-    return render_template('coins/btc.html')
-
-@app.route("/ADA")
-def cardano():
-    return render_template('coins/ada.html')
-
-@app.route("/DOGE")
-def doge():
-    return render_template('coins/doge.html')
-
-@app.route("/ETH")
-def ethereum():
-    return render_template('coins/eth.html')
-
-@app.route("/coin/<string:coin>")
-def find_price(coin):
-        print("\nReceived an coin for conversion in JSON:", coin)
-        if coin == 'BNB':
-            getBNBSinglePrice()
-        elif coin == 'ADA':
-            getADASinglePrice()
-        elif coin == 'SOL':
-            getSOLSinglePrice()
-        elif coin == 'BTC':
-            getBTCSinglePrice()
-        elif coin == 'DOGE':
-            getDOGESinglePrice()
-        elif coin == 'ETH':
-            getETHSinglePrice()
-            
-
+@app.route("/coin/SOL")
 def getSOLSinglePrice():
+    print("\n--- Checking pricing for SOL ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=SOL&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]
@@ -71,8 +35,9 @@ def getSOLSinglePrice():
     ), 404
     
 
-
+@app.route("/coin/BNB")
 def getBNBSinglePrice():
+    print("\n--- Checking pricing for BNB ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=BNB&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]
@@ -95,8 +60,9 @@ def getBNBSinglePrice():
         }
     ), 404
 
-
+@app.route("/coin/BTC")
 def getBTCSinglePrice():
+    print("\n--- Checking pricing for BTC ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]
@@ -120,8 +86,9 @@ def getBTCSinglePrice():
     ), 404
 
 
-
+@app.route("/coin/ADA")
 def getADASinglePrice():
+    print("\n--- Checking pricing for ADA ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=ADA&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]
@@ -145,8 +112,9 @@ def getADASinglePrice():
     ), 404
 
 
-
+@app.route("/coin/DOGE")
 def getDOGESinglePrice():
+    print("\n--- Checking pricing for DOGE ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=DOGE&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]
@@ -169,7 +137,9 @@ def getDOGESinglePrice():
         }
     ), 404
 
+@app.route("/coin/ETH")
 def getETHSinglePrice():
+    print("\n--- Checking pricing for ETH ---")
     singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD&api_key=b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
     response = requests.get(singlePriceUrl) 
     price = response.json()["USD"]

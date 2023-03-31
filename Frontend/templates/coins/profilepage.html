@@ -133,7 +133,17 @@
         </table>
         <button class="btn btn-primary" id="reset">Reset Wallet Balance</button>
         <a class="btn btn-primary" id="topup" href="/topup">Top Up Wallet Balance</a>
-        
+        <form action="/thanks" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            data-key="pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX"
+            data-name="Top-up"
+            data-description="Top Up your wallet using EeveePay"
+            data-amount="{{topUpAmt}}}"
+            data-currency="usd">
+          </script>
+        </form>
       </div>
       <div class="col-lg-6 col-md-12" style="">
         <h2 style="font-size:40px" class="words">Transaction History</h2>

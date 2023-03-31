@@ -1,3 +1,5 @@
+# Check Transactions that happened (Buy/Sell + Topping Up transactions)
+
 #    print(price)
 #     # url = "https://min-api.cryptocompare.com/data/price"
 
@@ -78,3 +80,6 @@
 
 # def transactsell():
 #     return
+if __name__ == "__main__":
+    print("This is flask " + os.path.basename(__file__) + " for placing an order...")
+    app.run(port=5002, debug=True)
