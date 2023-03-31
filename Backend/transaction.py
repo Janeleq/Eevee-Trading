@@ -1,4 +1,46 @@
-# Check Transactions that happened (Buy/Sell + Topping Up transactions)
+#!/usr/bin/env python3
+# The above shebang (#!) operator tells Unix-like environments
+# to run this file as a python3 script
+
+import json
+import os
+
+import amqp_setup
+
+monitorBindingKey='#'
+
+def receiveTransactionLog():
+    amqp_setup.check_setup()
+        
+    queue_name = 'Transaction_Log'
+    
+    # set up a consumer and start to wait for coming messages
+    amqp_setup.channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+    amqp_setup.channel.start_consuming() # an implicit loop waiting to receive messages; 
+    #it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
+
+# Track Transactions that happened (Buy/Sell + Topping Up  + Swap transactions)
+def processBuyLog(order):
+    print("Recording an Buy log:")
+    print(order)
+
+def processSellLog(order):
+    print("Recording an Sell log:")
+    print(order)
+
+def processSwapLog(order):
+    print("Recording an Swap log:")
+    print(order)
+
+def processTopUpLog(order):
+    print("Recording an order log:")
+    print(order)
+
+if __name__ == "__main__":  # execute this program only if it is run as a script (not by 'import')
+    print("\nThis is " + os.path.basename(__file__), end='')
+    print(": monitoring routing key '{}' in exchange '{}' ...".format(monitorBindingKey, amqp_setup.exchangename))
+    receiveOrderLog()
+
 
 #    print(price)
 #     # url = "https://min-api.cryptocompare.com/data/price"
@@ -81,5 +123,6 @@
 # def transactsell():
 #     return
 if __name__ == "__main__":
-    print("This is flask " + os.path.basename(__file__) + " for placing an order...")
-    app.run(port=5002, debug=True)
+    print("\nThis is " + os.path.basename(__file__), end='')
+    print(": monitoring routing key '{}' in exchange '{}' ...".format(monitorBindingKey, amqp_setup.exchangename))
+    receiveTransactionLog()
