@@ -1,8 +1,7 @@
 # make_transaction complex Microservice
 # have to invoke wallet.py to check wheter got enough $$ to eg buy cc defined
 
-
-from flask import Flask, request, jsonify
+from flask import Flask, redirect, render_template, url_for, request
 from flask_cors import CORS
 
 import os, sys
@@ -14,178 +13,159 @@ from invokes import invoke_http
 import pika
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 
 #set up RabbitMQ Connection
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-channel = connection.channel()
-channel.queue_declare(queue='buy_order_queue')
-#book_URL = "http://localhost:5000/book"
-converter_URL = "http://localhost:5001/converter" 
-marketplace_URL = "http://localhost:5002/shipping_record" 
-price_URL =  "http://localhost:5003/price" 
+# connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+# channel = connection.channel()
+# channel.queue_declare(queue='buy_order_queue')
+
+marketplace_URL = "http://localhost:5000/marketplace"
+price_URL =  "http://localhost:5001/price" 
 # buy_transaction_URL =  "http://localhost:5004/" 
 # sell_transaction_URL =  "http://localhost:5004/" 
 
-
-#buying
-@app.route("/buy", methods=['POST'])
-def buycc(coin, quantity):
-    #invoke pricing microservice
-    url = "https://min-api.cryptocompare.com/data/price"
-
-    parameters = {
-        "fsym": coin
-    }
-
-    response = requests.post(url, params = parameters)
-
-    if response.status_code == 200:
-        result = response.json()
-        price = result['USD']
-        total_price = price * quantity
-        #access wallet, if total_price > money in wallet --> give error --> update error log(?)
-        #else, update wallet balance, add to transactions log
-
-@app.route("/sell", methods=['POST'])
-def sellcc(coin, quantity):
-    #invoke pricing microservice
-    url = "https://min-api.cryptocompare.com/data/price"
-
-    parameters = {
-        "fsym": coin
-    }
-
-    response = requests.post(url, params = parameters)
-
-    if response.status_code == 200:
-        result = response.json()
-        price = result['USD']
-        total_price = price * quantity
-        #access wallet, if quantity sold > quantity owned --> give error --> update error log(?)
-        #else, update wallet balance, add to transactions log
-
-@app.route("/buyorder", method=['POST'])
-def buyorder(coin, quantity, set_buy_price):
-
-    max_price = quantity * set_buy_price
-    #if max_price > wallet balance --> error
-    #else baam set
-
-
-    #need to keep retrieving data of pricing of the coin
-    unit_price = 0
-    #once coin price lower then set_buy_price --> undergo transaction and update wallet (update transaction log)(sale is based on the price at that tick of time)
-
-
-    message = f'Buy order executed for {coin} at {unit_price} USD'
-    channel.basic_publish(exchange='', routing_key='buy_order_queue', body=message)
-    print(f'Sent message: {message}')
-    return
-
-@app.route("/sellorder", method=['POST'])
-def sellorder(coin, quantity, set_sell_price):
-    #if quantity intended to sell > quantity owned --> error
-    #else baam set
-
-    #need to keep retrieving data of pricing of the coin
-    unit_price = 0
-    #once coin price higher then set_sell_price --> undergo transaction and update wallet (update transaction log) (sale is based on the price at that tick of time)
-
-    if unit_price > set_sell_price:
-
-
-
-    message = f'Sell order executed for {coin} at {unit_price} USD'
-    channel.basic_publish(exchange='', routing_key='buy_order_queue', body=message)
-    print(f'Sent message: {message}')
-    return
-
-
-def transactbuy():
-    return
-
-def transactsell():
-    return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# #BINANCE
+@app.route("/BNB")
+def binance():
+    return render_template('coins/bnb.html')
+
+@app.route("/BNB/buy")
+def buyBinance():
+
+    status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
+    print(status)
+    price = invoke_http('', 'GET', json=None)
+    print(price)
+
+    return status
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/BNB/sell")
+def sellBinance():
+    status = '\n --- Invoking transaction microservice to settle Binance sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+    
+#BITCOIN
+@app.route("/BTC")
+def bitcoin():
+    return render_template('coins/btc.html')
+
+@app.route("/BTC/buy")
+def buyBitcoin():
+    status = '\n --- Invoking transaction microservice to settle Bitcoin buy order ---'
+    print(status)
+    
+    return status
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/BTC/sell")
+def sellBitcoin():
+    status = '\n --- Invoking transaction microservice to settle Bitcoin sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+#CARDANO
+@app.route("/ADA")
+def cardano():
+    return render_template('coins/ada.html')
+
+@app.route("/ADA/buy")
+def buyCardano():
+    status = '\n --- Invoking transaction microservice to settle Cardano buy order ---'
+    print(status)
+    price = invoke_http('localhost:5003/price', 'GET')
+    print(price)
+    return price
+    return status
+    result = invoke_http("http:localhost:5000/transaction", method='POST')
+    print(result)
+
+@app.route("/ADA/sell")
+def sellCardano():
+    status = '\n --- Invoking transaction microservice to settle Cardano sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+#DOGE
+@app.route("/DOGE")
+def doge():
+    return render_template('coins/doge.html')
+
+@app.route("/DOGE/buy")
+def buyDoge():
+    status = '\n --- Invoking transaction microservice to settle DOGE buy order ---'
+    print(status)
+    
+    return status
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/DOGE/sell")
+def sellDoge():
+    status = '\n --- Invoking transaction microservice to settle DOGE sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+#ETHEREUM
+@app.route("/ETH")
+def ethereum():
+    return render_template('coins/eth.html')
+
+@app.route("/ETH/buy")
+def buyEth():
+    status = '\n --- Invoking transaction microservice to settle Ethereum buy order ---'
+    print(status)
+    
+    return status
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/ETH/sell")
+def sellEth():
+    status = '\n --- Invoking transaction microservice to settle Ethereum sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+# SOLANA
+@app.route("/SOL")
+def solana():
+    return render_template('coins/sol.html')
+
+@app.route("/SOL/buy")
+def buySolana():
+    status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
+    print(status)
+    
+    return status
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+
+@app.route("/SOL/sell")
+def sellSolana():
+    status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
+    print(status)
+    return(status)
+    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # print(result)
+    
+
+if __name__ == '__main__':
+    app.run(port=5003, debug=True)
 
 
 

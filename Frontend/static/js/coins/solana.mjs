@@ -34,66 +34,95 @@ function getValues(data, uid) {
   document.getElementById('qty').innerHTML = ' ' + data[uid].Sol
 }
 
-setTimeout(() => {
-  addBuyEvent()
-}, 1000);
+// setTimeout(() => {
+//   addBuyEvent()
+// }, 1000);
+
+// setTimeout(() => {
+//   addSellEvent()
+// }, 1000);
+
+// function addBuyEvent() {
+//   buy.addEventListener('click', (d) => {
+//     var quantityBought = Number(document.getElementById('transactionqty').value)
+//     var balance = Number(document.getElementById('qty').textContent)
+//     var price = document.getElementById('price').textContent
+//     var totalCost = quantityBought * Number(price)
+//     var tv = Number(document.getElementById('wallet').textContent) - totalCost
+//     tv = tv.toFixed(2)
+//     if (tv >= 0) {
+//       onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           var totalsol = quantityBought + balance
+//           update(ref(db, 'All users in database/' + user.uid), {
+//             Sol: totalsol,
+//             Bc: tv,
+//           })
+//           alert('Successfully Bought!')
+//         }
+//       });
+//     }
+//     else {
+//       alert("Not enough Bcs")
+//     }
+//   })
+// }
+
+
+// function addSellEvent() {
+//   sell.addEventListener('click', (e) => {
+//     var quantitySold = Number(document.getElementById('transactionqty').value)
+//     var balance = Number(document.getElementById('qty').textContent)
+//     var price = document.getElementById('price').textContent
+//     var totalCost = quantitySold * Number(price)
+//     var tv = Number(document.getElementById('wallet').textContent) + totalCost
+//     tv = tv.toFixed(2)
+//     if (balance - quantitySold >= 0) {
+//       onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           var totalsol = balance - quantitySold
+//           update(ref(db, 'All users in database/' + user.uid), {
+//             Sol: totalsol,
+//             Bc: tv,
+//           })
+//           alert("Successfully Sold!")
+//         }
+//       });
+//     }
+//     else {
+//       alert("Not enough quantity")
+//     }
+//   })
+// }
+
+
 
 setTimeout(() => {
-  addSellEvent()
+  addListener()
 }, 1000);
 
-function addBuyEvent() {
-  buy.addEventListener('click', (d) => {
-    var quantityBought = Number(document.getElementById('transactionqty').value)
-    var balance = Number(document.getElementById('qty').textContent)
-    var price = document.getElementById('price').textContent
-    var totalCost = quantityBought * Number(price)
-    var tv = Number(document.getElementById('wallet').textContent) - totalCost
-    tv = tv.toFixed(2)
-    if (tv >= 0) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          var totalsol = quantityBought + balance
-          update(ref(db, 'All users in database/' + user.uid), {
-            Sol: totalsol,
-            Bc: tv,
-          })
-          alert('Successfully Bought!')
-        }
-      });
-    }
-    else {
-      alert("Not enough Bcs")
-    }
-  })
+function addListener(){
+  logout.addEventListener('click', (f) => {
+    //record before signing off
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        update(ref(db, 'Users in the system/' + user.uid), {
+          LoginStatus: "Logged Off",
+          LoginTime: "NIL"
+        })
+      }
+    });
+  
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      setTimeout(() => {
+        alert("Signed out!")
+        window.location.href = "../Login+Register Page/Login.html";
+    }, 1000);
+    }).catch((error) => {
+      // An error happened.
+    });
+  
+  });
 }
-
-
-function addSellEvent() {
-  sell.addEventListener('click', (e) => {
-    var quantitySold = Number(document.getElementById('transactionqty').value)
-    var balance = Number(document.getElementById('qty').textContent)
-    var price = document.getElementById('price').textContent
-    var totalCost = quantitySold * Number(price)
-    var tv = Number(document.getElementById('wallet').textContent) + totalCost
-    tv = tv.toFixed(2)
-    if (balance - quantitySold >= 0) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          var totalsol = balance - quantitySold
-          update(ref(db, 'All users in database/' + user.uid), {
-            Sol: totalsol,
-            Bc: tv,
-          })
-          alert("Successfully Sold!")
-        }
-      });
-    }
-    else {
-      alert("Not enough quantity")
-    }
-  })
-}
-
-
-

@@ -1,5 +1,6 @@
 import os
 import socket 
+import requests
 from invokes import invoke_http
 from flask import Flask, redirect, render_template, url_for, request
 from flask_cors import CORS
@@ -53,16 +54,19 @@ def swap():
     hostname, host_ip = fetchDetails()
     return render_template('Swap.html', HOSTNAME=hostname, IP=host_ip)
 
-#BINANCE
+# #BINANCE
 @app.route("/BNB")
 def binance():
     return render_template('coins/bnb.html')
 
 @app.route("/BNB/buy")
 def buyBinance():
+
     status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
     print(status)
-    
+    price = invoke_http('', 'GET', json=None)
+    print(price)
+
     return status
     # result = invoke_http("http:localhost:5000/transaction", method='POST')
     # print(result)
@@ -106,10 +110,12 @@ def cardano():
 def buyCardano():
     status = '\n --- Invoking transaction microservice to settle Cardano buy order ---'
     print(status)
-    
+    price = invoke_http('localhost:5003/price', 'GET')
+    print(price)
+    return price
     return status
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
+    result = invoke_http("http:localhost:5000/transaction", method='POST')
+    print(result)
 
 @app.route("/ADA/sell")
 def sellCardano():

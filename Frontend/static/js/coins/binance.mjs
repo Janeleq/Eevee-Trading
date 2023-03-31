@@ -34,67 +34,67 @@ function getValues(data, uid) {
   document.getElementById('qty').innerHTML = ' ' + data[uid].Bnb
 }
 
-setTimeout(() => {
-  addBuyEvent()
-}, 1000);
+// setTimeout(() => {
+//   addBuyEvent()
+// }, 1000);
 
-setTimeout(() => {
-  addSellEvent()
-}, 1000);
+// setTimeout(() => {
+//   addSellEvent()
+// }, 1000);
 
-function addBuyEvent() {
-  buy.addEventListener('click', (d) => {
-    var quantityBought = Number(document.getElementById('transactionqty').value)
-    var balance = Number(document.getElementById('qty').textContent)
-    var price = document.getElementById('price').textContent
-    var totalCost = quantityBought * Number(price)
-    var tv = Number(document.getElementById('wallet').textContent) - totalCost
-    tv = tv.toFixed(2)
-    if (tv >= 0) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          var totalbnb = quantityBought + balance
-          update(ref(db, 'All users in database/' + user.uid), {
-            Bnb: totalbnb,
-            Bc: tv,
-          })
-          alert('Successfully Bought!')
-        } 
-      });
-    }
-    else {
-      alert("Not enough Bcs")
-    }
-  })
-}
-function addSellEvent() {
-  sell.addEventListener('click', (e) => {
-    var quantitySold = Number(document.getElementById('transactionqty').value)
-    var balance = Number(document.getElementById('qty').textContent)
-    var price = document.getElementById('price').textContent
-    var totalCost = quantitySold * Number(price)
-    var tv = Number(document.getElementById('wallet').textContent) + totalCost
-    tv = tv.toFixed(2)
-    if (balance - quantitySold >= 0) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          var totalbnb = balance - quantitySold
-          update(ref(db, 'All users in database/' + user.uid), {
-            Bnb: totalbnb,
-            Bc: tv,
-          })
-          alert("Successfully Sold!")
+// function addBuyEvent() {
+//   buy.addEventListener('click', (d) => {
+//     var quantityBought = Number(document.getElementById('transactionqty').value)
+//     var balance = Number(document.getElementById('qty').textContent)
+//     var price = document.getElementById('price').textContent
+//     var totalCost = quantityBought * Number(price)
+//     var tv = Number(document.getElementById('wallet').textContent) - totalCost
+//     tv = tv.toFixed(2)
+//     if (tv >= 0) {
+//       onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           var totalbnb = quantityBought + balance
+//           update(ref(db, 'All users in database/' + user.uid), {
+//             Bnb: totalbnb,
+//             Bc: tv,
+//           })
+//           alert('Successfully Bought!')
+//         } 
+//       });
+//     }
+//     else {
+//       alert("Not enough Bcs")
+//     }
+//   })
+// }
+// function addSellEvent() {
+//   sell.addEventListener('click', (e) => {
+//     var quantitySold = Number(document.getElementById('transactionqty').value)
+//     var balance = Number(document.getElementById('qty').textContent)
+//     var price = document.getElementById('price').textContent
+//     var totalCost = quantitySold * Number(price)
+//     var tv = Number(document.getElementById('wallet').textContent) + totalCost
+//     tv = tv.toFixed(2)
+//     if (balance - quantitySold >= 0) {
+//       onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           var totalbnb = balance - quantitySold
+//           update(ref(db, 'All users in database/' + user.uid), {
+//             Bnb: totalbnb,
+//             Bc: tv,
+//           })
+//           alert("Successfully Sold!")
 
-        } else {
+//         } else {
 
-        }
-      });
-    }
-    else {
-      alert("Not enough quantity")
-    }
-  })
-}
+//         }
+//       });
+//     }
+//     else {
+//       alert("Not enough quantity")
+//     }
+//   })
+// }
 
 
 
