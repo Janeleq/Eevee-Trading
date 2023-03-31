@@ -148,9 +148,8 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 | Library / Tool       | Description                                          | Link                                                         |
 | -------------------- | ---------------------------------------------------- | ------------------------------------------------------------ |
 | Stripe Payment API    | Provide stock articles news and information          | [Alpha Vantage API](https://www.alphavantage.co/documentation) |
-| ExchangeRate API     | Provide latest exchange rates                        | [ExchangeRate API](https://app.exchangerate-api.com/dashboard) |
 | Google Firebase      | Real-time Database and Authentication                | [Google Firebase](https://firebase.google.com)               |
-| vue-google-translate | Translate content corresponding to selected language | [vue-google-translate](https://www.npmjs.com/package/vue-google-translate) |
+| CryptoCompare API               | README Editing and Formatting                        | [Typora](https://typora.io)                                  |
 | Bootstrap Studio     | Drag and Drop designing of pages                     | [Bootstrap Studio](https://bootstrapstudio.io)               |
 | Typora               | README Editing and Formatting                        | [Typora](https://typora.io)                                  |
 
@@ -158,17 +157,16 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 ### External Messaging Brokers
 
-## How to Install and Run Our Web Application (for Developers) ##
 
 [Go To Top](#is213)
 
-### Project Setup
+### Project Setup [For Developers]
 
 ##### Tools Required
 
 | Tool   | Download                                           |
 | ------ | -------------------------------------------------- |
-| NodeJS | [Download NodeJS](https://nodejs.org/en/download/) |
+| Python3 | [Download Python3](https://www.python.org/downloads/) |
 
 1. Run Docker
 2. Run MAMP / WAMP
@@ -176,7 +174,6 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 4. Visit the webpage by opening a browser (preferably Google Chrome) and enter http://localhost:5000
 
 # Download the necessary dependencies to start the development server
-
 pip install -r requirements.txt
 ```
 
@@ -188,6 +185,23 @@ pip install -r requirements.txt
 | ape@gmail.com | apeape   |
 
 
-## How to Use Our Web Application
+##### Card Usage
+Visa	4242424242424242	Any 3 digits	Any future date
+Visa (debit)	4000056655665556	Any 3 digits	Any future date
+Mastercard	5555555555554444	Any 3 digits	Any future date
+Mastercard (2-series)	2223003122003222	Any 3 digits	Any future date
+Mastercard (debit)	5200828282828210	Any 3 digits	Any future date
+Mastercard (prepaid)	5105105105105100	Any 3 digits	Any future date
+American Express	378282246310005	Any 4 digits	Any future date
+American Express	371449635398431	Any 4 digits	Any future date
+Discover	6011111111111117	Any 3 digits	Any future date
+Discover	6011000990139424	Any 3 digits	Any future date
+Discover (debit)	6011981111111113	Any 3 digits	Any future date
+Diners Club	3056930009020004	Any 3 digits	Any future date
+Diners Club (14-digit card)	36227206271667	Any 3 digits	Any future date
+JCB	3566002020360505	Any 3 digits	Any future date
+UnionPay	6200000000000005	Any 3 digits	Any future date
+UnionPay (debit)	6200000000000047	Any 3 digits	Any future date
+
 
 [Go To Top](#is213)
