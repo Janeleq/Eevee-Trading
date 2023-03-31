@@ -186,7 +186,7 @@ pip install -r requirements.txt
 
 
 ##### Card Usage
-![image](https://user-images.githubusercontent.com/47893187/229196666-ecc97b8a-d22b-4bbe-851d-08dd768a1444.png)
+[Utilise Stripe Test Cards](https://stripe.com/docs/testing)
 
 
 [Go To Top](#is213)
