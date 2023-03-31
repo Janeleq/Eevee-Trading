@@ -17,6 +17,10 @@ import json
 app = Flask(__name__)
 CORS(app)
 
+#set up RabbitMQ Connection
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='buy_order_queue')
 #book_URL = "http://localhost:5000/book"
 converter_URL = "http://localhost:5001/converter" 
 marketplace_URL = "http://localhost:5002/shipping_record" 
@@ -24,294 +28,488 @@ price_URL =  "http://localhost:5003/price"
 # buy_transaction_URL =  "http://localhost:5004/" 
 # sell_transaction_URL =  "http://localhost:5004/" 
 
-@app.route("/ADA/buy", methods=['POST'])
-def buyADA():
-    data = request.json
-    quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
-    price = response.json()['USD']
+#buying
+@app.route("/buy", methods=['POST'])
+def buycc(coin, quantity):
+    #invoke pricing microservice
+    url = "https://min-api.cryptocompare.com/data/price"
 
-    total_cost = quantity * price
+    parameters = {
+        "fsym": coin
+    }
+
+    response = requests.post(url, params = parameters)
+
+    if response.status_code == 200:
+        result = response.json()
+        price = result['USD']
+        total_price = price * quantity
+        #access wallet, if total_price > money in wallet --> give error --> update error log(?)
+        #else, update wallet balance, add to transactions log
+
+@app.route("/sell", methods=['POST'])
+def sellcc(coin, quantity):
+    #invoke pricing microservice
+    url = "https://min-api.cryptocompare.com/data/price"
+
+    parameters = {
+        "fsym": coin
+    }
+
+    response = requests.post(url, params = parameters)
+
+    if response.status_code == 200:
+        result = response.json()
+        price = result['USD']
+        total_price = price * quantity
+        #access wallet, if quantity sold > quantity owned --> give error --> update error log(?)
+        #else, update wallet balance, add to transactions log
+
+@app.route("/buyorder", method=['POST'])
+def buyorder(coin, quantity, set_buy_price):
+
+    max_price = quantity * set_buy_price
+    #if max_price > wallet balance --> error
+    #else baam set
+
+
+    #need to keep retrieving data of pricing of the coin
+    unit_price = 0
+    #once coin price lower then set_buy_price --> undergo transaction and update wallet (update transaction log)(sale is based on the price at that tick of time)
+
+
+    message = f'Buy order executed for {coin} at {unit_price} USD'
+    channel.basic_publish(exchange='', routing_key='buy_order_queue', body=message)
+    print(f'Sent message: {message}')
+    return
+
+@app.route("/sellorder", method=['POST'])
+def sellorder(coin, quantity, set_sell_price):
+    #if quantity intended to sell > quantity owned --> error
+    #else baam set
+
+    #need to keep retrieving data of pricing of the coin
+    unit_price = 0
+    #once coin price higher then set_sell_price --> undergo transaction and update wallet (update transaction log) (sale is based on the price at that tick of time)
+
+    if unit_price > set_sell_price:
+
+
+
+    message = f'Sell order executed for {coin} at {unit_price} USD'
+    channel.basic_publish(exchange='', routing_key='buy_order_queue', body=message)
+    print(f'Sent message: {message}')
+    return
+
+
+def transactbuy():
+    return
+
+def transactsell():
+    return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.route("/ADA/buy", methods=['POST'])
+# def buyADA():
+#     data = request.json
+#     quantity = data.get('amount')
+
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
+#     price = response.json()['USD']
+
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/BTC/buy", methods=['POST'])
-def buyBTC():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/BTC/buy", methods=['POST'])
+# def buyBTC():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BTC')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BTC')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/BNB/buy", methods=['POST'])
-def buyBNB():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/BNB/buy", methods=['POST'])
+# def buyBNB():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/DOGE/buy", methods=['POST'])
-def buyDOGE():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/DOGE/buy", methods=['POST'])
+# def buyDOGE():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/ETH/buy", methods=['POST'])
-def buyETH():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/ETH/buy", methods=['POST'])
+# def buyETH():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/SOL/buy", methods=['POST'])
-def buySOL():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/SOL/buy", methods=['POST'])
+# def buySOL():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/ADA/sell", methods=['POST'])
-def sellADA():
-    data = request.json
-    quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
-    price = response.json()['USD']
+#selling
 
-    total_cost = quantity * price
+# @app.route("/ADA/sell", methods=['POST'])
+# def sellADA():
+#     data = request.json
+#     quantity = data.get('amount')
+
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ADA')
+#     price = response.json()['USD']
+
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/BTC/sell", methods=['POST'])
-def sellBTC():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/BTC/sell", methods=['POST'])
+# def sellBTC():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BTC')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BTC')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/BNB/sell", methods=['POST'])
-def sellBNB():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/BNB/sell", methods=['POST'])
+# def sellBNB():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=BNB')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/DOGE/sell", methods=['POST'])
-def sellDOGE():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/DOGE/sell", methods=['POST'])
+# def sellDOGE():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=DOGE')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/ETH/sell", methods=['POST'])
-def sellETH():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/ETH/sell", methods=['POST'])
+# def sellETH():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=ETH')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
-@app.route("/SOL/sell", methods=['POST'])
-def sellSOL():
-    data = request.json
-    quantity = data.get('amount')
+# @app.route("/SOL/sell", methods=['POST'])
+# def sellSOL():
+#     data = request.json
+#     quantity = data.get('amount')
 
-    response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
-    price = response.json()['USD']
+#     response = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym=SOL')
+#     price = response.json()['USD']
 
-    total_cost = quantity * price
+#     total_cost = quantity * price
     
-    return jsonify({'total_cost': total_cost})
+#     return jsonify({'total_cost': total_cost})
 
 
 
-# @app.route("/place_order", methods=['POST'])
+# # @app.route("/place_order", methods=['POST'])
 
-# def place_order():
-#     # Simple check of input format and data of the request are JSON
-#     if request.is_json:
-#         try:
-#             order = request.get_json()
-#             print("\nReceived an order in JSON:", order)
+# # def place_order():
+# #     # Simple check of input format and data of the request are JSON
+# #     if request.is_json:
+# #         try:
+# #             order = request.get_json()
+# #             print("\nReceived an order in JSON:", order)
 
-#             # do the actual work
-#             # 1. Send order info {cart items}
-#             result = processPlaceOrder(order)
-#             print('\n------------------------')
-#             print('\nresult: ', result)
-#             return jsonify(result), result["code"]
+# #             # do the actual work
+# #             # 1. Send order info {cart items}
+# #             result = processPlaceOrder(order)
+# #             print('\n------------------------')
+# #             print('\nresult: ', result)
+# #             return jsonify(result), result["code"]
 
-#         except Exception as e:
-#             # Unexpected error in code
-#             exc_type, exc_obj, exc_tb = sys.exc_info()
-#             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-#             ex_str = str(e) + " at " + str(exc_type) + ": " + fname + ": line " + str(exc_tb.tb_lineno)
-#             print(ex_str)
+# #         except Exception as e:
+# #             # Unexpected error in code
+# #             exc_type, exc_obj, exc_tb = sys.exc_info()
+# #             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+# #             ex_str = str(e) + " at " + str(exc_type) + ": " + fname + ": line " + str(exc_tb.tb_lineno)
+# #             print(ex_str)
 
-#             return jsonify({
-#                 "code": 500,
-#                 "message": "place_order.py internal error: " + ex_str
-#             }), 500
+# #             return jsonify({
+# #                 "code": 500,
+# #                 "message": "place_order.py internal error: " + ex_str
+# #             }), 500
 
-#     # if reached here, not a JSON request.
-#     return jsonify({
-#         "code": 400,
-#         "message": "Invalid JSON input: " + str(request.get_data())
-#     }), 400
+# #     # if reached here, not a JSON request.
+# #     return jsonify({
+# #         "code": 400,
+# #         "message": "Invalid JSON input: " + str(request.get_data())
+# #     }), 400
 
 
-# def processPlaceOrder(order):
-#     # 2. Send the order info {cart items}
-#     # Invoke the order microservice
-#     print('\n-----Invoking order microservice-----')
-#     order_result = invoke_http(order_URL, method='POST', json=order)
-#     print('order_result:', order_result)
+# # def processPlaceOrder(order):
+# #     # 2. Send the order info {cart items}
+# #     # Invoke the order microservice
+# #     print('\n-----Invoking order microservice-----')
+# #     order_result = invoke_http(order_URL, method='POST', json=order)
+# #     print('order_result:', order_result)
   
-#     # Check the order result; if a failure, send it to the error microservice.
-#     code = order_result["code"]
-#     message = json.dumps(order_result)
+# #     # Check the order result; if a failure, send it to the error microservice.
+# #     code = order_result["code"]
+# #     message = json.dumps(order_result)
 
-#     amqp_setup.check_setup()
+# #     amqp_setup.check_setup()
 
-#     if code not in range(200, 300):
-#         # Inform the error microservice
-#         #print('\n\n-----Invoking error microservice as order fails-----')
-#         print('\n\n-----Publishing the (order error) message with routing_key=order.error-----')
+# #     if code not in range(200, 300):
+# #         # Inform the error microservice
+# #         #print('\n\n-----Invoking error microservice as order fails-----')
+# #         print('\n\n-----Publishing the (order error) message with routing_key=order.error-----')
 
-#         # invoke_http(error_URL, method="POST", json=order_result)
-#         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.error", 
-#             body=message, properties=pika.BasicProperties(delivery_mode = 2)) 
-#         # make message persistent within the matching queues until it is received by some receiver 
-#         # (the matching queues have to exist and be durable and bound to the exchange)
+# #         # invoke_http(error_URL, method="POST", json=order_result)
+# #         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.error", 
+# #             body=message, properties=pika.BasicProperties(delivery_mode = 2)) 
+# #         # make message persistent within the matching queues until it is received by some receiver 
+# #         # (the matching queues have to exist and be durable and bound to the exchange)
 
-#         # - reply from the invocation is not used;
-#         # continue even if this invocation fails        
-#         print("\nOrder status ({:d}) published to the RabbitMQ Exchange:".format(
-#             code), order_result)
+# #         # - reply from the invocation is not used;
+# #         # continue even if this invocation fails        
+# #         print("\nOrder status ({:d}) published to the RabbitMQ Exchange:".format(
+# #             code), order_result)
 
-#         # 7. Return error
-#         return {
-#             "code": 500,
-#             "data": {"order_result": order_result},
-#             "message": "Order creation failure sent for error handling."
-#         }
+# #         # 7. Return error
+# #         return {
+# #             "code": 500,
+# #             "data": {"order_result": order_result},
+# #             "message": "Order creation failure sent for error handling."
+# #         }
 
-#     # Notice that we are publishing to "Activity Log" only when there is no error in order creation.
-#     # In http version, we first invoked "Activity Log" and then checked for error.
-#     # Since the "Activity Log" binds to the queue using '#' => any routing_key would be matched 
-#     # and a message sent to “Error” queue can be received by “Activity Log” too.
+# #     # Notice that we are publishing to "Activity Log" only when there is no error in order creation.
+# #     # In http version, we first invoked "Activity Log" and then checked for error.
+# #     # Since the "Activity Log" binds to the queue using '#' => any routing_key would be matched 
+# #     # and a message sent to “Error” queue can be received by “Activity Log” too.
 
-#     else:
-#         # 4. Record new order
-#         # record the activity log anyway
-#         #print('\n\n-----Invoking activity_log microservice-----')
-#         print('\n\n-----Publishing the (order info) message with routing_key=order.info-----')        
+# #     else:
+# #         # 4. Record new order
+# #         # record the activity log anyway
+# #         #print('\n\n-----Invoking activity_log microservice-----')
+# #         print('\n\n-----Publishing the (order info) message with routing_key=order.info-----')        
 
-#         # invoke_http(activity_log_URL, method="POST", json=order_result)            
-#         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.info", 
-#             body=message)
+# #         # invoke_http(activity_log_URL, method="POST", json=order_result)            
+# #         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="order.info", 
+# #             body=message)
     
-#     print("\nOrder published to RabbitMQ Exchange.\n")
-#     # - reply from the invocation is not used;
-#     # continue even if this invocation fails
+# #     print("\nOrder published to RabbitMQ Exchange.\n")
+# #     # - reply from the invocation is not used;
+# #     # continue even if this invocation fails
     
-#     # 5. Send new order to shipping
-#     # Invoke the shipping record microservice
-#     print('\n\n-----Invoking shipping_record microservice-----')    
+# #     # 5. Send new order to shipping
+# #     # Invoke the shipping record microservice
+# #     print('\n\n-----Invoking shipping_record microservice-----')    
     
-#     shipping_result = invoke_http(
-#         shipping_record_URL, method="POST", json=order_result['data'])
-#     print("shipping_result:", shipping_result, '\n')
+# #     shipping_result = invoke_http(
+# #         shipping_record_URL, method="POST", json=order_result['data'])
+# #     print("shipping_result:", shipping_result, '\n')
 
-#     # Check the shipping result;
-#     # if a failure, send it to the error microservice.
-#     code = shipping_result["code"]
-#     if code not in range(200, 300):
-#         # Inform the error microservice
-#         #print('\n\n-----Invoking error microservice as shipping fails-----')
-#         print('\n\n-----Publishing the (shipping error) message with routing_key=shipping.error-----')
+# #     # Check the shipping result;
+# #     # if a failure, send it to the error microservice.
+# #     code = shipping_result["code"]
+# #     if code not in range(200, 300):
+# #         # Inform the error microservice
+# #         #print('\n\n-----Invoking error microservice as shipping fails-----')
+# #         print('\n\n-----Publishing the (shipping error) message with routing_key=shipping.error-----')
 
-#         # invoke_http(error_URL, method="POST", json=shipping_result)
-#         message = json.dumps(shipping_result)
-#         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="shipping.error", 
-#             body=message, properties=pika.BasicProperties(delivery_mode = 2))
+# #         # invoke_http(error_URL, method="POST", json=shipping_result)
+# #         message = json.dumps(shipping_result)
+# #         amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="shipping.error", 
+# #             body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
-#         print("\nShipping status ({:d}) published to the RabbitMQ Exchange:".format(
-#             code), shipping_result)
+# #         print("\nShipping status ({:d}) published to the RabbitMQ Exchange:".format(
+# #             code), shipping_result)
 
-#         # 7. Return error
-#         return {
-#             "code": 400,
-#             "data": {
-#                 "order_result": order_result,
-#                 "shipping_result": shipping_result
-#             },
-#             "message": "Simulated shipping record error sent for error handling."
-#         }
+# #         # 7. Return error
+# #         return {
+# #             "code": 400,
+# #             "data": {
+# #                 "order_result": order_result,
+# #                 "shipping_result": shipping_result
+# #             },
+# #             "message": "Simulated shipping record error sent for error handling."
+# #         }
 
-#     # 7. Return created order, shipping record
-#     return {
-#         "code": 201,
-#         "data": {
-#             "order_result": order_result,
-#             "shipping_result": shipping_result
-#         }
-#     }
+# #     # 7. Return created order, shipping record
+# #     return {
+# #         "code": 201,
+# #         "data": {
+# #             "order_result": order_result,
+# #             "shipping_result": shipping_result
+# #         }
+# #     }
 
 
-# # Execute this program if it is run as a main script (not by 'import')
-# if __name__ == "__main__":
-#     print("This is flask " + os.path.basename(__file__) + " for placing an order...")
-#     app.run(host="0.0.0.0", port=5100, debug=True)
-#     # Notes for the parameters: 
-#     # - debug=True will reload the program automatically if a change is detected;
-#     #   -- it in fact starts two instances of the same flask program, and uses one of the instances to monitor the program changes;
-#     # - host="0.0.0.0" allows the flask program to accept requests sent from any IP/host (in addition to localhost),
-#     #   -- i.e., it gives permissions to hosts with any IP to access the flask program,
-#     #   -- as long as the hosts can already reach the machine running the flask program along the network;
-#     #   -- it doesn't mean to use http://0.0.0.0 to access the flask program.
+# # # Execute this program if it is run as a main script (not by 'import')
+# # if __name__ == "__main__":
+# #     print("This is flask " + os.path.basename(__file__) + " for placing an order...")
+# #     app.run(host="0.0.0.0", port=5100, debug=True)
+# #     # Notes for the parameters: 
+# #     # - debug=True will reload the program automatically if a change is detected;
+# #     #   -- it in fact starts two instances of the same flask program, and uses one of the instances to monitor the program changes;
+# #     # - host="0.0.0.0" allows the flask program to accept requests sent from any IP/host (in addition to localhost),
+# #     #   -- i.e., it gives permissions to hosts with any IP to access the flask program,
+# #     #   -- as long as the hosts can already reach the machine running the flask program along the network;
+# #     #   -- it doesn't mean to use http://0.0.0.0 to access the flask program.
