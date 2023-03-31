@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Coin Swap</title>
   <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
   <!-- Axios -->
@@ -61,6 +61,9 @@
             <a class="nav-link text-white" href="/profile">Profile</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link text-white" href="/swap">Coin Swap</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link text-white" id="logout">Sign-out</a>
           </li>
         </ul>
@@ -71,9 +74,9 @@
     <div class="row">
       <div class="col-lg-6 col-md-12" style="padding-top:20px">
         <h1 class="words">Profile</h1>
-        <h4 style="padding-bottom:40px" class="words" id="email"></h4>
-        <h4 style="padding-bottom:40px" class="words" id="registered"></h4>
-        <p style="font-size:20px" class="words">Coin List</p>
+        <h4 style="padding-bottom:40px" class="words" id="email">TestEmail</h4>
+        <h4 style="padding-bottom:40px" class="words" id="registered">TestRegistered</h4>
+        <p style="font-size:40px" class="words">Crypto Wallet</p>
         <table>
           <tr>
             <th>Coins Owned</th>
@@ -132,8 +135,31 @@
         <a class="btn btn-primary" id="topup" href="/topup">Top Up Wallet Balance</a>
         
       </div>
-      <div class="col-lg-6 col-md-12" style="padding-top:20px">
-        <h1 class="words">Recommended Coins</h1>
+      <div class="col-lg-6 col-md-12" style="">
+        <h2 style="font-size:40px" class="words">Transaction History</h2>
+        <table>
+          <tr>
+            <th>Currency/Coin</th>
+            <th>Amount Paid</th>
+            <th>Currency/Coin</th>
+            <th>Amount Received</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+          <tr id="transactiondata">
+            <td>USD</td>
+            <td>100</td>
+            <td>ETH</td>
+            <td>0.03</td>
+            <td>31 March 2023</td>
+            <td>1730</td>
+          </tr>
+
+        </table>
+      </div>
+      </div>
+      <div class="col-lg-12 col-md-12" style="padding-top:100px">
+        <h1 class="words">Find out more!</h1>
         <h4 class="words" style="padding-top:20px; padding-left:10px; padding-bottom:20px">You may also be interested
           in...</h4>
         <div class="words" id="recommendation" style="padding-left:10px">
@@ -170,7 +196,7 @@
     var str = ``
     function getCoinInfo() {
       for (coin of coinArray) {
-        str += `<h5>${coin.name} --> <a href ="${coin.website}" target='_blank'>Link</a></h5><br>`
+        str += `<h5><a href ="${coin.website}" target='_blank'>${coin.name}</a></h5>`
       }
       document.getElementById('recommendation').innerHTML = str
     }
