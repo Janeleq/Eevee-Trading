@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="./images/logo.png">
+  <title>Marketplace</title>
+  <!-- Axios -->
+  <script src='https://unpkg.com/axios/dist/axios.js'></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  
+  <style></style>
+
+</head>
+<body>
+  <nav id="nav" class="navbar navbar-expand-lg bg-dark sticky-top">
+    <div class="container-fluid" id="header">
+      <a class="navbar-brand text-white" href="/home"><img
+          src="{{url_for('static', filename='images/coins/logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/marketplace">Marketplace</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/swap">Coin Swap</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" id="logout">Sign-out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <form action="POST">
+        <div class="form-label text-light">
+            <div>
+                <div class="form-label">Amount: </div>
+                <input class="form-input" type="number" name="from_amount">
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      From Currency
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Ether</a>
+                      <a class="dropdown-item" href="#">Bitcoin</a>
+                      <a class="dropdown-item" href="#">Ada</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      To Currency
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Ether</a>
+                      <a class="dropdown-item" href="#">Bitcoin</a>
+                      <a class="dropdown-item" href="#">Ada</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+  </div>
+        
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" 
+  integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+</body>
