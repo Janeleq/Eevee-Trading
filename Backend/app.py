@@ -37,7 +37,6 @@ def register():
 def home():
     return render_template('homepageWithLogin/homepageWithLogin.html')
 
-
 @app.route("/profile")
 def profile():
     return render_template('coins/profilepage.html')
@@ -48,6 +47,11 @@ def marketplace():
     status = '\n --- Invoking pricing microservice to display various CC prices ---'
     print(status)
     return render_template('coins/marketplace.html', data = status)
+
+@app.route("/swap")
+def swap():
+    hostname, host_ip = fetchDetails()
+    return render_template('Swap.html', HOSTNAME=hostname, IP=host_ip)
 
 #BINANCE
 @app.route("/BNB")
