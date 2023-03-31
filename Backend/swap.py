@@ -1,32 +1,41 @@
 from invokes import invoke_http
-from flask import Flask, request
+import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-price_URL = ""
-wallet_URL = ""
+app = Flask(__name__)
+CORS(app)
 
 @app.route("/swap", methods = ['GET', 'POST'])
-def swap():
-    if request.method == 'GET':
-        from_amount = request.form.get('from_amount')
-        from_currency = request.form.get("from_currency")
-        to_currency = request.form.get("to_currency")
-    
+def swap(from_amount, from_currency, to_currency):
+    # if request.method == 'GET':
+    #     from_amount = request.form.get('from_amount')
+    #     from_currency = request.form.get("from_currency")
+    #     to_currency = request.form.get("to_currency")
+
+    to_price_URL = ""
+    from_price_URL = ""
+
+    wallet_URL = ""
     conversion_ratio = getRatio(from_currency, to_currency)
-    price_data = invoke_http(price_URL, 'GET')
-    from_price = price_data['from_currency']
-    to_price = price_data['to_currency']
+    to_price_data = invoke_http(to_price_URL, 'GET')
+    from_price_data = invoke_http(from_price_URL, 'GET')
+
+    from_price = to_price_data['from_currency']
+    to_price = from_price_data['to_currency']
 
     #Retrieves wallet balance 
-    wallet_data = invoke_http(wallet_URL, 'GET')
+    wallet_data = invoke_http(wallet_URL, 'GET', json=EMAIL)
 
     conversion_amount = from_amount * conversion_ratio
 
     #Updates wallet
 
-    #Status of failed swap
-    if code not in range(200, 300):
-        #AMQP activity
 
+    #Status of failed swap
+    if <> not in range(200, 300):
+        #AMQP activity
+        
         return {
             "code": 500,
             "message": "Swap failure sent for error handling."
