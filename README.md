@@ -173,10 +173,8 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 3. Open 1 terminal (cd backend and run docker-compose up) 
 4. Visit the webpage by opening a browser (preferably Google Chrome) and enter http://localhost:5000
 
-# Download the necessary dependencies to start the development server
 pip install -r requirements.txt
 ```
-
 
 ##### Login Credentials
 
