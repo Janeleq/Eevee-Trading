@@ -22,29 +22,27 @@ def swap():
 
     # Retrieves wallet balance 
     # wallet_data = invoke_http(wallet_URL, 'GET', json=EMAIL)
-
-    conversion_amount = float(from_amount) * float(conversion_ratio)
+    
+    conversion_amount = float(from_amount) * float(conversion_ratio) * float(0.99)
 
     #Updates wallet
 
-    # #Status of failed swap
-    # if <> not in range(200, 300):
-    #     #AMQP activity
-
-        
-    #     return {
-    #         "code": 500,
-    #         "message": "Swap failure sent for error handling."
-    #     }
-
     #Status of successful swap
-    # else:
-    #     #AMQP activity
+    if conversion_amount:
+        #AMQP activity
+        return {
+            "code": 200,
+            'conversion_amount': conversion_amount
+        }
 
-    return {
-        "code": 200,
-        'conversion_amount': conversion_amount
-    }
+    #Status of failed swap
+    else:
+        #AMQP activity
+
+        return {
+            "code": 500,
+            "message": "Swap failure sent for error handling."
+        }
     
 def getPrice(response):
     price = response['data']['price']
