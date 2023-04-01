@@ -155,15 +155,13 @@ def solana():
 #     # result = invoke_http("http:localhost:5000/transaction", method='POST')
 #     # print(result)
 
-topUpURL = 'http://localhost:5005/processtopup'
-@app.route('/topup')
+
+@app.route('/topup', methods=['GET', 'POST'])
 def topup():
+    topUpURL = 'http://localhost:5005/processtopup'
     print("\n--- Invoking Topup Microservice ---")
-    response = requests.get(topUpURL)
-    if response:
-        return 'Hi'
-    else:
-        return 'Bye'
+    return redirect(topUpURL)
+    
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
