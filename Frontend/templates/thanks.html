@@ -20,7 +20,7 @@
         <nav>
           <ul class="nav nav-pills float-right">
             <li class="nav-item">
-              <a class="nav-link active" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="{{ url_for('profile') }}">Home <span class="sr-only">(current)</span></a>
             </li>
           </ul>
         </nav>
@@ -29,6 +29,8 @@
 
       <div class="jumbotron">
         <h1 class="display-3">Thank You!</h1>
+        
+        You have sucessfully topped up {{top_up_amt}}
         <p class="lead">Your EeveePay wallet will be updated shortly</p>
       </div>
 
