@@ -14,27 +14,45 @@
   </head>
 
   <body>
-
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills float-right">
+    <nav id="nav" class="navbar navbar-expand-lg bg-dark sticky-top" style="margin-bottom: 50px;">
+      <div class="container-fluid" id="header">
+        <a class="navbar-brand text-white" href="/home"><img
+            src="{{url_for('static', filename='images/eevee_logo.PNG')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" href="{{ url_for('profile') }}">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link text-white" href="{{url_for('marketplace')}}">Marketplace 🛒</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/profile">Profile 👤</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{url_for('swap')}}">Coin Swap</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" id="logout">Sign-out</a>
             </li>
           </ul>
-        </nav>
-        <h3 class="text-muted">EEVEE Trading</h3>
+        </div>
       </div>
+    </nav>
+    <div class="container text-center">
+        <h3 class="text-muted">EEVEE Trading</h3>
+  
 
       <div class="jumbotron">
         <h1 class="display-3">Thank You!</h1>
-        
-        You have sucessfully topped up {{top_up_amt}}USD.
-        <p class="lead">Your EeveePay wallet will be updated shortly</p>
+        <p class="lead">Your EeveePay wallet will be updated shortly.</p>
+        Transaction ID: {{transaction_id}} <br/>
+        ✔️ You have sucessfully topped up <strong>{{top_up_amt}}USD.</strong>
+      
       </div>
 
-    <footer>
+    <footer class="fixed-bottom">
         <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
     </footer>
 

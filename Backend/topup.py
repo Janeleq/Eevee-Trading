@@ -41,6 +41,8 @@ def processTopUp():
     session_id = request.args.get("session_id")
     print(session_id)
     line_items = stripe.checkout.Session.list_line_items(session_id)
+    print(line_items)
+    transaction_id = line_items['data'][0].id
     top_up_amt = line_items['data'][0].amount_total/100
     # top_up_amt is preset to 1 and stripe ensure no -ve numbers can be entered, so there wont be any human errors
     if top_up_amt != 0:
@@ -51,7 +53,7 @@ def processTopUp():
             
         )
         print('Top Up Amount: ', top_up_amt)
-        return render_template('thanks.html', status = status, top_up_amt = top_up_amt)
+        return render_template('thanks.html', status = status, transaction_id = transaction_id, top_up_amt = top_up_amt)
     else:
         status = 'Error! Try topping up again!'
         profile_page_URL = "http://localhost:5000/profile"
@@ -62,6 +64,16 @@ def processTopUp():
 def profile():
     profile_page_URL = "http://localhost:5000/profile"
     return redirect(profile_page_URL)
+
+@app.route("/swap")
+def swap():
+    swap_URL = "http://localhost:5000/swap"
+    return redirect(swap_URL)
+
+@app.route("/marketplace")
+def marketplace():
+    marketplace_URL = "http://localhost:5000/marketplace"
+    return redirect(marketplace_URL)
 
 if __name__ == '__main__':
     app.run(port=5005, debug=True)
