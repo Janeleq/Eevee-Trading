@@ -6,30 +6,34 @@ import stripe
 app = Flask(__name__)
 CORS(app)
 
-publishable_key = "pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX"
-stripe.api_key = "sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX"
+@app.route("/wallet")
 
-@app.route('/topup')
-def topUpWallet():
-    invoice = request.get('invoice')
-    amount = request.form.get('amount')
+def retrieveWallet():
 
-    customer = stripe.Customer.create(
-      email=request.form['stripeEmail'],
-      source=request.form['stripeToken'],
-    )
+# publishable_key = "pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX"
+# stripe.api_key = "sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX"
 
-    charge = stripe.Charge.create(
-      customer=customer.id,
-      description='Myshop',
-      amount=amount,
-      currency='usd',
-    )
+# @app.route('/topup')
+# def topUpWallet():
+#     invoice = request.get('invoice')
+#     amount = request.form.get('amount')
 
-    orders =  CustomerOrder.query.filter_by(customer_id = current_user.id,invoice=invoice).order_by(CustomerOrder.id.desc()).first()
-    orders.status = 'Paid'
+#     customer = stripe.Customer.create(
+#       email=request.form['stripeEmail'],
+#       source=request.form['stripeToken'],
+#     )
 
-    return redirect(url_for('profile'))
+#     charge = stripe.Charge.create(
+#       customer=customer.id,
+#       description='Myshop',
+#       amount=amount,
+#       currency='usd',
+#     )
+
+#     orders =  CustomerOrder.query.filter_by(customer_id = current_user.id,invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+#     orders.status = 'Paid'
+
+#     return redirect(url_for('profile'))
 
 
 @app.route('/profile')
