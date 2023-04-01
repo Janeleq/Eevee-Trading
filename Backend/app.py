@@ -77,7 +77,7 @@ def getQty(qty):
 
 @app.route("/<string:coin>/buy")
 def buycc(coin):
-    qty = request.args.get('transactionqty')
+    qty = request.form.get('transactionqty')
     getQty(qty)
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
