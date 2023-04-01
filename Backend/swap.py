@@ -9,7 +9,6 @@ CORS(app)
 
 @app.route("/swap", methods = ['GET'])
 def swap():
-    # if request.method == 'GET':
     from_amount = request.args.get('from_amount')
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
@@ -22,7 +21,7 @@ def swap():
 
     # Retrieves wallet balance 
     # wallet_data = invoke_http(wallet_URL, 'GET', json=EMAIL)
-    
+
     conversion_amount = float(from_amount) * float(conversion_ratio) * float(0.99)
 
     #Updates wallet
@@ -30,6 +29,7 @@ def swap():
     #Status of successful swap
     if conversion_amount:
         #AMQP activity
+
         return {
             "code": 200,
             'conversion_amount': conversion_amount
@@ -51,6 +51,7 @@ def getPrice(response):
 # Obtain rates from price.py and calculates ratio of swap (to rate / from rate)
 
 def getRatio(from_url, to_url):
+    
     to_price_data = requests.get(to_url)
     from_price_data = requests.get(from_url)
     from_price = None
