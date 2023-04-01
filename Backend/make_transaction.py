@@ -34,6 +34,7 @@ def getPrice(response):
     price = str(price)
     return price
 
+
 @app.route("/<string:coin>/buy")
 def buycc(coin):
     qty = request.args.get('buyqty')
