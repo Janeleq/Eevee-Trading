@@ -26,8 +26,9 @@ price_URL =  "http://127.0.0.1:5001"
 # sell_transaction_URL =  "http://localhost:5004/" 
 
 def buycc(coin, qty):
-    price_URL = price_URL + "/" +coin + "/price"
+    price_URL = price_URL + "/" + coin + "/price"
     response = requests.get(price_URL)
+    
     buy_price = 0
     
     totalamount = buy_price * qty
