@@ -61,9 +61,6 @@ def swap():
     hostname, host_ip = fetchDetails()
     return render_template('Swap.html', HOSTNAME=hostname, IP=host_ip)
 
-
-
-
 # #BINANCE
 @app.route("/BNB")
 def binance():
@@ -88,6 +85,9 @@ def buycc(coin):
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
+        #access wallet total usd balance
+        #if wallet balance >= total_amount: carry on
+        #else error
         return str(total_amount)
     else:
         return("Hello World")
@@ -102,15 +102,20 @@ def sellcc(coin):
     response = requests.get(price_URL, timeout=10)
     print(response)
     status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-    
+    # access wallet qty of coin 
+    #if qty of coin in wallet >= sold: carry out transaction
+    #else: error
     if response:
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
+        #update wallet + cryptocurrency owned
         return str(total_amount)
+
     else:
         return("Hello World")
     
+
 #BITCOIN
 @app.route("/BTC")
 def bitcoin():
