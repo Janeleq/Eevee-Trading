@@ -160,12 +160,8 @@ def solana():
 def topup():
     topUpURL = 'http://localhost:5005/processtopup'
     print("\n--- Invoking Topup Microservice ---")
-    response = requests.get(topUpURL)
-    print(response)
-    if response:
-        return 'Hi'
-    else:
-        return 'Bye'
+    return redirect(topUpURL)
+    
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

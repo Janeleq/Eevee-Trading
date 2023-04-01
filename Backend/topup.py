@@ -8,7 +8,7 @@ app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6
 
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
-@app.route("/processtopup", methods = ['GET', 'POST'])
+@app.route("/processtopup", methods = ['POST'])
 def topUpWallet():
     
     status = '\n --- Bringing you to top-up page ---'
