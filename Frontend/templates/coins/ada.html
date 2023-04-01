@@ -292,13 +292,13 @@
                           </td>
                           </tr>
                       </table>
-                      <div style="padding-top:30px;">
-                          <form action="ADA/submit" methods="POST"> 
+                      <div style="padding-top:30px;"> 
                           <small>Quantity</small><input name="transactionqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input>
                           <small>USD:<span id='wallet'></span></small><br><br>
-                          <input type="submit" id="buy" class="btn btn-primary" value="Buy">
-                          <input type="submit" id="sell" class="btn btn-primary" value="Sell">
-                      </div>
+                          <form action="ADA/buy" methods="POST"><input type="submit" id="buy" class="btn btn-primary" value="Buy"></form>
+                          <form action="ADA/sell" methods="POST"><input type="submit" id="sell" class="btn btn-primary" value="Sell">
+                          </form>
+                          </div>
             `
     }
   </script>

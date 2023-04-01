@@ -71,21 +71,26 @@ def swap():
 def binance():
     return render_template('coins/bnb.html')
 
+def getQty(qty):
+    return qty
 
-@app.route("/<string:coin>/submit")
+
+@app.route("/<string:coin>/buy")
 def buycc(coin):
-    qty = request.form.get("transactionqty")
+    qty = request.args.get('transactionqty')
+    getQty(qty)
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     print(price_URL)
-    response = requests.get(price_URL, timeout=5)
+    response = requests.get(price_URL, timeout=10)
     print(response)
     status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-    print(status)
+    
     if response:
         response = response.json()
         price = getPrice(response)
-        return price
+        total_amount = round(float(qty) * float(price),2)
+        return str(total_amount)
     else:
         return("Hello World")
     
