@@ -8,7 +8,7 @@ app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6
 
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
-@app.route("/processtopup", methods = ['POST'])
+@app.route("/processtopup", methods = ['GET', 'POST'])
 def topUpWallet():
     
     status = '\n --- Bringing you to top-up page ---'
@@ -42,13 +42,14 @@ def thanks():
     print(session_id)
     line_items = stripe.checkout.Session.list_line_items(session_id)
 
-    # print(line_items)
-    top_up_amt = line_items['data'][0].price['custom_unit_amount'].preset
-    print(top_up_amt)
+
+    top_up_amt = line_items['data'][0].amount_total/100
+    print('Top Up Amount: ', top_up_amt)
     return render_template('thanks.html', top_up_amt = top_up_amt)
     
 @app.route("/profile")
 def profile():
+    request.get_data()
     return render_template('coins/profilepage.html')
 
 if __name__ == '__main__':
