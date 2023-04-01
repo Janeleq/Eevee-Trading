@@ -3,7 +3,7 @@ import socket
 import requests
 import json
 from invokes import invoke_http
-from flask import Flask, redirect, render_template, url_for, request
+from flask import Flask, redirect, render_template, url_for, request, jsonify
 from flask_cors import CORS
 import stripe
 # from invokes import invoke_http
@@ -109,6 +109,24 @@ def topup():
     topUpURL = 'http://localhost:5005/processtopup'
     print("\n--- Invoking Topup Microservice ---")
     return redirect(topUpURL)
+
+
+@app.route('/thanks')
+def processTopUp():
+    top_up_amt = request.args.get('top_up_amt')
+    transaction_id = request.args.get('transaction_id')
+    status = request.args.get('status')
+    
+    # top_up_amt is preset to 1 and stripe ensure no -ve numbers can be entered, so there wont be any human errors
+    if top_up_amt != 0:
+        status = 200
+        print('Top Up Amount: ', top_up_amt)
+        return render_template('thanks.html', top_up_amt=top_up_amt, status=status, transaction_id=transaction_id)
+    else:
+        status = 'Error! Try topping up again!'
+        profile_page_URL = "http://localhost:5000/profile"
+        return redirect(profile_page_URL)
+
     
 
 if __name__ == '__main__':

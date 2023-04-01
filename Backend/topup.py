@@ -53,7 +53,7 @@ def processTopUp():
             
         )
         print('Top Up Amount: ', top_up_amt)
-        return render_template('thanks.html', status = status, transaction_id = transaction_id, top_up_amt = top_up_amt)
+        return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
     else:
         status = 'Error! Try topping up again!'
         profile_page_URL = "http://localhost:5000/profile"
