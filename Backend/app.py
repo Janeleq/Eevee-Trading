@@ -17,10 +17,6 @@ def fetchDetails():
     host_ip = socket.gethostbyname(hostname)
     return str(hostname) , str(host_ip)
 
-def getPrice(response):
-    price = response['data']['price']
-    price = str(price)
-    return price
 
 # endpoints
 @app.route("/")
@@ -66,55 +62,7 @@ def swap():
 def binance():
     return render_template('coins/bnb.html')
 
-def getQty(qty):
-    return qty
 
-
-@app.route("/<string:coin>/buy")
-def buycc(coin):
-    qty = request.args.get('buyqty')
-    getQty(qty)
-    price_URL = "http://localhost:5001" 
-    price_URL = price_URL + "/coin/" + coin
-    print(price_URL)
-    response = requests.get(price_URL, timeout=10)
-    print(response)
-    status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-    
-    if response:
-        response = response.json()
-        price = getPrice(response)
-        total_amount = round(float(qty) * float(price),2)
-        #access wallet total usd balance
-        #if wallet balance >= total_amount: carry on
-        #else error
-        return str(total_amount)
-    else:
-        return("Hello World")
-    
-@app.route("/<string:coin>/sell")
-def sellcc(coin):
-    qty = request.args.get('sellqty')
-    getQty(qty)
-    price_URL = "http://localhost:5001" 
-    price_URL = price_URL + "/coin/" + coin
-    print(price_URL)
-    response = requests.get(price_URL, timeout=10)
-    print(response)
-    status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-    # access wallet qty of coin 
-    #if qty of coin in wallet >= sold: carry out transaction
-    #else: error
-    if response:
-        response = response.json()
-        price = getPrice(response)
-        total_amount = round(float(qty) * float(price),2)
-        #update wallet + cryptocurrency owned
-        return str(total_amount)
-
-    else:
-        return("Hello World")
-    
 
 #BITCOIN
 @app.route("/BTC")
