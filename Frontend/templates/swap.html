@@ -46,39 +46,30 @@
   </nav>
 
   <div class="container-fluid">
-    <form method="GET">
-        <div class="form-label text-light">
-            <div>
-                <div class="form-label">Amount: </div>
-                <input class="form-input" type="number" name="from_amount">
-                <div class="form-label">From Currency: </div>
-                <input class="form-input" type="text" name="from_currency">
-                <div class="form-label">To Currency: </div>
-                <input class="form-input" type="text" name="to_currency">
-                
-                <!-- <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      From Currency
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">BNB</a>
-                      <a class="dropdown-item" href="#">ADA</a>
-                      <a class="dropdown-item" href="#">SOL</a>
-                    </div>
-                </div>
+    <form method="GET" action="http://127.0.0.1:5004/swap">
+        <div>
+          <div class="form-label text-light">Amount: </div>
+          <input class="form-input" type="number" name="from_amount">
+        </div>
 
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      To Currency
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Ether</a>
-                      <a class="dropdown-item" href="#">Bitcoin</a>
-                      <a class="dropdown-item" href="#">Ada</a>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <select name="from_currency">
+            <option value="BNB">BNB</option>
+            <option value="SOL">SOL</option>
+            <option value="ADA">ADA</option>
+          </select>
+        </div>
 
+        <div>
+          <select name="to_currency">
+            <option value="BNB">BNB</option>
+            <option value="SOL">SOL</option>
+            <option value="ADA">ADA</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="btn btn-primary">Submit</button>
         </div>
     </form>
   </div>
