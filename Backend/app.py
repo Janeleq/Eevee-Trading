@@ -81,7 +81,7 @@ def buycc(coin):
     response = requests.get(price_URL, timeout=5)
     print(response)
     status = '\n --- Invoking transaction microservice to settle Binance buy order ---'
-
+    print(status)
     if response:
         response = response.json()
         price = getPrice(response)
