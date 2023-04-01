@@ -1,4 +1,4 @@
-from flask import redirect, request, url_for, render_template, Flask
+from flask import redirect, request, url_for, render_template, Flask, jsonify
 import stripe
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
@@ -37,20 +37,31 @@ def topUpWallet():
     # print(result)
 
 @app.route('/thanks')
-def thanks():
+def processTopUp():
     session_id = request.args.get("session_id")
     print(session_id)
     line_items = stripe.checkout.Session.list_line_items(session_id)
-
-
     top_up_amt = line_items['data'][0].amount_total/100
-    print('Top Up Amount: ', top_up_amt)
-    return render_template('thanks.html', top_up_amt = top_up_amt)
-    
+    # top_up_amt is preset to 1 and stripe ensure no -ve numbers can be entered, so there wont be any human errors
+    if top_up_amt != 0:
+        status = jsonify (
+            {
+                'code': 200
+            }
+            
+        )
+        print('Top Up Amount: ', top_up_amt)
+        return render_template('thanks.html', status = status, top_up_amt = top_up_amt)
+    else:
+        status = 'Error! Try topping up again!'
+        profile_page_URL = "http://localhost:5000/profile"
+        return redirect(profile_page_URL)
+
+
 @app.route("/profile")
 def profile():
-    request.get_data()
-    return render_template('coins/profilepage.html')
+    profile_page_URL = "http://localhost:5000/profile"
+    return redirect(profile_page_URL)
 
 if __name__ == '__main__':
     app.run(port=5005, debug=True)
