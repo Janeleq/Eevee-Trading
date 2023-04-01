@@ -297,8 +297,19 @@
                       </table>
                       <div style="padding-top:30px;">
                         <small>USD:<span id='wallet'></span></small><br><br>
-                          <form action="ADA/buy" methods="POST"><small>Quantity</small><input name="buyqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input><input type="submit" id="buy" class="btn btn-primary" value="Buy"></form>
-                          <form action="ADA/sell" methods="POST"><small>Quantity</small><input name="sellqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input><input type="submit" id="sell" class="btn btn-primary" value="Sell"></form>
+                        <form action="DOGE/buy" methods="POST"><small>Quantity</small><input name="buyqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input><input type="submit" id="buy" class="btn btn-primary" value="Buy"></form>
+
+                        <form action="DOGE/sell" methods="POST"><small>Quantity</small><input name="sellqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input><input type="submit" id="sell" class="btn btn-primary" value="Sell"></form>
+
+                        <form action="DOGE/buyorder" methods="POST">
+                          <small>Quantity</small><input name="buyorderqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input>
+                          <small>Price</small><input name="buyorderprice" type="number" placeholder="Price" style="margin-left: 30px; margin-right:30px"></input>
+                          <input type="submit" id="buy" class="btn btn-primary" value="Buy Order"></form>
+                          
+                        <form action="DOGE/sellorder" methods="POST">
+                          <small>Quantity</small><input name="sellorderqty" type="number" placeholder="Quantity" style="margin-left: 30px; margin-right:30px"></input>
+                          <small>Price</small><input name="sellorderprice" type="number" placeholder="Price" style="margin-left: 30px; margin-right:30px"></input>
+                          <input type="submit" id="sellorder" class="btn btn-primary" value="Sell Order"></form>
                       </div>
             `
                     }
