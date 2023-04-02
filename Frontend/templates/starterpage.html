@@ -17,7 +17,11 @@
                             <!-- <p class="mb-4">Etiam a rutrum, mauris lectus aptent convallis. Fusce vulputate aliquam, sagittis odio metus. Nulla porttitor vivamus viverra laoreet, aliquam netus.</p> -->
                             <h6 class="text-uppercase mb-5" style="font-weight: 300"><br />Make smarter choices with your money.</h6>
                             <router-link to="/register">
-                                <a class="btn btn-primary fs-5 me-2 py-2 px-4" type="button" href='/register'>Get Started</a>
+                                <a id="btn" class="btn btn-primary fs-5 me-2 py-2 px-4" type="button" href='/register'>Get Started</a>
+                            </router-link>
+                            <br/>
+                            <router-link to="/register">
+                                Already have an account? Log in <a href='/login'>here</a>
                             </router-link>
                         </div>
                     </div>
@@ -37,4 +41,15 @@
         /* background-position: 50%; */
         background-size: cover;
     }   
+
+    
+    #btn {
+
+        transition: transform 0.3s;
+
+    }
+
+    #btn:hover {
+        transform: translateY(-10px);
+    }
 </style>

@@ -1,5 +1,6 @@
 from flask import redirect, request, url_for, render_template, Flask, jsonify
 import stripe
+import pyrebase
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 
@@ -7,6 +8,21 @@ app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iIL
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX'
 
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
+
+firebase_config = {
+    "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
+    "authDomain": "cryptobuds-ba428.firebaseapp.com",
+    "databaseURL": "https://cryptobuds-ba428-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "cryptobuds-ba428",
+    "storageBucket": "cryptobuds-ba428.appspot.com",
+    "messagingSenderId": "72206190161",
+    "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
+    "measurementId": "G-BVXDMYJR2K"
+}
+
+
+fb = pyrebase.initialize_app(firebase_config)
+database = fb.database()
 
 @app.route("/processtopup", methods = ['GET', 'POST'])
 def topUpWallet():
@@ -44,14 +60,18 @@ def processTopUp():
     print(line_items)
     transaction_id = line_items['data'][0].id
     top_up_amt = line_items['data'][0].amount_total/100
+    id = "generated_uid1"
     # top_up_amt is preset to 1 and stripe ensure no -ve numbers can be entered, so there wont be any human errors
     if top_up_amt != 0:
         status = jsonify (
             {
-                'code': 200
+                'code': 200,
+                'message': 'Top up sucessful!'
             }
             
         )
+
+        database.child("users").child(id).child('wallet_coins').update({"USD":top_up_amt})
         print('Top Up Amount: ', top_up_amt)
         return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
     else:
