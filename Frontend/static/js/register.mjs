@@ -25,32 +25,27 @@ signUp.addEventListener('click', (e) => {
 
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
-    var bc = 5000;
-    var eth = 0;
-    var btc = 0;
-    var bnb = 0;
-    var doge = 0;
-    var sol = 0;
-    var ada = 0;
-    var dt = Date();
 
+    var wallet_coins = {
+        BTC: { name: "Bitcoin", qty: 0 },
+        ETH: { name: "Ethereum", qty: 0 },
+        BNB: { name: "Binance Coin", qty: 0},
+        DOGE: { name: "Doge Coin", qty: 0},
+        SOL: { name: "Solana", qty: 0},
+        ADA: { name: "Cardano", qty: 0},
+        USD: { name: "United States Dollar", qty: 0}
+    };
+    
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
 
             const user = userCredential.user;
-            set(ref(database, 'All users in database/' + user.uid), {
-                Email: email,
-                Bc: bc,
-                DateRegistered: dt,
-                Eth: eth,
-                Btc: btc,
-                Bnb: bnb,
-                Doge: doge,
-                Sol: sol,
-                Ada: ada,
+            set(ref(database, 'users/' + user.uid), {
+                username: email,
+                date_created: Date(),
+                wallet_coins: wallet_coins
             })
-
 
             setTimeout(() => {
                 alert('user created!');
