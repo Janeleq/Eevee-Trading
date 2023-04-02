@@ -1,7 +1,8 @@
 body {
-  background: #333333;
+  /* background: #333333;
   -webkit-perspective: 800px;
-  perspective: 800px;
+  perspective: 800px; */
+  background-color: rgb(6, 17, 33);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -19,27 +20,24 @@ body {
 
 
 #top {
-  background-image: url("../images/homepageWithLogin/home.jpg");
+  background-color:#081f2e;
   background-size: cover;
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
 }
 
 
-#content {
+/* #content {
   background-size: cover;
   background-image: url("../images/homepageWithLogin/home.jpg");
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
-}
+} */
 
-h1, .words{
-  color:white;
-}
 
-.words{
+/* .words{
   text-align:center;
   font-size:20px;
   line-height:30px;
-}
+} */
 

@@ -7,11 +7,12 @@
     <meta name="author" content="">
 
     <title>Thank You</title>
-
- <!-- Bootstrap CSS -->
- <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css' rel='stylesheet'
- integrity='sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx' crossorigin='anonymous'>
-  </head>
+    <!-- <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}"> -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
+  <!-- Bootstrap CSS -->
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css' rel='stylesheet'
+  integrity='sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx' crossorigin='anonymous'>
+    </head>
 
   <body>
     <nav id="nav" class="navbar navbar-expand-lg bg-dark sticky-top" style="margin-bottom: 50px;">
@@ -41,7 +42,8 @@
       </div>
     </nav>
     <div class="container text-center">
-        <h3 class="text-muted">EEVEE Trading</h3>
+        <image src="{{url_for('static', filename='images/eevee_logo.PNG')}}" width="140" height="140" class="d-inline-block align-top" alt=""></image>
+        <h3 class="text-muted d-inline-flex" style = 'margin-top:70px; margin-left: 10px'>EEVEE Trading</h3>
   
 
       <div class="jumbotron">
