@@ -34,6 +34,36 @@ def getPrice(response):
     price = str(price)
     return price
 
+# #BINANCE
+@app.route("/BNB")
+def binance():
+    return render_template('coins/bnb.html')
+
+#BITCOIN
+@app.route("/BTC")
+def bitcoin():
+    return render_template('coins/btc.html')
+
+#CARDANO
+@app.route("/ADA")
+def cardano():
+    return render_template('coins/ada.html')
+
+#DOGE
+@app.route("/DOGE")
+def doge():
+    return render_template('coins/doge.html')
+
+#ETHEREUM
+@app.route("/ETH")
+def ethereum():
+    return render_template('coins/eth.html')
+
+# SOLANA
+@app.route("/SOL")
+def solana():
+    return render_template('coins/sol.html')
+
 
 @app.route("/<string:coin>/buy")
 def buycc(coin):
@@ -123,7 +153,7 @@ def sellordercc(coin):
 
 
 if __name__ == '__main__':
-    app.run(port=5003, debug=True)
+    app.run(port=5010, debug=True)
 
 
 

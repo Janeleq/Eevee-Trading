@@ -9,7 +9,7 @@ import stripe
 # from invokes import invoke_http
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
-
+CORS(app)
 
 # function to fetch hostname and ip to check different instances currently running 
 def fetchDetails():
@@ -60,49 +60,32 @@ def swap():
 # #BINANCE
 @app.route("/BNB")
 def binance():
-    return render_template('coins/bnb.html')
-
-
+    return redirect("http://127.0.0.1:5010/BNB")
 
 #BITCOIN
 @app.route("/BTC")
 def bitcoin():
-    return render_template('coins/btc.html')
+    return redirect("http://127.0.0.1:5010/BTC")
 
 #CARDANO
 @app.route("/ADA")
 def cardano():
-    return render_template('coins/ada.html')
+    return redirect("http://127.0.0.1:5010/ADA")
 
 #DOGE
 @app.route("/DOGE")
 def doge():
-    return render_template('coins/doge.html')
+    return redirect("http://127.0.0.1:5010/DOGE")
 
 #ETHEREUM
 @app.route("/ETH")
 def ethereum():
-    return render_template('coins/eth.html')
+    return redirect("http://127.0.0.1:5010/ETH")
 
 # SOLANA
 @app.route("/SOL")
 def solana():
-    return render_template('coins/sol.html')
-
-# @app.route("/SOL/buy")
-# def buySolana():
-#     status = '\n --- Invoking transaction microservice to settle Solana buy order ---'
-#     return status
-#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
-#     # print(result)
-
-# @app.route("/SOL/sell")
-# def sellSolana():
-#     status = '\n --- Invoking transaction microservice to settle Solana sell order ---'
-#     return(status)
-#     # result = invoke_http("http:localhost:5000/transaction", method='POST')
-#     # print(result)
-
+    return redirect("http://127.0.0.1:5010/SOL")
 
 @app.route('/topup', methods=['GET', 'POST'])
 def topup():
@@ -128,6 +111,7 @@ def processTopUp():
         return redirect(profile_page_URL)
 
     
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
