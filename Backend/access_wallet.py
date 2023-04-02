@@ -24,7 +24,8 @@ database = fb.database()
 
 @app.route("/wallet")
 def retrieveWallet():
-    userdetails = database.child("users").child("generated_uid1").get()
+    id = "generated_uid1"
+    userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     currencyowned = {
         "BNB": wallet_coins['BNB']['qty'],
@@ -38,9 +39,10 @@ def retrieveWallet():
 
 @app.route("/wallet/<string:coin>")
 def retrieveCurrency(coin):
-    userdetails = database.child("users").child("generated_uid1").get()
+    id = "generated_uid1"
+    userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
-    return wallet_coins[coin]['qty']
+    return str((wallet_coins[coin]['qty']))
 
 @app.route('/profile')
 def profile():
