@@ -1,9 +1,9 @@
-body {
+/* body {
   background: #333333;
   -webkit-perspective: 800px;
   perspective: 800px;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
+} */
 
 #nav{
   background: linear-gradient(to right, #0e2e43, #0e2e43);
@@ -26,20 +26,17 @@ body {
 }
 
 
-#content {
+/* #content {
   background-size: cover;
   background-image: url("../images/homepageWithLogin/home.jpg");
   -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
-}
+} */
 
-h1, .words{
-  color:white;
-}
 
-.words{
+/* .words{
   text-align:center;
   font-size:20px;
   line-height:30px;
-}
+} */
 
