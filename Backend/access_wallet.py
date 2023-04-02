@@ -42,7 +42,6 @@ def retrieveCurrency(coin):
     wallet_coins = userdetails.val()['wallet_coins']
     return wallet_coins[coin]['qty']
 
-
 @app.route('/profile')
 def profile():
     return render_template('coins/profilepage.html')
