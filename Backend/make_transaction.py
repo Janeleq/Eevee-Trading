@@ -91,7 +91,7 @@ def buycc(coin):
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet" + coin
+    wallet_URL = "http://localhost:5100/wallet/" + coin
     #get price
     response = requests.get(price_URL, timeout=10)
     #get USD owned
@@ -108,7 +108,7 @@ def buycc(coin):
 
     if qty_usd_owned >= total_amount:
         id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
-        qty_coin_owned = requests.get(f"http://localhost:5100/wallet/{coin}")
+        qty_coin_owned = requests.get(wallet_URL)
         if qty_coin_owned:
             ownedcoin = qty_coin_owned.json()
             ownedcoin = getNumber(ownedcoin, coin)
@@ -130,6 +130,10 @@ def buycc(coin):
         }, 400
         return result 
     
+
+
+
+
 @app.route("/<string:coin>/sell")
 def sellcc(coin):
     qty = request.args.get('sellqty')
@@ -137,39 +141,48 @@ def sellcc(coin):
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet" + coin
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+    #get price
     response = requests.get(price_URL, timeout=10)
-    amount_owned = requests.get(wallet_USD, timeout=10)
-    coinqty_owned = requests.get(wallet_URL, timeout=10)
-    # access wallet qty of coin 
-    #if qty of coin in wallet >= sold: carry out transaction
-    #else: error
+
     if response:
+        #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        amount = getQty(amount_owned)
-        coinqty = getQty(coinqty_owned)
-        if amount and coinqty:
-            if coinqty>= qty:
-                id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
-                decrease = float(coinqty) - float(qty)
-                increase = amount + total_amount
-                database.child("users").child(id).child('wallet_coins').child("USD").update({"USD": increase})
-                database.child("users").child(id).child('wallet_coins').child(coin).update({coin: decrease})
-                result = {
-                    "code":200,
-                    "message": "Transaction successful!"
-                }, 200
-                return result
-            
-        else:
-            result = {
-                "code" : 400,
-                "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
-            }, 400
-            return result
 
+    coin_owned = requests.get(wallet_URL)
+    if coin_owned:
+        coin_owned = coin_owned.json()
+        qty_coin_owned = getNumber(coin_owned, coin)
+
+    # if amount_owned:
+    #     amount_owned = amount_owned.json()
+    #     qty_usd_owned = getNumber(amount_owned, "USD")
+
+    if qty_coin_owned >= float(qty):
+        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+        amount_owned = requests.get(wallet_USD)
+        if amount_owned:
+            qty_usd_owned = amount_owned.json()
+            qty_usd_owned = getNumber(qty_usd_owned, "USD")
+            decrease = float(qty_coin_owned) - float(qty)
+            increase = qty_usd_owned + total_amount
+            database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":increase})
+            database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": decrease})
+            result = {
+                "code":200,
+                "message": "Transaction successful!"
+            }, 200
+            return result
+        else:
+            return "haha"
+    else:
+        result = {
+            "code" : 400,
+            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
+        }, 400
+        return result 
     
 @app.route("/<string:coin>/buyorder")
 def buyordercc(coin):
