@@ -22,9 +22,11 @@ firebase_config = {
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
+
 @app.route("/wallet")
 def retrieveWallet():
-    id = "generated_uid1"
+    id="DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+    # userId = fb.auth().current_user['localId']
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     currencyowned = {
@@ -39,7 +41,8 @@ def retrieveWallet():
 
 @app.route("/wallet/<string:coin>")
 def retrieveCurrency(coin):
-    id = "generated_uid1"
+    # userId = fb.auth().current_user['localId']
+    id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     return str((wallet_coins[coin]['qty']))

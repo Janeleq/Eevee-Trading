@@ -27,9 +27,9 @@ firebase_config = {
     "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
     "measurementId": "G-BVXDMYJR2K"
 }
-
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
+
 
 #set up RabbitMQ Connection
 # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -51,7 +51,7 @@ def getPrice(response):
 
 def getAmount(amount_owned):
     amount = amount_owned
-    return amount
+    return str(amount)
 
 # #BINANCE
 @app.route("/BNB")
@@ -86,6 +86,7 @@ def solana():
 
 @app.route("/<string:coin>/buy")
 def buycc(coin):
+    # userId = fb.auth().current_user['localId']
     qty = request.args.get('buyqty')
     qty = getQty(qty)
     price_URL = "http://localhost:5001" 
@@ -100,10 +101,10 @@ def buycc(coin):
         total_amount = round(float(qty) * float(price),2)
         
         if amount_owned:
-            amount = amount_owned.json()
-            amount = getAmount(amount)
-            if amount>= total_amount:
-                id = "generated_uid1"
+            amount = getAmount(amount_owned)
+                        
+            if float(amount)>= total_amount:
+                id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
                 coinowned = requests.get(f"http://localhost:5100/wallet/{coin}")
                 ownedcoin = coinowned.json()
                 ownedcoin = getAmount(ownedcoin)
@@ -116,7 +117,9 @@ def buycc(coin):
                     "message": "Transaction successful!"
                 }, 200
                 return result
-            
+            else:
+                return "haha"
+    
         else:
             result = {
                 "code" : 400,
@@ -137,7 +140,7 @@ def sellcc(coin):
     wallet_URL = "http://localhost:5100/wallet" + coin
     response = requests.get(price_URL, timeout=10)
     amount_owned = requests.get(wallet_USD, timeout=10)
-    coinqty_owned = requests.get()
+    coinqty_owned = requests.get(wallet_URL, timeout=10)
     # access wallet qty of coin 
     #if qty of coin in wallet >= sold: carry out transaction
     #else: error
@@ -145,18 +148,15 @@ def sellcc(coin):
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        if amount_owned:
-            amount = amount_owned.json()
-            amount = getAmount(amount)
-            if amount>= total_amount:
-                id = "generated_uid1"
-                coinowned = requests.get(f"http://localhost:5100/wallet/{coin}")
-                ownedcoin = coinowned.json()
-                ownedcoin = getAmount(ownedcoin)
-                decrease = amount - total_amount
-                increase = float(ownedcoin) + float(qty)
-                database.child("users").child(id).child('wallet_coins').child("USD").update({"USD": decrease})
-                database.child("users").child(id).child('wallet_coins').child(coin).update({coin: increase})
+        amount = getAmount(amount_owned)
+        coinqty = getAmount(coinqty_owned)
+        if amount and coinqty:
+            if coinqty>= qty:
+                id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+                decrease = float(coinqty) - float(qty)
+                increase = amount + total_amount
+                database.child("users").child(id).child('wallet_coins').child("USD").update({"USD": increase})
+                database.child("users").child(id).child('wallet_coins').child(coin).update({coin: decrease})
                 result = {
                     "code":200,
                     "message": "Transaction successful!"
@@ -170,8 +170,6 @@ def sellcc(coin):
             }, 400
             return result
 
-    else:
-        return("Hello World")
     
 @app.route("/<string:coin>/buyorder")
 def buyordercc(coin):
