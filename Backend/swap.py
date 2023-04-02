@@ -66,9 +66,9 @@ def getRatio(from_url, to_url):
 
 # Calls wallet to either retrieve or update balance. 
 '''
-Takes in four arguments - methods (retrive / update), from_currency, to_currency and user_email  
+Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email  
 '''
-def callWallet(method, from_currency, to_currency, user_email):
+def callWallet(type, from_currency, to_currency, user_email):
     pass 
 
 if __name__ == "__main__":
