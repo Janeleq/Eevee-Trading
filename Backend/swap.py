@@ -15,12 +15,12 @@ def swap():
 
     from_price_URL = f"http://127.0.0.1:5001/coin/{from_currency}"
     to_price_URL = f"http://127.0.0.1:5001/coin/{to_currency}"
-    # wallet_URL = ""
+    email = ""
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
 
     # Retrieves wallet balance 
-    # wallet_data = invoke_http(wallet_URL, 'GET', json=EMAIL)
+    
 
     conversion_amount = float(from_amount) * float(conversion_ratio) * float(0.99)
 
@@ -49,7 +49,6 @@ def getPrice(response):
     return price
 
 # Obtain rates from price.py and calculates ratio of swap (to rate / from rate)
-
 def getRatio(from_url, to_url):
     
     to_price_data = requests.get(to_url)
@@ -65,8 +64,11 @@ def getRatio(from_url, to_url):
         from_price = getPrice(from_price_data) 
     return (from_price / to_price)
 
-# Update wallet of new balance
-def updateWallet(walletId):
+# Calls wallet to either retrieve or update balance. 
+'''
+Takes in four arguments - methods (retrive / update), from_currency, to_currency and user_email  
+'''
+def callWallet(method, from_currency, to_currency, user_email):
     pass 
 
 if __name__ == "__main__":
