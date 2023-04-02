@@ -7,11 +7,35 @@ import stripe
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/wallet")
+firebase_config = {
+    "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
+    "authDomain": "cryptobuds-ba428.firebaseapp.com",
+    "databaseURL": "https://cryptobuds-ba428-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "cryptobuds-ba428",
+    "storageBucket": "cryptobuds-ba428.appspot.com",
+    "messagingSenderId": "72206190161",
+    "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
+    "measurementId": "G-BVXDMYJR2K"
+}
 
+firebase = pyrebase.initialize_app(firebase_config)
+database = firebase.database
+
+
+
+
+@app.route("/wallet/read")
 def retrieveWallet():
-
+    #do the read function
     return
+
+
+@app.route("/wallet/update")
+def updateWallet(coin1, coin2):
+    return
+
+
+
 
 @app.route('/profile')
 def profile():
