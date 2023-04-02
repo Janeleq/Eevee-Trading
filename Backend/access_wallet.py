@@ -1,7 +1,8 @@
 # Complex Wallet Microservice
 from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response
 from flask_cors import CORS
-import pyrebase
+import requests
+import pyrebase 
 import stripe 
 
 app = Flask(__name__)
@@ -18,21 +19,47 @@ firebase_config = {
     "measurementId": "G-BVXDMYJR2K"
 }
 
-firebase = pyrebase.initialize_app(firebase_config)
-database = firebase.database
+fb = pyrebase.initialize_app(firebase_config)
+database = fb.database()
 
 
 
 
-@app.route("/wallet/read")
+@app.route("/wallet")
 def retrieveWallet():
-    #do the read function
-    return
+    userdetails = database.child("users").child("generated_uid1").get()
+    wallet_coins = userdetails.val()['wallet_coins']
+    currencyowned = {
+        "BNB": wallet_coins['BNB']['qty'],
+        "BTC": wallet_coins['BTC']['qty'],
+        "ADA": wallet_coins['ADA']['qty'],
+        "DOGE": wallet_coins['DOGE']['qty'],
+        "ETH": wallet_coins['ETH']['qty'],
+        "SOL": wallet_coins['SOL']['qty'],
+    }
+    return currencyowned
 
+@app.route("/wallet/<string:coin>")
+def retrieveCurrency(coin):
+    userdetails = database.child("users").child("generated_uid1").get()
+    wallet_coins = userdetails.val()['wallet_coins']
+    return wallet_coins[coin]['qty']
 
-@app.route("/wallet/update")
-def updateWallet(coin1, coin2):
-    return
+# @app.route("/wallet/update")
+# def updateWallet(coin1, coin2, transact1, transact2):
+#     currentqty1 = requests.get(f"/wallet/{coin1}")
+
+#     userdetails = database.child("users").child("generated_uid1").child("wallet_coins").update({coin1:d})
+#     wallet_coins = userdetails.val()['wallet_coins']
+#     currencyowned = {
+#         "BNB": wallet_coins['BNB']['qty'],
+#         "BTC": wallet_coins['BTC']['qty'],
+#         "ADA": wallet_coins['ADA']['qty'],
+#         "DOGE": wallet_coins['DOGE']['qty'],
+#         "ETH": wallet_coins['ETH']['qty'],
+#         "SOL": wallet_coins['SOL']['qty'],
+#     }
+#     return
 
 
 
