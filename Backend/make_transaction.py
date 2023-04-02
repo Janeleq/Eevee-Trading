@@ -109,8 +109,8 @@ def buycc(coin):
                 ownedcoin = getAmount(ownedcoin)
                 decrease = amount - total_amount
                 increase = float(ownedcoin) + float(qty)
-                database.child("users").child(id).child('wallet_coins').update({"USD":decrease})
-                database.child("users").child(id).child('wallet_coins').update({coin: increase})
+                database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
+                database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
                 result = {
                     "code":200,
                     "message": "Transaction successful!"
