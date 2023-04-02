@@ -28,20 +28,21 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text"><img src="{{url_for('static', filename='images/Login+Register Page/images/user-solid.svg')}}" id="icon"></span>
 							</div>
-							<input type="text" class="form-control" placeholder="Email" id="email">
+							<input type="text" class="form-control" placeholder="Email" id="email" name="un">
 
 						</div>
 						<div class="input-group form-group" id="forms">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><img src="{{url_for('static', filename='images/Login+Register Page/images/key-solid.svg')}}" id="icon"></span>
 							</div>
-							<input type="password" class="form-control" placeholder="Password" id="password">
+							<input type="password" class="form-control" placeholder="Password" id="password" name="pw">
 						</div>
 						<div class="row align-items-center remember">
 							<input type="checkbox">Remember Me
 						</div>
 						<div class="form-group">
-							<input type="text" value="Login" class="btn login_btn" id="signIn">
+							<!-- <input type="submit" value="Login" class="btn login_btn" id="signIn" href="/authenticate"> -->
+							<a class="btn login_btn" id="signIn" type="submit" href='http://localhost:5050/authenticate'>Login</a>
 						</div>
 					</form>
 				</div>
