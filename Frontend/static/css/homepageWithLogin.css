@@ -1,9 +1,10 @@
-/* body {
-  background: #333333;
+body {
+  /* background: #333333;
   -webkit-perspective: 800px;
-  perspective: 800px;
+  perspective: 800px; */
+  background-color: rgb(6, 17, 33);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-} */
+}
 
 #nav{
   background: linear-gradient(to right, #0e2e43, #0e2e43);
@@ -19,7 +20,7 @@
 
 
 #top {
-  background-image: url("../images/homepageWithLogin/home.jpg");
+  background-color:#081f2e;
   background-size: cover;
   -webkit-transform-origin: 50% 100%;
   transform-origin: 50% 100%;
