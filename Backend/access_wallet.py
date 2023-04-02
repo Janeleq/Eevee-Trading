@@ -1,6 +1,7 @@
 # Complex Wallet Microservice
 from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response
 from flask_cors import CORS
+import pyrebase
 import stripe 
 
 app = Flask(__name__)
@@ -9,6 +10,12 @@ CORS(app)
 @app.route("/wallet")
 
 def retrieveWallet():
+
+    return
+
+@app.route('/profile')
+def profile():
+    return render_template('coins/profilepage.html')
 
 # publishable_key = "pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX"
 # stripe.api_key = "sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX"
@@ -34,11 +41,6 @@ def retrieveWallet():
 #     orders.status = 'Paid'
 
 #     return redirect(url_for('profile'))
-
-
-@app.route('/profile')
-def profile():
-    return render_template('coins/profilepage.html')
 
 
 if __name__ == '__main__':
