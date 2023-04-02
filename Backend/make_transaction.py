@@ -49,9 +49,9 @@ def getPrice(response):
     price = str(price)
     return price
 
-def getAmount(amount_owned):
-    amount = amount_owned
-    return str(amount)
+def getNumber(number,coin):
+    number = number[coin]
+    return number
 
 # #BINANCE
 @app.route("/BNB")
@@ -86,49 +86,49 @@ def solana():
 
 @app.route("/<string:coin>/buy")
 def buycc(coin):
-    # userId = fb.auth().current_user['localId']
     qty = request.args.get('buyqty')
     qty = getQty(qty)
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     wallet_USD = "http://localhost:5100/wallet/USD"
     wallet_URL = "http://localhost:5100/wallet" + coin
+    #get price
     response = requests.get(price_URL, timeout=10)
+    #get USD owned
     amount_owned = requests.get(wallet_USD, timeout=10)
     if response:
+        #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        
-        if amount_owned:
-            amount = getAmount(amount_owned)
-                        
-            if float(amount)>= total_amount:
-                id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
-                coinowned = requests.get(f"http://localhost:5100/wallet/{coin}")
-                ownedcoin = coinowned.json()
-                ownedcoin = getAmount(ownedcoin)
-                decrease = amount - total_amount
-                increase = float(ownedcoin) + float(qty)
-                database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
-                database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
-                result = {
-                    "code":200,
-                    "message": "Transaction successful!"
-                }, 200
-                return result
-            else:
-                return "haha"
-    
-        else:
+
+    if amount_owned:
+        amount_owned = amount_owned.json()
+        qty_usd_owned = getNumber(amount_owned, "USD")
+
+    if qty_usd_owned >= total_amount:
+        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+        qty_coin_owned = requests.get(f"http://localhost:5100/wallet/{coin}")
+        if qty_coin_owned:
+            ownedcoin = qty_coin_owned.json()
+            ownedcoin = getNumber(ownedcoin, coin)
+            decrease = qty_usd_owned - total_amount
+            increase = float(ownedcoin) + float(qty)
+            database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
+            database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
             result = {
-                "code" : 400,
-                "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
-            }, 400
+                "code":200,
+                "message": "Transaction successful!"
+            }, 200
             return result
-        #access wallet total usd balance
-        #if wallet balance >= total_amount: carry on
-        #else error
+        else:
+            return "haha"
+    else:
+        result = {
+            "code" : 400,
+            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
+        }, 400
+        return result 
     
 @app.route("/<string:coin>/sell")
 def sellcc(coin):
@@ -148,8 +148,8 @@ def sellcc(coin):
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        amount = getAmount(amount_owned)
-        coinqty = getAmount(coinqty_owned)
+        amount = getQty(amount_owned)
+        coinqty = getQty(coinqty_owned)
         if amount and coinqty:
             if coinqty>= qty:
                 id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
