@@ -1,7 +1,7 @@
 html,body{
 background-image: url("../images/homepageWithLogin/home.jpg");
 background-size: cover;
-background-repeat: no-repeat;
+background-repeat: repeat;
 height: 100%;
 font-family:Arial, Helvetica, sans-serif;
 
