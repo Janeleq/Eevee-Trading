@@ -129,6 +129,11 @@
           + (jsonData['conversion_amount'].toFixed(2)).toString() + " " + to_currency;
         })
         .catch(error => console.log(error));
+      
+      // fetching balance of from and to currency before and after swap
+      fetch('http://127.0.0.1:5004/swap')
+        .then(response => response.text())
+      
     }
   </script>
   <footer class="text-center">
