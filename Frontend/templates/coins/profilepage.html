@@ -91,9 +91,9 @@
           </tr>
           <tr>
             <td>USD</td>
-            <td id="BCquantity"></td>
-            <td id="BCprice">1</td>
-            <td id="BCTotalValue"></td>
+            <td id="USDquantity"></td>
+            <td id="USDprice">1</td>
+            <td id="USDTotalValue"></td>
           </tr>
           <tr>
             <td>Binance Coin</td>
@@ -136,7 +136,6 @@
             <td id="totalamount"></td>
           </tr>
         </table>
-        <button style="display: inline;" class="btn btn-primary" id="reset">Reset Wallet Balance</button>
         
         {{error}}
         <form action="/topup" method="POST">
@@ -185,12 +184,12 @@
   <script>
      const top_up_wallet_URL = "http://localhost:5000/book"
 
-    function getBCValue() {
-      var bcquantity = document.getElementById('BCquantity').textContent
-      var bcprice = 1
-      var bcvalue = document.getElementById('BCTotalValue')
-      var total = Number(bcquantity) * bcprice
-      bcvalue.innerHTML = total
+    function getUSDValue() {
+      var usdquantity = document.getElementById('USDquantity').textContent
+      var usdprice = 1
+      var usdvalue = document.getElementById('USDTotalValue')
+      var total = Number(usdquantity) * usdprice
+      usdvalue.innerHTML = total
     }
 
 
@@ -206,6 +205,7 @@
       { "name": "Waves", "website": "https://waves.tech/" },
       { "name": "FileCoin", "website": "https://filecoin.io/" }
     ]
+
     var str = ``
     function getCoinInfo() {
       for (coin of coinArray) {
@@ -213,9 +213,6 @@
       }
       document.getElementById('recommendation').innerHTML = str
     }
-
- 
-
 
     function getBNBSinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
@@ -235,8 +232,6 @@
         });
     }
 
-
-
     function getBTCSinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
       singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?'
@@ -254,8 +249,6 @@
           console.log(error.message);
         });
     }
-
-
 
     function getADASinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
@@ -275,8 +268,6 @@
         });
     }
 
-
-
     function getDOGESinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
       singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?'
@@ -294,8 +285,6 @@
           console.log(error.message);
         });
     }
-
-
 
     function getETHSinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
@@ -315,8 +304,6 @@
         });
     }
 
-
-
     function getSOLSinglePrice() {
       var apiKey = 'b6d25f96f139bef5f924e987f529a010daf1b3f4faf934b6a02d671becf8ac3d'
       singlePriceUrl = 'https://min-api.cryptocompare.com/data/price?'
@@ -334,8 +321,6 @@
           console.log(error.message);
         });
     }
-
-
 
     function dummy(price, name) {
       coinPrice = price.toFixed(2)
@@ -363,9 +348,9 @@
       var totalsol = Number(document.getElementById('SOLTotalValue').textContent)
       var totaldoge = Number(document.getElementById('DOGETotalValue').textContent)
       var totaleth = Number(document.getElementById('ETHTotalValue').textContent)
-      var totalbc = Number(document.getElementById('BCTotalValue').textContent)
+      var totalusd = Number(document.getElementById('USDTotalValue').textContent)
       var totalbnb = Number(document.getElementById('BNBTotalValue').textContent)
-      var total = (totalada + totalbtc + totalbnb + totalsol + totaldoge + totalbc + totaleth).toFixed(2)
+      var total = (totalada + totalbtc + totalbnb + totalsol + totaldoge + totalusd + totaleth).toFixed(2)
 
       var previousTotal = Number(document.getElementById('totalamount').textContent)
       if (total > previousTotal) {
@@ -384,9 +369,9 @@
   <script>
     getCoinInfo()
     setTimeout(() => {
-      getBCValue()
+      getUSDValue()
         ;
-    }, 500);
+    }, 1000);
     setTimeout(() => {
       getTotal()
         ;
@@ -422,7 +407,7 @@
     }, 1000);
 
     setInterval(() => {
-      getBCValue()
+      getUSDValue()
         ;
     }, 1000);
     setInterval(() => {
