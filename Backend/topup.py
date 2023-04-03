@@ -72,13 +72,17 @@ def processTopUp():
             
         )
 
+  # Update Wallet amount
         retrieved_bal = database.child("users").child(id).child('wallet_coins').get()
         print(retrieved_bal)
         final_topup_amt = retrieved_bal.val()['USD']['qty'] + top_up_amt
         database.child("users").child(id).child('wallet_coins').child('USD').update({"qty":final_topup_amt})
         
-        # Update Transaction (User ID, line_items)
-        database.child("users").child(id).child('wallet_coins').child('USD').update({"qty":final_topup_amt})
+    # Update Transaction in logs
+        transaction_type = 'topup'
+        data = {"userid": id, "transactionid": transaction_id, "transaction_type": transaction_type, "amount": top_up_amt, }
+        database.child("users").child(id).child('transactions').push(data)
+
         
         print('Top Up Amount: ', top_up_amt)
         return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
