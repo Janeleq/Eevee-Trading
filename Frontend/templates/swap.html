@@ -50,7 +50,7 @@
     <div class="card mx-auto m-5" style="width: 70%">
       <div class="card-body">
         <h5 class="card-title">Coin Swap</h5>
-        <form method="GET" action="http://127.0.0.1:5004/swap" id="rate-form">
+        <form method="GET" action="http://localhost:5004/swap" id="rate-form">
           <div>
             Amount: <input class="form-control" type="number" name="from_amount" min="0"> 
           </div>
@@ -92,8 +92,7 @@
     <div class="card mx-auto" style="width: 70%">
       <div class="card-body">
         <h5 class="card-title">Transaction</h5>
-        <form method="GET" id="swap-form">
-          New from currency balance: 
+        <form method="GET" id="swap-form"> 
           <div id="from_currency_status"></div>
           <div id="to_currency_status"></div>
           <button type="submit" class="btn btn-primary" onclick="submitSwapForm(event)">Make Swap</button>
@@ -152,14 +151,18 @@
         let to_amount = document.getElementById('to_amount').value;
 
         // fetching updating of from and to currency before and after swap and displays in UI
-        fetch('http://127.0.0.1:5004/update/')
+        fetch('http://localhost:5004/update')
           .then(data => {
             const jsonData = data;
             console.log(data);
             const from_currency_status_element = document.getElementById('from_currency_status');
             const to_currency_status_element = document.getElementById('to_currency_status');
-            console.log(jsonData["updated " + from_currency].toFixed(2).toString());
-            from_currency_status_element.innerText = jsonData["updated " + from_currency].toFixed(2).toString();
+            // console.log(jsonData["updated " + from_currency].toFixed(2).toString());
+
+            from_currency_status_element.innerText = from_currency + " - Old Balance: " + jsonData["old " + from_currency].toFixed(2).toString() 
+            + " New Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
+            to_currency_status_element.innerText = to_currency + " - Old Balance: " + jsonData["old " + to_currency].toFixed(2).toString() 
+            + " New Balance: " + jsonData["updated " + to_currency].toFixed(2).toString();
           })  
           .catch(error => console.log(error));
         }
