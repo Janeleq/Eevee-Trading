@@ -162,13 +162,13 @@ def getETHSinglePrice():
         }
     ), 404
     
-with app.app_context():
-     print(getSOLSinglePrice())
-     print(getETHSinglePrice())
-     print(getADASinglePrice())
-     print(getDOGESinglePrice())
-     print(getBTCSinglePrice())
-     print(getBNBSinglePrice())
+# with app.app_context():
+#      print(getSOLSinglePrice())
+#      print(getETHSinglePrice())
+#      print(getADASinglePrice())
+#      print(getDOGESinglePrice())
+#      print(getBTCSinglePrice())
+#      print(getBNBSinglePrice())
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) + " for placing an order...")

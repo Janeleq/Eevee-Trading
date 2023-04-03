@@ -2,9 +2,11 @@ from flask import redirect, request, url_for, render_template, Flask, jsonify
 import stripe
 import pyrebase
 import helpers
+from flask_cors import CORS
 from datetime import datetime
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
+CORS(app)
 
 app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX'
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX'
