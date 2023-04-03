@@ -8,6 +8,7 @@ from flask_cors import CORS
 import stripe
 # from invokes import invoke_http
 
+
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 

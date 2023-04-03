@@ -31,7 +31,7 @@ fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
 
-#set up RabbitMQ Connection
+#set up RabbitMQ Connec tion
 # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 # channel = connection.channel()
 # channel.queue_declare(queue='buy_order_queue')
@@ -201,34 +201,44 @@ def buyordercc(coin):
     if total_usd_owned:
         total_usd_owned = total_usd_owned.json()
         total_usd_owned = getNumber(total_usd_owned, "USD")
+
     if total_usd_owned >= total_amount_needed:
         #place order
+        id = helpers.retrieveHelperVal('uID','helpers.txt')
         order_details = {
             'total_amount_required' : total_amount_needed,
             'buy_quantity': boqty,
             'buy_price': boprice,
             'orderid': 2
         }
-        database.child('users').child(id).child('orders').push({"order{order_details['orderid']}":{'orderid':order_details['orderid'], 'details': order_details}})
-    #4. AMQP stuff
+        database.child('users').child(id).child('orders').child(coin).update({"ordercoin":coin})
+        database.child('users').child(id).child('orders').child(coin).update({"buy_price":boprice})
+        database.child('users').child(id).child('orders').child(coin).update({"buy_quantity":boqty})
+        database.child('users').child(id).child('orders').child(coin).update({"total_amount_required":total_amount_needed})
 
-    if response:
-        #get total price needed to pay with current price + quantity
-        response = response.json()
-        price = getPrice(response)
+        return "Buy order has been placed :D"
+
+
+    
+    #4. AMQP stuff
+    
+    # if response:
+    #     #get total price needed to pay with current price + quantity
+    #     response = response.json()
+    #     price = getPrice(response)
         
-    if amount_owned:
-        amount_owned = amount_owned.json()
-        qty_usd_owned = getNumber(amount_owned, "USD")
+    # if amount_owned:
+    #     amount_owned = amount_owned.json()
+    #     qty_usd_owned = getNumber(amount_owned, "USD")
 
 
         #if total_amount <= wallet balance --> place buy order and create id (ascending order) 
         #else --> error
-        #update wallet + cryptocurrency owned
-        return
+    #     #update wallet + cryptocurrency owned
+    #     return
 
-    else:
-        return 0 
+    # else:
+    #     return 0 
 # while True:
 #     check_order()
 #     time.sleep(10)
