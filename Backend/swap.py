@@ -97,7 +97,7 @@ def updateWallet():
     from_amount = request.args.get('from_amount')
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
-    to_amount = request.args.get("hidden_to_amount")
+    to_amount = request.args.get("to_amount")
 
     old_from_balance = None
     old_to_balance = None
@@ -128,11 +128,11 @@ def updateWallet():
 
     # Returns new and old wallet balance for to and from currency
     return {
-        "old" + from_currency : old_from_balance,
-        "old" + to_currency : old_to_balance,
-        "updated " + from_currency : updated_from_balance,
-        "updated" + to_currency : updated_to_balance,
-    }
+            "old " + from_currency : old_from_balance,
+            "old " + to_currency : old_to_balance,
+            "updated " + from_currency : updated_from_balance,
+            "updated" + to_currency : updated_to_balance,
+        }
 
 def getNumber(amount_owned,coin):
     amount_owned = amount_owned[coin]

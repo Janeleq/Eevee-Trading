@@ -82,7 +82,7 @@
           <div class="my-2">Gas Fee: 1%</div>
           <div>
             <h5 id="swap_amount_message" class="my-2 text-success"></h5>
-            <input type="hidden" value="" id="hidden_to_amount">
+            <input type="hidden" value="" id="to_amount">
             <button class="btn btn-primary" onclick="submitRateForm(event)">Get Rates</button>
           </div>
       </form>
@@ -96,7 +96,7 @@
           New from currency balance: 
           <div id="from_currency_status"></div>
           <div id="to_currency_status"></div>
-          <button type="submit" class="btn btn-primary" onclick="submitSwapForm()">Make Swap</button>
+          <button type="submit" class="btn btn-primary" onclick="submitSwapForm(event)">Make Swap</button>
         </form>
       </div>
     </div>
@@ -129,7 +129,7 @@
         .then(data => {
           const jsonData = JSON.parse(data);
           const element = document.getElementById('swap_amount_message');
-          document.getElementById('hidden_to_amount').value = jsonData['conversion_amount'].toFixed(2);
+          document.getElementById('to_amount').value = jsonData['conversion_amount'].toFixed(2);
           console.log(jsonData)
           element.innerText = from_amount + " " + from_currency + " will be swapped for " 
           + (jsonData['conversion_amount'].toFixed(2)).toString() + " " + to_currency;
@@ -147,20 +147,19 @@
         // get form data as URLSearchParams object
         const inputs = new URLSearchParams(new FormData(form)); 
         let from_currency = inputs.get("from_currency"); 
-        console.log(inputs.get("from_amount"), 10);
         let from_amount = parseInt(inputs.get("from_amount"), 10);
         let to_currency = inputs.get("to_currency");
-        let to_amount = 0;
+        let to_amount = document.getElementById('to_amount').value;
 
         // fetching updating of from and to currency before and after swap and displays in UI
-        fetch('http://127.0.0.1:5004/update')
+        fetch('http://127.0.0.1:5004/update/')
           .then(data => {
             const jsonData = data;
             console.log(data);
             const from_currency_status_element = document.getElementById('from_currency_status');
             const to_currency_status_element = document.getElementById('to_currency_status');
             console.log(jsonData["updated " + from_currency].toFixed(2).toString());
-            from_currency_status_element.innerText = "Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
+            from_currency_status_element.innerText = jsonData["updated " + from_currency].toFixed(2).toString();
           })  
           .catch(error => console.log(error));
         }
