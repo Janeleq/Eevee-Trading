@@ -7,7 +7,7 @@ import time
 import pyrebase
 import os, sys
 from os import environ
-
+import helpers
 import requests
 from invokes import invoke_http
 
@@ -51,7 +51,7 @@ def getPrice(response):
     return price
 
 def getNumber(number,coin):
-    number = number[coin]
+    # number = number[coin]
     return number
 
 # #BINANCE
@@ -97,6 +97,7 @@ def buycc(coin):
     response = requests.get(price_URL, timeout=10)
     #get USD owned
     amount_owned = requests.get(wallet_USD, timeout=10)
+    
     if response:
         #get total price needed to pay with current price + quantity
         response = response.json()
@@ -108,9 +109,9 @@ def buycc(coin):
         qty_usd_owned = getNumber(amount_owned, "USD")
 
     if qty_usd_owned >= total_amount:
-        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
         qty_coin_owned = requests.get(wallet_URL)
         if qty_coin_owned:
+            id = helpers.retrieveHelperVal('uID','helpers.txt')
             ownedcoin = qty_coin_owned.json()
             ownedcoin = getNumber(ownedcoin, coin)
             decrease = qty_usd_owned - total_amount
@@ -155,9 +156,9 @@ def sellcc(coin):
         qty_coin_owned = getNumber(coin_owned, coin)
 
     if qty_coin_owned >= float(qty):
-        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
         amount_owned = requests.get(wallet_USD)
         if amount_owned:
+            id = helpers.retrieveHelperVal('uID','helpers.txt')
             qty_usd_owned = amount_owned.json()
             qty_usd_owned = getNumber(qty_usd_owned, "USD")
             decrease = float(qty_coin_owned) - float(qty)
