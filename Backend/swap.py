@@ -7,7 +7,7 @@ from flask_cors import CORS
 import pyrebase
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=['http://localhost:5000'])
 
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
@@ -30,10 +30,8 @@ def swap():
 
     from_price_URL = f"http://127.0.0.1:5001/coin/{from_currency}"
     to_price_URL = f"http://127.0.0.1:5001/coin/{to_currency}"
-    email = ""
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
-
     gas_fee = 0.01
     if from_currency == to_currency:
         gas_fee = 0 
@@ -55,7 +53,7 @@ def swap():
         #AMQP activity
 
         return {
-            "code": 500,
+            "code": 400,
             "message": "Swap failure sent for error handling."
         }
     
@@ -127,12 +125,14 @@ def updateWallet():
         database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
 
     # Returns new and old wallet balance for to and from currency
-    return {
+    response = Flask.jsonify({
             "old " + from_currency : old_from_balance,
             "old " + to_currency : old_to_balance,
             "updated " + from_currency : updated_from_balance,
             "updated" + to_currency : updated_to_balance,
-        }
+        })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 def getNumber(amount_owned,coin):
     amount_owned = amount_owned[coin]
