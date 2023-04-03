@@ -1,5 +1,5 @@
 # Complex Wallet Microservice
-from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response
+from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response, jsonify
 from flask_cors import CORS
 import requests
 import pyrebase 
@@ -25,8 +25,8 @@ database = fb.database()
 
 @app.route("/wallet")
 def retrieveWallet():
+    # id="DsU3Gmoe1McjyXU8JA66GfiBG7L2"
     id = helpers.retrieveHelperVal('uID','helpers.txt')
-    
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     currencyowned = {
@@ -36,13 +36,14 @@ def retrieveWallet():
         "DOGE": wallet_coins['DOGE']['qty'],
         "ETH": wallet_coins['ETH']['qty'],
         "SOL": wallet_coins['SOL']['qty'],
+        "USD": wallet_coins['USD']['qty'],
     }
     return currencyowned
 
 @app.route("/wallet/<string:coin>")
 def retrieveCurrency(coin):
     id = helpers.retrieveHelperVal('uID','helpers.txt')
-
+    # id='DsU3Gmoe1McjyXU8JA66GfiBG7L2'
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     return str((wallet_coins[coin]['qty']))

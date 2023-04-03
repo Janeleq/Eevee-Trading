@@ -47,7 +47,7 @@
 
   <div class="container-fluid">
 
-    <div class="card" style="width: 100%">
+    <div class="card mx-auto m-5" style="width: 70%">
       <div class="card-body">
         <h5 class="card-title">Coin Swap</h5>
         <form method="GET" action="http://127.0.0.1:5004/swap" id="swap-form">
@@ -88,9 +88,12 @@
       </div>
     </div>
 
-    <div class="card" style="width: 100%">
+    <div class="card mx-auto" style="width: 70%">
       <div class="card-body">
-        <div class="card-title" id="swap_amount_message"></div>
+        <h5 class="card-title">Transaction Status</h5>
+        <div id="swap_amount_message"></div>
+        <div id="from_currency_status"></div>
+        <div id="to_currency_status"></div>
         <input type="hidden" value="" id="hidden_to_amount">
       </div>
     </div>
@@ -133,12 +136,18 @@
       // fetching balance of from and to currency before and after swap
       fetch('http://127.0.0.1:5004/swap')
         .then(response => response.text())
-      
+        .then(data => {
+          const jsonData = JSON.parse(data);
+          document.getElementById('from_currency_status').innerText = jsonData[''].toFixed(2).toString();
+          element.innerText = from_amount + " " + from_currency + " is swapped for " 
+          + (jsonData['conversion_amount'].toFixed(2)).toString() + " " + to_currency;
+        })
+        
     }
   </script>
-  <footer class="text-center">
-    <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
-  </footer>
+    <footer class="text-center" style="font-size:12px">
+      <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
+    </footer>
 </body>
 
 <style>

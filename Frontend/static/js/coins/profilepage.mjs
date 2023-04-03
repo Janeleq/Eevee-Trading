@@ -17,7 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const coinRef = ref(db, 'All users in database');
+const coinRef = ref(db, 'users');
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -30,30 +30,28 @@ onAuthStateChanged(auth, (user) => {
 });
 
 function getValues(data, uid) {
-  console.log(data[uid])
-  var user = data[uid]
-  var dateRegistered = user.DateRegistered
-  var start = dateRegistered.indexOf('GMT')
-  var dateRegistered = dateRegistered.substring(0, start)
-  console.log(dateRegistered)
-  var ada = user.Ada
-  var bc = user.Bc
-  var bnb = user.Bnb
-  var btc = user.Btc
-  var doge = user.Doge
-  var eth = user.Eth
-  var sol = user.Sol
-  var email = user.Email
+  wallet_coins = data[uid].wallet_coins
+  var username = data[uid].username
+  var datecreated = data[uid].date_created
+  var wallet_coins = data[uid].wallet_coins
 
-  document.getElementById('email').innerHTML = 'Email: ' + email
-  document.getElementById('registered').innerHTML = 'Last Registered: ' + dateRegistered
-  document.getElementById('ADAquantity').innerHTML = ada
-  document.getElementById('BNBquantity').innerHTML = bnb
-  document.getElementById('BTCquantity').innerHTML = btc
-  document.getElementById('DOGEquantity').innerHTML = doge
-  document.getElementById('ETHquantity').innerHTML = eth
-  document.getElementById('SOLquantity').innerHTML = sol
-  document.getElementById('BCquantity').innerHTML = bc
+  var ada = wallet_coins.ADA
+  var usd = wallet_coins.USD
+  var bnb = wallet_coins.BNB
+  var btc = wallet_coins.BTC
+  var doge = wallet_coins.DOGE
+  var eth = wallet_coins.ETH
+  var sol = wallet_coins.SOL
+
+  document.getElementById('email').innerHTML = username
+  document.getElementById('registered').innerHTML = datecreated
+  document.getElementById('ADAquantity').innerHTML = ada.qty
+  document.getElementById('BNBquantity').innerHTML = bnb.qty
+  document.getElementById('BTCquantity').innerHTML = btc.qty
+  document.getElementById('DOGEquantity').innerHTML = doge.qty
+  document.getElementById('ETHquantity').innerHTML = eth.qty
+  document.getElementById('SOLquantity').innerHTML = sol.qty
+  document.getElementById('USDquantity').innerHTML = usd.qty
 }
 
 setTimeout(() => {
@@ -83,27 +81,6 @@ function addListener(){
   
   });
 }
-setTimeout(() => {
-  addResetListener()
-}, 1000);
 
-function addResetListener(){
-  reset.addEventListener('click',(g)=> {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      update(ref(db, 'All users in database/' + user.uid), {
-        Eth: 0,
-        Bc: 5000,
-        Ada: 0,
-        Bnb: 0,
-        Btc:0,
-        Doge:0,
-        Sol:0,
 
-      })
-      alert('Successfully Reset!')
-    } 
-  });
-})
-}
+
