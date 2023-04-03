@@ -19,33 +19,19 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-signIn.addEventListener('click', (d) => {
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var LoginStatus = "Logged in"
+document.getElementById('signIn').addEventListener('click', (d) => {
+  var email = document.getElementById('un').value;
+  var password = document.getElementById('pw').value;
 
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-
-      var dt = Date();
-      update(ref(database, 'Users in the system/' + user.uid), {
-        LoginTime: dt,
-        LoginStatus: LoginStatus,
-        email: email
-      })
-      setTimeout(() => {
-        window.location.href = "/home";
-      }, 1000);
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-
-      alert(errorMessage);
     });
-
 });
 
 
