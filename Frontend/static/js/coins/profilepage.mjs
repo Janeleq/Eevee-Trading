@@ -39,6 +39,7 @@ function getValues(data, uid) {
   var username = data[uid].username
   var datecreated = data[uid].date_created
   var wallet_coins = data[uid].wallet_coins
+  var wallet_balance = data[uid].wallet_coins["USD"]
   var ada = wallet_coins.ADA
   var usd = wallet_coins.USD
   var bnb = wallet_coins.BNB
@@ -55,6 +56,7 @@ function getValues(data, uid) {
   console.log(sol)
   document.getElementById('email').innerHTML = username
   document.getElementById('registered').innerHTML = datecreated
+  document.getElementById('wallet_balance').innerHTML = wallet_balance
   document.getElementById('ADAquantity').innerHTML = ada.qty
   document.getElementById('BNBquantity').innerHTML = bnb.qty
   document.getElementById('BTCquantity').innerHTML = btc.qty
