@@ -25,6 +25,7 @@ database = fb.database()
 
 @app.route("/wallet")
 def retrieveWallet():
+    # id="DsU3Gmoe1McjyXU8JA66GfiBG7L2"
     id = helpers.retrieveHelperVal('uID','helpers.txt')
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
@@ -42,6 +43,7 @@ def retrieveWallet():
 @app.route("/wallet/<string:coin>")
 def retrieveCurrency(coin):
     id = helpers.retrieveHelperVal('uID','helpers.txt')
+    # id='DsU3Gmoe1McjyXU8JA66GfiBG7L2'
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     return str((wallet_coins[coin]['qty']))

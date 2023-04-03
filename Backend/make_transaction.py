@@ -111,6 +111,7 @@ def buycc(coin):
     if qty_usd_owned >= total_amount:
         qty_coin_owned = requests.get(wallet_URL)
         if qty_coin_owned:
+            # id = 'DsU3Gmoe1McjyXU8JA66GfiBG7L2'
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             ownedcoin = qty_coin_owned.json()
             ownedcoin = getNumber(ownedcoin, coin)
