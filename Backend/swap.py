@@ -19,12 +19,15 @@ def swap():
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
 
-    # Retrieves wallet balance 
-    
+    gas_fee = 0.01
+    if from_currency == to_currency:
+        gas_fee = 0 
 
-    conversion_amount = float(from_amount) * float(conversion_ratio) * float(0.99)
+    conversion_amount = float(from_amount) * float(conversion_ratio) * float(1 - gas_fee)
+    to_amount = request.args.get("to_amount")
 
     #Updates wallet
+    updateWallet(from_currency, from_amount, to_currency, to_amount)
 
     #Status of successful swap
     if conversion_amount:
@@ -68,8 +71,22 @@ def getRatio(from_url, to_url):
 '''
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email  
 '''
-def callWallet(from_currency, to_currency, user_email):
-    pass 
+def updateWallet(from_currency, from_amount, to_currency, to_amount):
+    # Calls access_wallet to update from_amount
+
+    # Calls access_wallet to update to_amount
+
+    # Get new wallet balance for to and from currency
+
+    # Returns new wallet balance for to and from currency
+    updated_from_balance = None
+    updated_to_balance = None
+    
+    return {
+        from_currency : updated_from_balance,
+        to_currency : updated_to_balance
+    }
 
 if __name__ == "__main__":
+    print("This is flask " + os.path.basename(__file__))
     app.run(port=5004, debug=True)
