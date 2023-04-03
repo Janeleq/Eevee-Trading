@@ -194,7 +194,7 @@ def buyordercc(coin):
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
     #1. get total amount needed
-    total_amount_needed = boqty * boprice
+    total_amount_needed = float(boqty) * float(boprice)
     #2. get wallet balance in USD
     total_usd_owned = requests.get(wallet_USD, timeout=10)
     #3. compare --> if wallet balance >= total amount --> place in order/ create order details
@@ -211,11 +211,6 @@ def buyordercc(coin):
         }
         database.child('users').child(id).child('orders').push({"order{order_details['orderid']}":{'orderid':order_details['orderid'], 'details': order_details}})
     #4. AMQP stuff
-
-    
-    amount_owned = requests.get(wallet_USD, timeout=10)
-    
-    total_buy_amount = round(float(boqty) * float(boprice),2)
 
     if response:
         #get total price needed to pay with current price + quantity
