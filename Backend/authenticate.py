@@ -2,7 +2,6 @@ import pyrebase
 
 # Price Microservice to show different CC prices on diff cc pages
 from flask import Flask, request, redirect
-import requests
 from flask_cors import CORS
 import os
 
@@ -36,12 +35,17 @@ def authenticateUser():
         login = auth.sign_in_with_email_and_password(email, password)
         idToken = auth.get_account_info(login['idToken'])
         uID = auth.current_user['localId']
+
+        writeToText('helpers.txt','uID:'+uID)
+
         return redirect('http://localhost:5000/home')
     except:
         print("Invalid email or password")
         return redirect('http://localhost:5000/login')
 
-    
+def writeToText(filename, text):
+    with open(filename, 'w') as f:
+        f.write(text)
 # with app.app_context():
 
 if __name__ == "__main__":

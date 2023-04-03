@@ -17,6 +17,8 @@ def fetchDetails():
     host_ip = socket.gethostbyname(hostname)
     return str(hostname) , str(host_ip)
 
+if os.path.exists('helpers.txt'):
+    os.remove('helpers.txt')
 
 # endpoints
 @app.route("/")
