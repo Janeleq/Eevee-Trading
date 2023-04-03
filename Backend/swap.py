@@ -114,9 +114,24 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
         changed_amt = ownedcoin - from_amount
         updated_from_balance = changed_amt
         database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+
+    # Calls access_wallet to update to_amount and get new balance
+    coin = to_currency
+    old_to_balance = requests.get(wallet_URL)
+    if old_to_balance:
+        ownedcoin = updated_to_balance.json()
+        ownedcoin = getNumber(ownedcoin, coin)
+        old_to_balance = ownedcoin
+        changed_amt = ownedcoin + to_amount
+        updated_to_balance = changed_amt
+        database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+
+    # Returns new and old wallet balance for to and from currency
     return {
-        from_currency : updated_from_balance,
-        to_currency : updated_to_balance
+        "old" + from_currency : old_from_balance,
+        "old" + to_currency : old_to_balance,
+        "updated " + from_currency : updated_from_balance,
+        "updated" + to_currency : updated_to_balance,
     }
 
 if __name__ == "__main__":
