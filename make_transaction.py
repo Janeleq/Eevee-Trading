@@ -50,8 +50,7 @@ def getPrice(response):
     price = str(price)
     return price
 
-def getNumber(number,coin):
-    # number = number[coin]
+def getNumber(number):
     return number
 
 # #BINANCE
@@ -106,7 +105,7 @@ def buycc(coin):
 
     if amount_owned:
         amount_owned = amount_owned.json()
-        qty_usd_owned = getNumber(amount_owned, "USD")
+        qty_usd_owned = getNumber(amount_owned)
 
     if qty_usd_owned >= total_amount:
         qty_coin_owned = requests.get(wallet_URL)
@@ -114,7 +113,7 @@ def buycc(coin):
             # id = 'DsU3Gmoe1McjyXU8JA66GfiBG7L2'
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             ownedcoin = qty_coin_owned.json()
-            ownedcoin = getNumber(ownedcoin, coin)
+            ownedcoin = getNumber(ownedcoin)
             decrease = qty_usd_owned - total_amount
             increase = float(ownedcoin) + float(qty)
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
@@ -148,7 +147,7 @@ def sellcc(coin):
 
     if coin_owned:
         coin_owned = coin_owned.json()
-        qty_coin_owned = getNumber(coin_owned, coin)
+        qty_coin_owned = getNumber(coin_owned)
 
     if response:
         #get total price needed to pay with current price + quantity
@@ -161,7 +160,7 @@ def sellcc(coin):
         if amount_owned:
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             qty_usd_owned = amount_owned.json()
-            qty_usd_owned = getNumber(qty_usd_owned, "USD")
+            qty_usd_owned = getNumber(qty_usd_owned)
             decrease = float(qty_coin_owned) - float(qty)
             increase = qty_usd_owned + total_amount
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":increase})
@@ -172,11 +171,15 @@ def sellcc(coin):
             }, 200
             return result
         else:
-            return "haha"
+            result = {
+                "code" : 400,
+                "message": "Transaction failed, please try again."
+            }, 400
+            return result
     else:
         result = {
             "code" : 400,
-            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
+            "message": "Transaction failed, please try again as you do not have enough balance."
         }, 400
         return result 
 
@@ -193,6 +196,7 @@ def buyordercc(coin):
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
+
     #1. get total amount needed
     total_amount_needed = float(boqty) * float(boprice)
     #2. get wallet balance in USD
@@ -200,53 +204,16 @@ def buyordercc(coin):
     #3. compare --> if wallet balance >= total amount --> place in order/ create order details
     if total_usd_owned:
         total_usd_owned = total_usd_owned.json()
-        total_usd_owned = getNumber(total_usd_owned, "USD")
+        total_usd_owned = getNumber(total_usd_owned)
 
     if total_usd_owned >= total_amount_needed:
         #place order
         id = helpers.retrieveHelperVal('uID','helpers.txt')
-        order_details = {
-            'total_amount_required' : total_amount_needed,
-            'buy_quantity': boqty,
-            'buy_price': boprice,
-            'orderid': 2
-        }
-        database.child('users').child(id).child('orders').child(coin).update({"ordercoin":coin})
-        database.child('users').child(id).child('orders').child(coin).update({"buy_price":boprice})
-        database.child('users').child(id).child('orders').child(coin).update({"buy_quantity":boqty})
-        database.child('users').child(id).child('orders').child(coin).update({"total_amount_required":total_amount_needed})
-
+        database.child('users').child(id).child('buyorders').child(coin).update({"ordercoin":coin})
+        database.child('users').child(id).child('buyorders').child(coin).update({"buy_price":boprice})
+        database.child('users').child(id).child('buyorders').child(coin).update({"buy_quantity":boqty})
+        database.child('users').child(id).child('buyorders').child(coin).update({"total_amount_required":total_amount_needed})
         return "Buy order has been placed :D"
-
-
-    
-    #4. AMQP stuff
-    
-    # if response:
-    #     #get total price needed to pay with current price + quantity
-    #     response = response.json()
-    #     price = getPrice(response)
-        
-    # if amount_owned:
-    #     amount_owned = amount_owned.json()
-    #     qty_usd_owned = getNumber(amount_owned, "USD")
-
-
-        #if total_amount <= wallet balance --> place buy order and create id (ascending order) 
-        #else --> error
-    #     #update wallet + cryptocurrency owned
-    #     return
-
-    # else:
-    #     return 0 
-# while True:
-#     check_order()
-#     time.sleep(10)
-    
-def check_order(orderid):
-    return
-
-
 
 @app.route("/<string:coin>/sellorder")
 def sellordercc(coin):
@@ -256,19 +223,25 @@ def sellordercc(coin):
     soprice = dummy(soprice)
     wallet_USD = "http://localhost:5100/wallet/USD"
     wallet_URL = "http://localhost:5100/wallet/" + coin
-
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
     #get USD owned
-
-    #1. get qty to sell
-
+    total_usd_owned = requests.get(wallet_USD, timeout=10)
     #2. get qty owned
-
+    total_coin_owned = requests.get(wallet_URL, timeout=10)
     #3. compare --> if qty owned >= qty sold --> place in order/ create order details
-
-    #4. AMQP stuff
+    if total_coin_owned:
+        total_coin_owned = total_coin_owned.json()
+        total_coin_owned = getNumber(total_coin_owned)
+        if total_coin_owned >= soqty:
+            total_amount_gained = soqty * soprice
+            id = helpers.retrieveHelperVal('uID','helpers.txt')
+            database.child('users').child(id).child('sellorders').child(coin).update({"ordercoin":coin})
+            database.child('users').child(id).child('sellorders').child(coin).update({"sell_price":soprice})
+            database.child('users').child(id).child('sellorders').child(coin).update({"sell_quantity":soqty})
+            database.child('users').child(id).child('sellorders').child(coin).update({"total_amount_earned":total_amount_gained})
+            return "Sell order has been placed :D"
 
 
 if __name__ == '__main__':
