@@ -8,9 +8,9 @@
   <title>Profile</title>
   <!-- <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}"> -->
   <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
-  <link rel="icon" type="image/x-icon" href="./images/logo.png">
-  <link rel="stylesheet" href="aos-by-red.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <!-- <link rel="icon" type="image/x-icon" href="./images/logo.png"> -->
+  <!-- <link rel="stylesheet" href="aos-by-red.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" /> -->
 
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
@@ -61,7 +61,7 @@ h1 {
     margin-bottom: 28px;
 }
 
-#settings-card {
+/* #settings-card {
     margin: 50px 0px 50px 0px;
     padding: 40px 30px 60px 30px;
 
@@ -70,7 +70,7 @@ h1 {
 
     width:540px;
     background-color: azure;
-}
+} */
 
 #card-outline {
     width: 100%;
@@ -88,7 +88,7 @@ h1 {
     margin-left: 2px;
 }
 
-#editProfileModalPFP {
+/* #editProfileModalPFP {
     height: 80px;
     width: 80px;
     border-radius: 50%;
@@ -99,9 +99,9 @@ h1 {
     z-index: 1;
     display: flex;
     margin: auto;
-}
+} */
 
-#editProfileModalPFPOverlay {
+/* #editProfileModalPFPOverlay {
     height: 30px;
     width: 30px;
     z-index:2;
@@ -115,7 +115,7 @@ h1 {
     margin-left:auto;
     margin-right: auto;
     margin-bottom: auto;
-}
+} */
 
   </style>
 
@@ -158,8 +158,10 @@ h1 {
               
               
               <p style="font-weight: bold; font-size: large; color: #1199FA;" class="words">User Details </p>
-              <h4 style="padding-bottom:20px" class="words" id="email"></h4>
-              <h4 style="padding-bottom:40px" class="words" id="registered"></h4>
+              Email:<h4 style="padding-bottom:10px" class="words" id="email"></h4>
+              Registered on:<h4 style="padding-bottom:10px" class="words" id="registered"></h4>
+              Wallet Balance: <h4 style="padding-bottom:40px" class="words" id="wallet_balance"></h4>
+
               <p style="font-weight: bold; font-size: large; color: #1199FA; display: inline;" class="words">Crypto Wallet 👛</p>
              
 
@@ -253,11 +255,10 @@ h1 {
     <!-- CURRENT -->
     <div class="settings-subbox" style="color: white;" >
 
-      <h3 style="" href="#supportModal" data-bs-toggle="modal"><img id="setting-icons" src="../assets/ui/support.png" alt="">&nbsp;Support</h3>
+      <h3 style="" href="#supportModal" data-bs-toggle="modal"><img id="setting-icons" src="  " alt="">&nbsp;Support</h3>
       <hr>
       <div class="col-lg-12 col-md-12" style="margin-left: 10px;">
         <!-- <h4 class="words" style="margin-left: 10px; font-size: medium;">Find out more!</h4> -->
-
         <div class="words" id="recommendation" style="padding-left:10px; font-size: 15px">
         </div>
       </div>
@@ -270,13 +271,13 @@ h1 {
   </div>
 
   
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init({
       duration: 3000,
       once: false,
     });
-  </script>
+  </script> -->
 
   <script>
      const top_up_wallet_URL = "http://localhost:5000/book"
@@ -533,7 +534,7 @@ h1 {
   <script src="https://js.stripe.com/v3/"></script>
 
   <script>
-    const checkout_public_key = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX';
+    const checkout_public_key = '{{checkout_public_key}}';
     const checkout_session_id = '{{checkout_session_id}}';
   </script>
   
