@@ -41,9 +41,6 @@ def swap():
     conversion_amount = float(from_amount) * float(conversion_ratio) * float(1 - gas_fee)
     to_amount = request.args.get("to_amount")
 
-    #Updates wallet
-    updateWallet(from_currency, from_amount, to_currency, to_amount)
-
     #Status of successful swap
     if conversion_amount:
         #AMQP activity
@@ -91,10 +88,16 @@ def getNumber(amount_owned,coin):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-def updateWallet(from_currency, from_amount, to_currency, to_amount):
+@app.route("/update")
+def updateWallet():
     coin = None
     wallet_URL = "http://localhost:5100/wallet/{coin}"
-    id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+    id = "P2lTOnotbgfpU8ThbATf0Lx6D9G2"
+
+    from_amount = request.args.get('from_amount')
+    from_currency = request.args.get("from_currency")
+    to_currency = request.args.get("to_currency")
+    to_amount = request.args.get("to_amount")
 
     old_from_balance = None
     old_to_balance = None
@@ -125,11 +128,15 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
 
     # Returns new and old wallet balance for to and from currency
     return {
-        "old" + from_currency : old_from_balance,
-        "old" + to_currency : old_to_balance,
-        "updated " + from_currency : updated_from_balance,
-        "updated" + to_currency : updated_to_balance,
-    }
+            "old " + from_currency : old_from_balance,
+            "old " + to_currency : old_to_balance,
+            "updated " + from_currency : updated_from_balance,
+            "updated" + to_currency : updated_to_balance,
+        }
+
+def getNumber(amount_owned,coin):
+    amount_owned = amount_owned[coin]
+    return amount_owned
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__))
