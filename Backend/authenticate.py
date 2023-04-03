@@ -30,16 +30,16 @@ def authenticateUser():
     
     email= request.args.get("un")
     password=request.args.get("pw")
-    
-    try:
-        login = auth.sign_in_with_email_and_password(email, password)
-        print("Successfully logged in!")
-        idToken = auth.get_account_info(login['idToken'])
 
-        return redirect('/home')
+    try:
+        print("Successfully logged in!1")
+        login = auth.sign_in_with_email_and_password(email, password)
+        idToken = auth.get_account_info(login['idToken'])
+        uID = auth.current_user['localId']
+        return redirect('http://localhost:5000/home')
     except:
         print("Invalid email or password")
-        return redirect('localhost:5000/login')
+        return redirect('http://localhost:5000/login')
 
     
 # with app.app_context():
