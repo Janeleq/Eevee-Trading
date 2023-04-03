@@ -82,29 +82,56 @@ def getRatio(from_url, to_url):
         from_price = getPrice(from_price_data) 
     return (from_price / to_price)
 
-# Calls wallet to either retrieve or update balance. 
 '''
-Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email  
+getNumber(amount_owned, coin)
+'''
+def getNumber(amount_owned,coin):
+    amount_owned = amount_owned[coin]
+    return amount_owned
+
+# Calls wallet to update balance and retrieve . 
+'''
+Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
+Returns json in format of "updated <coin>" : updated balance 
 '''
 def updateWallet(from_currency, from_amount, to_currency, to_amount):
     coin = None
-    wallet_URL = "http://localhost:5100/wallet/" + coin
-    # Calls access_wallet to update from_amount
-    coin = from_currency
-    amount_owned = requests.get(wallet_URL, timeout=10)
-    
+    wallet_URL = "http://localhost:5100/wallet/{coin}"
+    id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
 
-    # Calls access_wallet to update to_amount
-
-    # Get new wallet balance for to and from currency
-
-    # Returns new wallet balance for to and from currency
+    old_from_balance = None
+    old_to_balance = None
     updated_from_balance = None
     updated_to_balance = None
-    
+
+    # Calls access_wallet to update from_amount and get new balance
+    coin = from_currency
+    old_from_balance = requests.get(wallet_URL)
+    if old_from_balance:
+        ownedcoin = old_from_balance.json()
+        ownedcoin = getNumber(ownedcoin, coin)
+        old_from_balance = ownedcoin
+        changed_amt = ownedcoin - from_amount
+        updated_from_balance = changed_amt
+        database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+
+    # Calls access_wallet to update to_amount and get new balance
+    coin = to_currency
+    old_to_balance = requests.get(wallet_URL)
+    if old_to_balance:
+        ownedcoin = updated_to_balance.json()
+        ownedcoin = getNumber(ownedcoin, coin)
+        old_to_balance = ownedcoin
+        changed_amt = ownedcoin + to_amount
+        updated_to_balance = changed_amt
+        database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+
+    # Returns new and old wallet balance for to and from currency
     return {
-        from_currency : updated_from_balance,
-        to_currency : updated_to_balance
+        "old" + from_currency : old_from_balance,
+        "old" + to_currency : old_to_balance,
+        "updated " + from_currency : updated_from_balance,
+        "updated" + to_currency : updated_to_balance,
     }
 
 if __name__ == "__main__":
