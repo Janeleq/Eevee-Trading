@@ -1,6 +1,7 @@
 from flask import redirect, request, url_for, render_template, Flask, jsonify
 import stripe
 import pyrebase
+import helpers
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 
@@ -60,7 +61,7 @@ def processTopUp():
     print(line_items)
     transaction_id = line_items['data'][0].id
     top_up_amt = line_items['data'][0].amount_total/100
-    id = "generated_uid1"
+    id = helpers.retrieveHelperVal('uID', 'helpers.txt')
     # top_up_amt is preset to 1 and stripe ensure no -ve numbers can be entered, so there wont be any human errors
     if top_up_amt != 0:
         status = jsonify (
@@ -71,7 +72,14 @@ def processTopUp():
             
         )
 
-        database.child("users").child(id).child('wallet_coins').update({"USD":top_up_amt})
+        retrieved_bal = database.child("users").child(id).child('wallet_coins').get()
+        print(retrieved_bal)
+        final_topup_amt = retrieved_bal.val()['USD']['qty'] + top_up_amt
+        database.child("users").child(id).child('wallet_coins').child('USD').update({"qty":final_topup_amt})
+        
+        # Update Transaction (User ID, line_items)
+        database.child("users").child(id).child('wallet_coins').child('USD').update({"qty":final_topup_amt})
+        
         print('Top Up Amount: ', top_up_amt)
         return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
     else:
@@ -96,4 +104,5 @@ def marketplace():
     return redirect(marketplace_URL)
 
 if __name__ == '__main__':
+    # processTopUp()
     app.run(port=5005, debug=True)
