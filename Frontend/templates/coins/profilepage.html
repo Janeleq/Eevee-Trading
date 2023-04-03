@@ -9,6 +9,9 @@
   <!-- <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}"> -->
   <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
+  <link rel="stylesheet" href="aos-by-red.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
   <!-- Bootstrap CSS -->
@@ -44,6 +47,76 @@
       text-align: center;
       color: white;
     }
+
+
+h1 {
+    text-align: center;
+
+}
+
+
+
+
+.settings-subbox {
+    margin-bottom: 28px;
+}
+
+#settings-card {
+    margin: 50px 0px 50px 0px;
+    padding: 40px 30px 60px 30px;
+
+    outline: none;
+    border: none;
+
+    width:540px;
+    background-color: azure;
+}
+
+#card-outline {
+    width: 100%;
+    background-color:#344c64;
+
+
+    display: flex;
+    justify-content: center;
+}
+
+#setting-icons {
+    height: 15px;
+    padding-right: 4px;
+    margin-bottom: 3px;
+    margin-left: 2px;
+}
+
+#editProfileModalPFP {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #344c64;
+    filter: brightness(50%);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    margin: auto;
+}
+
+#editProfileModalPFPOverlay {
+    height: 30px;
+    width: 30px;
+    z-index:2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    margin-top: 40px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: auto;
+}
+
   </style>
 
 </head>
@@ -75,112 +148,135 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid" style="color: white">
-    <div class="row">
-      <div class="col-lg-6 col-md-12" style="padding-top:20px">
-        <h1 class="words">Profile</h1>
-        <h4 style="padding-bottom:20px" class="words" id="email"></h4>
-        <h4 style="padding-bottom:40px" class="words" id="registered"></h4>
-        <p style="font-size:40px" class="words">Crypto Wallet 👛</p>
-        <table>
-          <tr>
-            <th>Coins Owned</th>
-            <th>Quantity Owned</th>
-            <th>Value/Coin (USD)</th>
-            <th>Total Value (USD)</th>
-          </tr>
-          <tr>
-            <td>USD</td>
-            <td id="USDquantity"></td>
-            <td id="USDprice">1</td>
-            <td id="USDTotalValue"></td>
-          </tr>
-          <tr>
-            <td>Binance Coin</td>
-            <td id="BNBquantity"></td>
-            <td id="BNBprice"></td>
-            <td id="BNBTotalValue"></td>
-          </tr>
-          <tr>
-            <td>Bitcoin</td>
-            <td id="BTCquantity"></td>
-            <td id="BTCprice"></td>
-            <td id="BTCTotalValue"></td>
-          </tr>
-          <tr>
-            <td>Cardano</td>
-            <td id="ADAquantity"></td>
-            <td id="ADAprice"></td>
-            <td id="ADATotalValue"></td>
-          </tr>
-          <tr>
-            <td>DOGE Coin</td>
-            <td id="DOGEquantity"></td>
-            <td id="DOGEprice"></td>
-            <td id="DOGETotalValue"></td>
-          </tr>
-          <tr>
-            <td>Ethereum</td>
-            <td id="ETHquantity"></td>
-            <td id="ETHprice"></td>
-            <td id="ETHTotalValue"></td>
-          </tr>
-          <tr>
-            <td>Solana</td>
-            <td id="SOLquantity"></td>
-            <td id="SOLprice"></td>
-            <td id="SOLTotalValue"></td>
-          </tr>
-          <tr>
-            <td colspan="3" style="text-align: center">Total Value</td>
-            <td id="totalamount"></td>
-          </tr>
-        </table>
-        
-        {{error}}
-        <form action="/topup" method="POST">
-          <button style="display: inline-block;" class="mt-1 btn btn-primary" type="submit" id="topup">Top Up Wallet</button>
-        </form>
-        <!-- <a href="/topup" class="btn btn-primary" id="topup">Top Up Wallet Balance</a> -->
-        <!-- {{top_up_amt}} -->
-      </div>
-      <div class="col-lg-6 col-md-12">
-        <h2 style="font-size:40px" class="words">Transaction History 📜</h2>
-        <a class="btn btn-primary" href="/transactions">Check Transactions</a>
-        {{retrieved_transactions}}
-        <table>
-          <tr>
-            <th>Currency/Coin</th>
-            <th>Amount Paid</th>
-            <th>Currency/Coin</th>
-            <th>Amount Received</th>
-            <th>Date</th>
-            <th>Time</th>
-          </tr>
-          <tr id="transactiondata">
-            <td>USD</td>
-            <td>100</td>
-            <td>ETH</td>
-            <td>0.03</td>
-            <td>31 March 2023</td>
-            <td>1730</td>
-          </tr>
 
-        </table>
-      </div>
-      </div>
-      <div class="col-lg-12 col-md-12" style="padding-top:100px">
-        <h1 class="words">Find out more!</h1>
-        <h4 class="words" style="padding-top:20px; padding-left:10px; padding-bottom:20px">You may also be interested
-          in...</h4>
-        <div class="words" id="recommendation" style="padding-left:10px">
+  <div id="bigContainer" style="color:white; margin-left: 10px; margin-bottom: 50px;">
+    <div class="container settings-background" style="margin: 0; ">
+          <div class="row">
+            <h3 class="mt-2 words">Profile</h3>
+            <hr>
+            <div class="col-lg-6 col-md-12" style="padding-top:20px">
+              
+              
+              <p style="font-weight: bold; font-size: large; color: #1199FA;" class="words">User Details </p>
+              <h4 style="padding-bottom:20px" class="words" id="email"></h4>
+              <h4 style="padding-bottom:40px" class="words" id="registered"></h4>
+              <p style="font-weight: bold; font-size: large; color: #1199FA; display: inline;" class="words">Crypto Wallet 👛</p>
+             
+
+              <table>
+                <tr>
+                  <th>Coins Owned</th>
+                  <th>Quantity Owned</th>
+                  <th>Value/Coin (USD)</th>
+                  <th>Total Value (USD)</th>
+                </tr>
+                <tr>
+                  <td>USD</td>
+                  <td id="USDquantity"></td>
+                  <td id="USDprice">1</td>
+                  <td id="USDTotalValue"></td>
+                </tr>
+                <tr>
+                  <td>Binance Coin</td>
+                  <td id="BNBquantity"></td>
+                  <td id="BNBprice"></td>
+                  <td id="BNBTotalValue"></td>
+                </tr>
+                <tr>
+                  <td>Bitcoin</td>
+                  <td id="BTCquantity"></td>
+                  <td id="BTCprice"></td>
+                  <td id="BTCTotalValue"></td>
+                </tr>
+                <tr>
+                  <td>Cardano</td>
+                  <td id="ADAquantity"></td>
+                  <td id="ADAprice"></td>
+                  <td id="ADATotalValue"></td>
+                </tr>
+                <tr>
+                  <td>DOGE Coin</td>
+                  <td id="DOGEquantity"></td>
+                  <td id="DOGEprice"></td>
+                  <td id="DOGETotalValue"></td>
+                </tr>
+                <tr>
+                  <td>Ethereum</td>
+                  <td id="ETHquantity"></td>
+                  <td id="ETHprice"></td>
+                  <td id="ETHTotalValue"></td>
+                </tr>
+                <tr>
+                  <td>Solana</td>
+                  <td id="SOLquantity"></td>
+                  <td id="SOLprice"></td>
+                  <td id="SOLTotalValue"></td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="text-align: center">Total Value</td>
+                  <td id="totalamount"></td>
+                </tr>
+              </table>
+              <a style="font-size: 12px; " class="mt-1 btn btn-primary" type="submit" href="/topup" id="topup">Top Up Wallet</a>  
+              {{error}}
+            
+              <!-- <a href="/topup" class="btn btn-primary" id="topup">Top Up Wallet Balance</a> -->
+              <!-- {{top_up_amt}} -->
+            </div>
+            <div class="mt-3 col-lg-6 col-md-12">
+              <p style="font-weight: bold; display: inline; font-size: large; color: #1199FA; ">Transaction History 📜</p>
+              <!-- {{retrieved_transactions}} -->
+              <table>
+                <tr>
+                  <th>Currency/Coin</th>
+                  <th>Amount Paid</th>
+                  <th>Currency/Coin</th>
+                  <th>Amount Received</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                </tr>
+                <tr id="transactiondata">
+                  <td>USD</td>
+                  <td>100</td>
+                  <td>ETH</td>
+                  <td>0.03</td>
+                  <td>31 March 2023</td>
+                  <td>1730</td>
+                </tr>
+              </table>
+              <a style= 'font-size: 12px; margin-left: 270px"' class="mt-1  btn btn-primary" href="/transactions">Check Transactions</a>
+            </div>
+           
+          </div>
+    </div>
+    </div>
+    <!-- CURRENT -->
+    <div class="settings-subbox" style="color: white;" >
+
+      <h3 style="" href="#supportModal" data-bs-toggle="modal"><img id="setting-icons" src="../assets/ui/support.png" alt="">&nbsp;Support</h3>
+      <hr>
+      <div class="col-lg-12 col-md-12" style="margin-left: 10px;">
+        <!-- <h4 class="words" style="margin-left: 10px; font-size: medium;">Find out more!</h4> -->
+
+        <div class="words" id="recommendation" style="padding-left:10px; font-size: 15px">
         </div>
       </div>
-    </div>
-  <footer class="text-center">
-    <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
-  </footer>
   </div>
+
+    </div>
+    <footer class="text-center" style="font-size:12px">
+      <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
+    </footer>
+  </div>
+
+  
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 3000,
+      once: false,
+    });
+  </script>
 
   <script>
      const top_up_wallet_URL = "http://localhost:5000/book"
@@ -437,7 +533,7 @@
   <script src="https://js.stripe.com/v3/"></script>
 
   <script>
-    const checkout_public_key = '{{checkout_public_key}}';
+    const checkout_public_key = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX';
     const checkout_session_id = '{{checkout_session_id}}';
   </script>
   
