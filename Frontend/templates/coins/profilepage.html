@@ -139,7 +139,7 @@ h1 {
             <a class="nav-link text-white" href="/profile">Profile 👤</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="/swap">Coin Swap</a>
+            <a class="nav-link text-white" href="/swap">Coin Swap 💳</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" id="logout">Sign-out</a>
@@ -152,7 +152,7 @@ h1 {
   <div id="bigContainer" style="color:white; margin-left: 10px; margin-bottom: 50px;">
     <div class="container settings-background" style="margin: 0; ">
           <div class="row">
-            <h3 class="mt-2 words">Profile</h3>
+            <h3 class="mt-2 words">Profile 👤</h3>
             <hr>
             <div class="col-lg-6 col-md-12" style="padding-top:20px">
               
@@ -285,7 +285,7 @@ h1 {
       var usdquantity = document.getElementById('USDquantity').textContent
       var usdprice = 1
       var usdvalue = document.getElementById('USDTotalValue')
-      var total = (Number(usdquantity) * usdprice).toFixed(2)
+      var total = (Number(usdquantity) * usdprice)
       usdvalue.innerHTML = total
     }
 
@@ -420,10 +420,10 @@ h1 {
     }
 
     function dummy(price, name) {
-      coinPrice = price.toFixed(2)
+      coinPrice = price
       previousPrice = document.getElementById(name + 'price').textContent
       quantity = document.getElementById(name + 'quantity').textContent
-      totalValue = (Number(quantity) * Number(coinPrice)).toFixed(2)
+      totalValue = (Number(quantity) * Number(coinPrice))
       if (coinPrice > previousPrice) {
         document.getElementById(name + 'price').innerHTML = `<span style="background-color: green">${coinPrice}</span>`
         document.getElementById(name + 'TotalValue').innerHTML = `<span style="background-color: green">${totalValue}</span>`
@@ -447,7 +447,7 @@ h1 {
       var totaleth = Number(document.getElementById('ETHTotalValue').textContent)
       var totalusd = Number(document.getElementById('USDTotalValue').textContent)
       var totalbnb = Number(document.getElementById('BNBTotalValue').textContent)
-      var total = (totalada + totalbtc + totalbnb + totalsol + totaldoge + totalusd + totaleth).toFixed(2)
+      var total = (totalada + totalbtc + totalbnb + totalsol + totaldoge + totalusd + totaleth)
 
       var previousTotal = Number(document.getElementById('totalamount').textContent)
       if (total > previousTotal) {
