@@ -9,6 +9,8 @@
   <title>Marketplace</title>
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
+  <link rel="stylesheet" href="aos-by-red.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
   <!-- Bootstrap CSS -->
@@ -67,9 +69,9 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="row py-3">
-      <div class="col-lg-7 col-md-12">
-        <h3 class="words" style="padding-bottom:10px">
+    <div class="row py-3" style="margin-left: 10px;">
+      <div class="mcol-lg-7 col-md-12" >
+        <h3 class="words" style="color: #1199FA; padding-bottom:10px">
           Welcome to the Marketplace!
         </h3>
         <p class="words">
@@ -78,41 +80,40 @@
           less intimidating for beginners to join.
         </p>
 
-        <h3 class="words">
+        <h3 class="words" style="color: #1199FA;">
           How to start off?
         </h3>
         <ol>
           <li>
-            As beginners, you will be given 5000 Buddies Coin which is exactly the same as United States Dollar. You
+            &nbsp; As beginners, you will be given 5000 Buddies Coin which is exactly the same as USD. You
             will be using this currency to trade.
           </li>
           <li>
-            To check for prices and trends, please click on the 6 coins that are available on the right of the browser
+            &nbsp; To check for prices and trends, you can click on the 6 coins that are available on this page.
           </li>
           <li>
-            In the individual coins section, you can buy and sell the coins at the price that is being shown on the
-            browser at any point of time (capability of buy and sell order is not available because the simulator is a
-            user-to-market transaction based simulation to not over-expose the users about the many different features
-            of different trading platforms)
+            &nbsp; In the individual coins section, you can buy or sell the coins at the price that is being shown on the
+            browser at any point of time.
           </li>
           <li>
-            Note that for now, users can only trade using Buddies Coin as it serves as a global cryptocurrency that can
+            &nbsp; Note that for now, users can only trade using Buddies Coin as it serves as a global cryptocurrency that can
             be converted into any other cryptocurrency other than itself.
           </li>
           <li>
-            To check the real-time balance of your wallet, please click on profile in the navigation bar at the top, and
-            click on my wallet. It will show the composition of coins and the total value of the wallet at that time.
+            &nbsp;To check the real-time balance of your wallet, please click on profile in the navigation bar at the top. It will show the composition of coins and the total value of the wallet at that time.
           </li>
         </ol>
-        <div id="app">
+        <div data-aos="flip-left" id="app">
+          <div class="row">
+            <div class="p-0 col-8">
           <table style="margin-bottom:20px; margin-left:30px; margin-top:20px; ">
             <tr>
-              <th>Name</th>
-              <th>Icon</th>
-              <th>Price ($USD)</th>
-              <th>Asset Website</th>
-              <th>White Paper</th>
-              <th>Proof Type</th>
+              <th style="color: #c6cacc;">Name</th>
+              <th style="color: #c6cacc;;">Icon</th>
+              <th style="color: #c6cacc;;">Price ($USD)</th>
+              <th style="color: #c6cacc;;">Asset Website</th>
+              <th style="color: #c6cacc;;">White Paper</th>
+              <th style="color: #c6cacc;;">Proof Type</th>
             </tr>
             <tr id="BNB">
 
@@ -133,47 +134,61 @@
 
             </tr>
           </table>
+          </div>
+          <div class="col-4">
+            <div data-aos="flip-left">
+              <h3 style="color: #1199FA;">List of Available Cryptocurrencies</h3>
+      
+              <ol id="cryptolinks" style="color:white">
+                <li>
+                  <a href="BTC"><span><img src="{{url_for('static', filename='images/coins/btc.png')}}" alt="" class="img"></span>Bitcoin (BTC)</a>
+                </li>
+                <li>
+                  <a href="ETH"><span><img src="{{url_for('static', filename='images/coins/eth.png')}}" alt="" class="img"></span>Ethereum (ETH)</a>
+                </li>
+                <li>
+                  <a href="BNB"><span><img src="{{url_for('static', filename='images/coins/bnb.png')}}" alt="" class="img"></span>Binance (BNB)</a>
+                </li>
+                <li>
+                  <a href="DOGE"><span><img src="{{url_for('static', filename='images/coins/doge.png')}}" alt="" class="img"></span>DOGE Coin (Doge)</a>
+                </li>
+                <li>
+                  <a href="SOL"><span><img src="{{url_for('static', filename='images/coins/sol.png')}}" alt="" class="img"></span> Solana (SOL)</a>
+                </li>
+                <li>
+                  <a href="ADA"><span><img src="{{url_for('static', filename='images/coins/ada.png')}}" alt="" class="img"></span>Cardano (ADA)</a>
+                </li>
+              </ol>
+              </div>
+          </div>
         </div>
       </div>
-      <div class="col-lg-5 col-md-12">
-        <h3>List of Available Cryptocurrencies</h3>
-
-        <ol id="cryptolinks" style="color:white">
-          <li>
-            <a href="BTC"><span><img src="{{url_for('static', filename='images/coins/btc.png')}}" alt="" class="img"></span>Bitcoin (BTC)</a>
-          </li>
-          <li>
-            <a href="ETH"><span><img src="{{url_for('static', filename='images/coins/eth.png')}}" alt="" class="img"></span>Ethereum (ETH)</a>
-          </li>
-          <li>
-            <a href="BNB"><span><img src="{{url_for('static', filename='images/coins/bnb.png')}}" alt="" class="img"></span>Binance (BNB)</a>
-          </li>
-          <li>
-            <a href="DOGE"><span><img src="{{url_for('static', filename='images/coins/doge.png')}}" alt="" class="img"></span>DOGE Coin (Doge)</a>
-          </li>
-          <li>
-            <a href="SOL"><span><img src="{{url_for('static', filename='images/coins/sol.png')}}" alt="" class="img"></span> Solana (SOL)</a>
-          </li>
-          <li>
-            <a href="ADA"><span><img src="{{url_for('static', filename='images/coins/ada.png')}}" alt="" class="img"></span>Cardano (ADA)</a>
-          </li>
-        </ol>
-        </div>
       </div>
     </div>
   </div>
-  </div>
-  <p style="color:red; font-weight:bold">
-    Disclaimer Alert: This simulator is not meant to reflect exactly how one uses other platforms to trade. It is
-    just a start for users to trade without the use of real money and to learn
-    from their mistakes and experiences before entering this real crypto-trading scene. Thus, we only offer 6
-    coins up for the simulation and a limited time-frame graph for each coin so as to not intimidate new users.
-    If they want to know more about the trends, they can go to any crypto market websites like Binance to analyse
-    the trends there.
+
+  <p style="margin-left: 10px; text-align:center; color:red; font-weight:bold">
+    Disclaimer Alert:<br/>
+    <p style="margin-left:25%; max-width: 50%; align-self: center; font-size: 10px; text-align:center; color:red;">
+      This simulator is not meant to reflect exactly how one uses other platforms to trade. It is
+      just a start for users to trade without the use of real money and to learn
+      from their mistakes and experiences before entering this real crypto-trading scene. Thus, we only offer 6
+      coins up for the simulation and a limited time-frame graph for each coin so as to not intimidate new users.
+      If they want to know more about the trends, they can go to any crypto market websites like Binance to analyse
+      the trends there.
+    </p>
   </p>
-  <footer class="text-center">
+  <footer class="text-center" style="font-size:12px">
     <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
   </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+  </script>
 
   <script>
     const get_all_prices = "http://localhost:5000/price";

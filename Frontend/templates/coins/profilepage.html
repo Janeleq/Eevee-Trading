@@ -9,6 +9,9 @@
   <!-- <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}"> -->
   <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
+  <link rel="stylesheet" href="aos-by-red.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
   <!-- Bootstrap CSS -->
@@ -261,10 +264,19 @@ h1 {
   </div>
 
     </div>
-  <footer class="text-center">
-    <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
-  </footer>
+    <footer class="text-center" style="font-size:12px">
+      <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
+    </footer>
   </div>
+
+  
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 3000,
+      once: false,
+    });
+  </script>
 
   <script>
      const top_up_wallet_URL = "http://localhost:5000/book"
