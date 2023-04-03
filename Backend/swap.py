@@ -82,9 +82,6 @@ def getRatio(from_url, to_url):
         from_price = getPrice(from_price_data) 
     return (from_price / to_price)
 
-'''
-getNumber(amount_owned, coin)
-'''
 def getNumber(amount_owned,coin):
     amount_owned = amount_owned[coin]
     return amount_owned
@@ -113,7 +110,7 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
         old_from_balance = ownedcoin
         changed_amt = ownedcoin - from_amount
         updated_from_balance = changed_amt
-        database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+        database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt})
 
     # Calls access_wallet to update to_amount and get new balance
     coin = to_currency
@@ -124,7 +121,7 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
         old_to_balance = ownedcoin
         changed_amt = ownedcoin + to_amount
         updated_to_balance = changed_amt
-        database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":changed_amt})
+        database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
 
     # Returns new and old wallet balance for to and from currency
     return {
