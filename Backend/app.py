@@ -60,32 +60,32 @@ def swap():
 # #BINANCE
 @app.route("/BNB")
 def binance():
-    return redirect("http://127.0.0.1:5010/BNB")
+    return redirect("http://localhost:5010/BNB")
 
 #BITCOIN
 @app.route("/BTC")
 def bitcoin():
-    return redirect("http://127.0.0.1:5010/BTC")
+    return redirect("http://localhost:5010/BTC")
 
 #CARDANO
 @app.route("/ADA")
 def cardano():
-    return redirect("http://127.0.0.1:5010/ADA")
+    return redirect("http://localhost:5010/ADA")
 
 #DOGE
 @app.route("/DOGE")
 def doge():
-    return redirect("http://127.0.0.1:5010/DOGE")
+    return redirect("http://localhost:5010/DOGE")
 
 #ETHEREUM
 @app.route("/ETH")
 def ethereum():
-    return redirect("http://127.0.0.1:5010/ETH")
+    return redirect("http://localhost:5010/ETH")
 
 # SOLANA
 @app.route("/SOL")
 def solana():
-    return redirect("http://127.0.0.1:5010/SOL")
+    return redirect("http://localhost:5010/SOL")
 
 @app.route('/topup', methods=['GET', 'POST'])
 def topup():

@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
   <title>Binance</title>
   <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
   <!-- Bootstrap CSS -->
@@ -50,7 +51,7 @@
 
   <nav id="nav" class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid" id="header">
-      <a class="navbar-brand text-white" href="/home"><img
+      <a class="navbar-brand text-white" href="http://localhost:5000/home"><img
           src="{{url_for('static', filename='images/eevee_logo.PNG')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
