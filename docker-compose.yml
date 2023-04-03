@@ -33,3 +33,49 @@ services:
       PYTHONUNBUFFERED: 1
     ports:
       - "5000:5004"
+
+  ##################################
+  # Authenticate: The Authenticate microservice
+  ##################################
+  authenticate:
+    build: 
+      context: ./
+      dockerfile: swap.Dockerfile
+    image: <dockerid>/authenticate:eevee
+    restart: always
+    environment:
+      authenticate_URL: http://authenticate:5000/authenticate
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5004"
+
+
+  ##################################
+  # Transaction Log: The Transaction Log microservice
+  ##################################
+  transactionLog:
+    build: 
+      context: ./
+      dockerfile: transactionLog.Dockerfile
+    image: <dockerid>/transactionLog:eevee
+    restart: always
+    environment:
+      transactionLog_URL: http://transactionLog:5000/transactionLog
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5004"
+      
+  ##################################
+  # Make Transaction: The Make Transaction microservice
+  ##################################
+  makeTransaction:
+    build: 
+      context: ./
+      dockerfile: makeTransaction.Dockerfile
+    image: <dockerid>/makeTransaction:eevee
+    restart: always
+    environment:
+      makeTransaction_URL: http://makeTransaction:5000/makeTransaction
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5000:5004"

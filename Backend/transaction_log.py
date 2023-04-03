@@ -2,12 +2,18 @@
 # The above shebang (#!) operator tells Unix-like environments
 # to run this file as a python3 script
 
+#RETURNS A JSON OF DIFF TRANSACTIONS
+
 import json
 import os
 
 import amqp_setup
 
 monitorBindingKey='#'
+
+@app.route('/transaction', methods=['GET', 'POST'])
+def topup():
+    pass
 
 def receiveTransactionLog():
     amqp_setup.check_setup()

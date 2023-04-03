@@ -13,13 +13,17 @@
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore-compat.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
 	<script type="module" src="{{url_for('static', filename='js/register.mjs')}}"></script>
+	<link rel="stylesheet" href="aos-by-red.css">
+	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
 <body>
 	<div class="container">
 		{{ HOSTNAME }}, {{ IP }}
+		<!-- <img class="fixed-bottom" style="right:0;" src="{{url_for('static', filename='images/eevee_logo.png')}}"> -->
 		<div class="d-flex justify-content-center h-100">
-			<div class="card">
+			
+			<div data-aos="zoom-in" class="card">
 				<div class="card-header">
 					<h3>Register</h3>
 				</div>
@@ -48,13 +52,23 @@
 						Already have an account?
 					</div>
 					<div class="d-flex justify-content-center links">
-						<p>Click <span><a href="/login">here</span></a>&nbsp;to Sign In now!
+						<p>Click<span><a href="/login">here</span></a>&nbsp;to Sign In now!
 						<p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<footer>
+		<p class="text-muted text-center mb-0 small">Copyright ©EEVEE Trading 2023</p>
+	</footer>
+	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+	<script>
+	  AOS.init({
+		duration: 1000,
+		once: true,
+	  });
+	</script>
 </body>
 
 </html>

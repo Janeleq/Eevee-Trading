@@ -4,8 +4,23 @@ import os, json
 import requests
 from flask_cors import CORS
 
+import pyrebase
+
 app = Flask(__name__)
 CORS(app)
+
+firebase_config = {
+    "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
+    "authDomain": "cryptobuds-ba428.firebaseapp.com",
+    "databaseURL": "https://cryptobuds-ba428-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "cryptobuds-ba428",
+    "storageBucket": "cryptobuds-ba428.appspot.com",
+    "messagingSenderId": "72206190161",
+    "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
+    "measurementId": "G-BVXDMYJR2K"
+}
+fb = pyrebase.initialize_app(firebase_config)
+database = fb.database()
 
 @app.route("/swap", methods = ['GET'])
 def swap():
@@ -19,12 +34,15 @@ def swap():
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
 
-    # Retrieves wallet balance 
-    
+    gas_fee = 0.01
+    if from_currency == to_currency:
+        gas_fee = 0 
 
-    conversion_amount = float(from_amount) * float(conversion_ratio) * float(0.99)
+    conversion_amount = float(from_amount) * float(conversion_ratio) * float(1 - gas_fee)
+    to_amount = request.args.get("to_amount")
 
     #Updates wallet
+    updateWallet(from_currency, from_amount, to_currency, to_amount)
 
     #Status of successful swap
     if conversion_amount:
@@ -68,8 +86,27 @@ def getRatio(from_url, to_url):
 '''
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email  
 '''
-def callWallet(type, from_currency, to_currency, user_email):
-    pass 
+def updateWallet(from_currency, from_amount, to_currency, to_amount):
+    coin = None
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+    # Calls access_wallet to update from_amount
+    coin = from_currency
+    amount_owned = requests.get(wallet_URL, timeout=10)
+    
+
+    # Calls access_wallet to update to_amount
+
+    # Get new wallet balance for to and from currency
+
+    # Returns new wallet balance for to and from currency
+    updated_from_balance = None
+    updated_to_balance = None
+    
+    return {
+        from_currency : updated_from_balance,
+        to_currency : updated_to_balance
+    }
 
 if __name__ == "__main__":
+    print("This is flask " + os.path.basename(__file__))
     app.run(port=5004, debug=True)

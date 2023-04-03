@@ -27,31 +27,32 @@ firebase_config = {
     "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
     "measurementId": "G-BVXDMYJR2K"
 }
-
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
+
 
 #set up RabbitMQ Connection
 # connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 # channel = connection.channel()
 # channel.queue_declare(queue='buy_order_queue')
 marketplace_URL = "http://localhost:5000/marketplace"
-price_URL =  "http://127.0.0.1:5001" 
+price_URL = "http://127.0.0.1:5001" 
 # buy_transaction_URL =  "http://localhost:5004/" 
 # sell_transaction_URL =  "http://localhost:5004/" 
 
-def getQty(qty):
-    return qty
 
+
+def dummy(qty):
+    return qty
 
 def getPrice(response):
     price = response['data']['price']
     price = str(price)
     return price
 
-def getAmount(amount_owned):
-    amount = amount_owned
-    return amount
+def getNumber(number,coin):
+    number = number[coin]
+    return number
 
 # #BINANCE
 @app.route("/BNB")
@@ -87,132 +88,171 @@ def solana():
 @app.route("/<string:coin>/buy")
 def buycc(coin):
     qty = request.args.get('buyqty')
-    qty = getQty(qty)
+    qty = dummy(qty)
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet" + coin
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+    #get price
     response = requests.get(price_URL, timeout=10)
+    #get USD owned
     amount_owned = requests.get(wallet_USD, timeout=10)
     if response:
+        #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        
-        if amount_owned:
-            amount = amount_owned.json()
-            amount = getAmount(amount)
-            if amount>= total_amount:
-                id = "generated_uid1"
-                coinowned = requests.get(f"http://localhost:5100/wallet/{coin}")
-                ownedcoin = coinowned.json()
-                ownedcoin = getAmount(ownedcoin)
-                decrease = amount - total_amount
-                increase = float(ownedcoin) + float(qty)
-                database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
-                database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
-                result = {
-                    "code":200,
-                    "message": "Transaction successful!"
-                }, 200
-                return result
-            
-        else:
+
+    if amount_owned:
+        amount_owned = amount_owned.json()
+        qty_usd_owned = getNumber(amount_owned, "USD")
+
+    if qty_usd_owned >= total_amount:
+        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+        qty_coin_owned = requests.get(wallet_URL)
+        if qty_coin_owned:
+            ownedcoin = qty_coin_owned.json()
+            ownedcoin = getNumber(ownedcoin, coin)
+            decrease = qty_usd_owned - total_amount
+            increase = float(ownedcoin) + float(qty)
+            database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
+            database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
             result = {
-                "code" : 400,
-                "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
-            }, 400
+                "code":200,
+                "message": "Transaction successful!"
+            }, 200
             return result
-        #access wallet total usd balance
-        #if wallet balance >= total_amount: carry on
-        #else error
+        else:
+            return "haha"
+    else:
+        result = {
+            "code" : 400,
+            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
+        }, 400
+        return result 
     
+
 @app.route("/<string:coin>/sell")
 def sellcc(coin):
     qty = request.args.get('sellqty')
-    qty = getQty(qty)
+    qty = dummy(qty)
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet" + coin
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+    #get price
     response = requests.get(price_URL, timeout=10)
-    amount_owned = requests.get(wallet_USD, timeout=10)
-    coinqty_owned = requests.get()
-    # access wallet qty of coin 
-    #if qty of coin in wallet >= sold: carry out transaction
-    #else: error
+
     if response:
+        #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-        if amount_owned:
-            amount = amount_owned.json()
-            amount = getAmount(amount)
-            if amount>= total_amount:
-                id = "generated_uid1"
-                coinowned = requests.get(f"http://localhost:5100/wallet/{coin}")
-                ownedcoin = coinowned.json()
-                ownedcoin = getAmount(ownedcoin)
-                decrease = amount - total_amount
-                increase = float(ownedcoin) + float(qty)
-                database.child("users").child(id).child('wallet_coins').child("USD").update({"USD": decrease})
-                database.child("users").child(id).child('wallet_coins').child(coin).update({coin: increase})
-                result = {
-                    "code":200,
-                    "message": "Transaction successful!"
-                }, 200
-                return result
-            
-        else:
-            result = {
-                "code" : 400,
-                "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
-            }, 400
-            return result
 
+    coin_owned = requests.get(wallet_URL)
+    if coin_owned:
+        coin_owned = coin_owned.json()
+        qty_coin_owned = getNumber(coin_owned, coin)
+
+    if qty_coin_owned >= float(qty):
+        id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+        amount_owned = requests.get(wallet_USD)
+        if amount_owned:
+            qty_usd_owned = amount_owned.json()
+            qty_usd_owned = getNumber(qty_usd_owned, "USD")
+            decrease = float(qty_coin_owned) - float(qty)
+            increase = qty_usd_owned + total_amount
+            database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":increase})
+            database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": decrease})
+            result = {
+                "code":200,
+                "message": "Transaction successful!"
+            }, 200
+            return result
+        else:
+            return "haha"
     else:
-        return("Hello World")
-    
+        result = {
+            "code" : 400,
+            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
+        }, 400
+        return result 
+
+
 @app.route("/<string:coin>/buyorder")
 def buyordercc(coin):
-    qty = request.args.get('buyorderqty')
+    boqty = request.args.get('buyorderqty')
+    boqty = dummy(boqty)
     boprice = request.args.get('buyorderprice')
+    boprice = dummy(boprice)
+    wallet_USD = "http://localhost:5100/wallet/USD"
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
+    #get USD owned
+
+    #1. get total amount needed
+
+    #2. get wallet balance
+
+    #3. compare --> if wallet balance >= total amount --> place in order/ create order details
+
+    #4. AMQP stuff
+
+    
+    amount_owned = requests.get(wallet_USD, timeout=10)
+    
+    total_buy_amount = round(float(boqty) * float(boprice),2)
+
     if response:
+        #get total price needed to pay with current price + quantity
         response = response.json()
-        current_price = getPrice(response)
-        total_amount = round(float(qty) * float(boprice),2)
-        #if total_amount <= wallet balance --> place buy order
+        price = getPrice(response)
+        
+    if amount_owned:
+        amount_owned = amount_owned.json()
+        qty_usd_owned = getNumber(amount_owned, "USD")
+
+
+        #if total_amount <= wallet balance --> place buy order and create id (ascending order) 
         #else --> error
         #update wallet + cryptocurrency owned
-        
-        return str(total_amount)
+        return
 
     else:
         return 0 
+# while True:
+#     check_order()
+#     time.sleep(10)
+    
+def check_order(orderid):
+    return
+
 
 
 @app.route("/<string:coin>/sellorder")
 def sellordercc(coin):
-    qty = request.args.get('sellorderqty')
+    soqty = request.args.get('sellorderqty')
+    soqty = dummy(soqty)
     soprice = request.args.get('sellorderprice')
+    soprice = dummy(soprice)
+    wallet_USD = "http://localhost:5100/wallet/USD"
+    wallet_URL = "http://localhost:5100/wallet/" + coin
+
     price_URL = "http://localhost:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
-    if response:
-        response = response.json()
-        current_price = getPrice(response)
-        total_amount = round(float(qty) * float(current_price),2)
-        #if qty sold <= qty owned --> place sell order
-        #else --> error
-        #update wallet + cryptocurrency owned
+    #get USD owned
 
-        return str(total_amount)
+    #1. get qty to sell
 
-    else:
-        return 0 
+    #2. get qty owned
+
+    #3. compare --> if qty owned >= qty sold --> place in order/ create order details
+
+    #4. AMQP stuff
 
 
 if __name__ == '__main__':

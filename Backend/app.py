@@ -93,6 +93,12 @@ def topup():
     print("\n--- Invoking Topup Microservice ---")
     return redirect(topUpURL)
 
+@app.route('/transactions', methods=['GET', 'POST'])
+def checkTransactions():
+    TransactionURL = 'http://localhost:5006/transactions'
+    print("\n--- Invoking Transaction Log Microservice ---")
+    return redirect(TransactionURL)
+
 
 @app.route('/thanks')
 def processTopUp():

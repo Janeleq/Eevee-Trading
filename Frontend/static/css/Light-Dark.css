@@ -1,21 +1,18 @@
-:root {
-	--primary-color: #EEEEEE;
-	--secondary-color: maroon;
-}
+
 
 body {
-	background-image: url("../images/homepageWithLogin/home.jpg");
+	background-color: rgb(6, 17, 33);
 	animation: run 30s ease infinite;
 	background-size: 400% 400%;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#nav {
+/* #nav {
 	background-image: url("../images/homepageWithLogin/home.jpg");
 	animation: run 30s ease infinite;
 	background-size: 400% 0%;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
-}
+} */
 
 @keyframes run {
 	0% {

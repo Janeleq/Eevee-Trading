@@ -181,7 +181,7 @@ function addListener(){
       // Sign-out successful.
       setTimeout(() => {
         alert("Signed out!")
-        window.location.href = "../Login+Register Page/Login.html";
+        window.location.href = "../login";
     }, 1000);
     }).catch((error) => {
       // An error happened.
