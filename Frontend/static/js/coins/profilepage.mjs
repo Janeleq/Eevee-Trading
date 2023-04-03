@@ -31,15 +31,10 @@ onAuthStateChanged(auth, (user) => {
 
 function getValues(data, uid) {
   wallet_coins = data[uid].wallet_coins
-  // var user = data[uid]
-  // var dateRegistered = user.DateRegistered
-  // var start = dateRegistered.indexOf('GMT')
-  // var dateRegistered = dateRegistered.substring(0, start)
-  // console.log(dateRegistered)
   var username = data[uid].username
   var datecreated = data[uid].date_created
   var wallet_coins = data[uid].wallet_coins
-  var wallet_balance = data[uid].wallet_coins["USD"]
+
   var ada = wallet_coins.ADA
   var usd = wallet_coins.USD
   var bnb = wallet_coins.BNB
@@ -47,16 +42,9 @@ function getValues(data, uid) {
   var doge = wallet_coins.DOGE
   var eth = wallet_coins.ETH
   var sol = wallet_coins.SOL
-  console.log(ada)
-  console.log(usd)
-  console.log(bnb)
-  console.log(btc)
-  console.log(doge)
-  console.log(eth)
-  console.log(sol)
+
   document.getElementById('email').innerHTML = username
   document.getElementById('registered').innerHTML = datecreated
-  document.getElementById('wallet_balance').innerHTML = wallet_balance
   document.getElementById('ADAquantity').innerHTML = ada.qty
   document.getElementById('BNBquantity').innerHTML = bnb.qty
   document.getElementById('BTCquantity').innerHTML = btc.qty

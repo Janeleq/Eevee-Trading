@@ -160,7 +160,6 @@ h1 {
               <p style="font-weight: bold; font-size: large; color: #1199FA;" class="words">User Details </p>
               Email:<h4 style="padding-bottom:10px" class="words" id="email"></h4>
               Registered on:<h4 style="padding-bottom:10px" class="words" id="registered"></h4>
-              Wallet Balance: <h4 style="padding-bottom:40px" class="words" id="wallet_balance"></h4>
 
               <p style="font-weight: bold; font-size: large; color: #1199FA; display: inline;" class="words">Crypto Wallet 👛</p>
              
@@ -253,7 +252,7 @@ h1 {
     </div>
     </div>
     <!-- CURRENT -->
-    <div class="settings-subbox" style="color: white;" >
+    <div class="settings-subbox" style="color: white;">
 
       <h3 style="" href="#supportModal" data-bs-toggle="modal"><img id="setting-icons" src="  " alt="">&nbsp;Support</h3>
       <hr>
@@ -286,7 +285,7 @@ h1 {
       var usdquantity = document.getElementById('USDquantity').textContent
       var usdprice = 1
       var usdvalue = document.getElementById('USDTotalValue')
-      var total = Number(usdquantity) * usdprice
+      var total = (Number(usdquantity) * usdprice).toFixed(2)
       usdvalue.innerHTML = total
     }
 
