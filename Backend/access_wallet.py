@@ -1,5 +1,5 @@
 # Complex Wallet Microservice
-from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response
+from flask import Flask, render_template, session, request, redirect,url_for,flash,current_app,make_response, jsonify
 from flask_cors import CORS
 import requests
 import pyrebase 

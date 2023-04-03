@@ -37,13 +37,13 @@ database = fb.database()
 # channel.queue_declare(queue='buy_order_queue')
 marketplace_URL = "http://localhost:5000/marketplace"
 price_URL = "http://127.0.0.1:5001" 
-# buy_transaction_URL =  "http://localhost:5004/" 
-# sell_transaction_URL =  "http://localhost:5004/" 
+# buy_transaction_URL = "http://localhost:5004/" 
+# sell_transaction_URL = "http://localhost:5004/" 
 
 
 
 def dummy(qty):
-    return qty
+    return float(qty)
 
 def getPrice(response):
     price = response['data']['price']
@@ -144,17 +144,17 @@ def sellcc(coin):
     wallet_URL = "http://localhost:5100/wallet/" + coin
     #get price
     response = requests.get(price_URL, timeout=10)
+    coin_owned = requests.get(wallet_URL)
+
+    if coin_owned:
+        coin_owned = coin_owned.json()
+        qty_coin_owned = getNumber(coin_owned, coin)
 
     if response:
         #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
         total_amount = round(float(qty) * float(price),2)
-
-    coin_owned = requests.get(wallet_URL)
-    if coin_owned:
-        coin_owned = coin_owned.json()
-        qty_coin_owned = getNumber(coin_owned, coin)
 
     if qty_coin_owned >= float(qty):
         amount_owned = requests.get(wallet_USD)
