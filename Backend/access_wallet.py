@@ -4,6 +4,7 @@ from flask_cors import CORS
 import requests
 import pyrebase 
 import stripe 
+import helpers
 
 app = Flask(__name__)
 CORS(app)
@@ -22,10 +23,10 @@ firebase_config = {
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
-
 @app.route("/wallet")
 def retrieveWallet():
-    id="DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+    id = helpers.retrieveHelperVal('uID','helpers.txt')
+    
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
     currencyowned = {
@@ -35,24 +36,23 @@ def retrieveWallet():
         "DOGE": wallet_coins['DOGE']['qty'],
         "ETH": wallet_coins['ETH']['qty'],
         "SOL": wallet_coins['SOL']['qty'],
-        "USD": wallet_coins['USD']['qty'],
     }
     return currencyowned
 
 @app.route("/wallet/<string:coin>")
 def retrieveCurrency(coin):
-    id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+    id = helpers.retrieveHelperVal('uID','helpers.txt')
+
     userdetails = database.child("users").child(id).get()
     wallet_coins = userdetails.val()['wallet_coins']
-    coinowned = {
-        coin:wallet_coins[coin]['qty']
-    }
-    return coinowned
+    return str((wallet_coins[coin]['qty']))
 
 @app.route('/profile')
 def profile():
     return render_template('coins/profilepage.html')
 
+
+            
 # publishable_key = "pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX"
 # stripe.api_key = "sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX"
 
