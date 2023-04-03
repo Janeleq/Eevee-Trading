@@ -2,6 +2,7 @@ from flask import redirect, request, url_for, render_template, Flask, jsonify
 import stripe
 import pyrebase
 import helpers
+from datetime import datetime
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 
@@ -80,7 +81,8 @@ def processTopUp():
         
     # Update Transaction in logs
         transaction_type = 'topup'
-        data = {"userid": id, "transactionid": transaction_id, "transaction_type": transaction_type, "amount": top_up_amt, }
+        time = datetime.now()
+        data = {"userid": id, "transactionid": transaction_id, "date": str(time), "transaction_type": transaction_type, "amount": top_up_amt, }
         database.child("users").child(id).child('transactions').push(data)
 
         
