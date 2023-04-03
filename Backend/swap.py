@@ -4,8 +4,23 @@ import os, json
 import requests
 from flask_cors import CORS
 
+import pyrebase
+
 app = Flask(__name__)
 CORS(app)
+
+firebase_config = {
+    "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
+    "authDomain": "cryptobuds-ba428.firebaseapp.com",
+    "databaseURL": "https://cryptobuds-ba428-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "cryptobuds-ba428",
+    "storageBucket": "cryptobuds-ba428.appspot.com",
+    "messagingSenderId": "72206190161",
+    "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
+    "measurementId": "G-BVXDMYJR2K"
+}
+fb = pyrebase.initialize_app(firebase_config)
+database = fb.database()
 
 @app.route("/swap", methods = ['GET'])
 def swap():
@@ -72,7 +87,12 @@ def getRatio(from_url, to_url):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email  
 '''
 def updateWallet(from_currency, from_amount, to_currency, to_amount):
+    coin = None
+    wallet_URL = "http://localhost:5100/wallet/" + coin
     # Calls access_wallet to update from_amount
+    coin = from_currency
+    amount_owned = requests.get(wallet_URL, timeout=10)
+    
 
     # Calls access_wallet to update to_amount
 
