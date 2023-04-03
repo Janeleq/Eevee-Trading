@@ -105,7 +105,7 @@ def buycc(coin):
 
     if amount_owned:
         amount_owned = amount_owned.json()
-        qty_usd_owned = getNumber(amount_owned, "USD")
+        qty_usd_owned = getNumber(amount_owned)
 
     if qty_usd_owned >= total_amount:
         qty_coin_owned = requests.get(wallet_URL)
@@ -113,7 +113,7 @@ def buycc(coin):
             # id = 'DsU3Gmoe1McjyXU8JA66GfiBG7L2'
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             ownedcoin = qty_coin_owned.json()
-            ownedcoin = getNumber(ownedcoin, coin)
+            ownedcoin = getNumber(ownedcoin)
             decrease = qty_usd_owned - total_amount
             increase = float(ownedcoin) + float(qty)
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
@@ -147,7 +147,7 @@ def sellcc(coin):
 
     if coin_owned:
         coin_owned = coin_owned.json()
-        qty_coin_owned = getNumber(coin_owned, coin)
+        qty_coin_owned = getNumber(coin_owned)
 
     if response:
         #get total price needed to pay with current price + quantity
@@ -160,7 +160,7 @@ def sellcc(coin):
         if amount_owned:
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             qty_usd_owned = amount_owned.json()
-            qty_usd_owned = getNumber(qty_usd_owned, "USD")
+            qty_usd_owned = getNumber(qty_usd_owned)
             decrease = float(qty_coin_owned) - float(qty)
             increase = qty_usd_owned + total_amount
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":increase})

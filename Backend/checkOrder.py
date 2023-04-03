@@ -12,16 +12,18 @@ import threading
 app = Flask(__name__)
 CORS(app)
 
-RABBITMQ_HOST = 'localhost'
-RABBITMQ_PORT = 5672
-RABBITMQ_USER = 'guest'
-RABBITMQ_PASS = 'guest'
-RABBITMQ_EXCHANGE = 'buyorders'
-RABBITMQ_QUEUE = 'buyordersqueue'
+# RABBITMQ_HOST = 'localhost'
+# RABBITMQ_PORT = 5672
+# RABBITMQ_USER = 'guest'
+# RABBITMQ_PASS = 'guest'
+# RABBITMQ_BUY_EXCHANGE = 'buyorders'
+# RABBITMQ_BUY_QUEUE = 'buyordersqueue'
+# RABBITMQ_SELL_EXCHANGE = 'sellorders'
+# RABBITMQ_SELL_QUEUE = 'sellordersqueue'
 
+# connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)))
 
-
-
+# channel = connection.channel()
 
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
@@ -33,6 +35,10 @@ firebase_config = {
     "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
     "measurementId": "G-BVXDMYJR2K"
 }
+
+fb = pyrebase.initialize_app(firebase_config)
+database = fb.database()
+
 def dummy(lel):
     price = lel.json()['data']['price']
     return float(price)
@@ -54,21 +60,18 @@ def checkBuyOrderStatus():
                     current_coin_pricing = dummy(current_coin_pricing)
                     if current_coin_pricing <= order['buy_price']:
                         buy=requests.get('http://localhost:5010/'+ coin_of_interest + '/buy?buyqty=' + str(order['buy_quantity']))
-                        database.child('users').child(id).child('buyorders').remove(coin_of_interest)
                         if buy:
-                            connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)))
-                            channel = connection.channel()
-
+                            total_amount_spent = float(order['buy_quantity']) * current_coin_pricing
+                            database.child('users').child(id).child('buyorders').remove(coin_of_interest)
                             # Declare exchange and queue
-                            channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, exchange_type='fanout')
-                            channel.queue_declare(queue=RABBITMQ_QUEUE)
-                            channel.queue_bind(exchange=RABBITMQ_EXCHANGE, queue=RABBITMQ_QUEUE)
-                            # Publish order to exchange
-                            # order = {'symbol': data['symbol'], 'amount': data['amount'], 'price': data['price'], 'total_value': total_value}
-                            # channel.basic_publish(exchange=RABBITMQ_EXCHANGE, routing_key='', body=json.dumps(order))
-
-                            # Close RabbitMQ connection
-                            connection.close()
+                            # channel.exchange_declare(exchange=RABBITMQ_BUY_EXCHANGE, exchange_type='fanout')
+                            # channel.queue_declare(queue=RABBITMQ_BUY_QUEUE)
+                            # channel.queue_bind(exchange=RABBITMQ_BUY_EXCHANGE, queue=RABBITMQ_BUY_QUEUE)
+                            # # Publish order to exchange
+                            # order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
+                            # channel.basic_publish(exchange=RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # # Close RabbitMQ connection
+                            # connection.close()
                             print('donezbuyer')
                     else:
                         pass
@@ -95,22 +98,30 @@ def checkSellOrderStatus():
                     current_coin_pricing = dummy(current_coin_pricing)
                     if current_coin_pricing >= order['sell_price']:
                         print('wassupseller')
-                        sell=requests.get('http://localhost:5010/'+ coin_of_interest + '/sell?sellqty=' + str(order['sell_quantity']))
-                        database.child('users').child(id).child('sellorders').remove(coin_of_interest)
+                        sell=requests.get('http://localhost:5010/'+ coin_of_interest + '/sell?sellqty='+str(order['sell_quantity']))
                         if sell:
+                            total_amount_gain = float(order['sell_quantity']) * current_coin_pricing
+                            database.child('users').child(id).child('sellorders').remove(coin_of_interest)
+                            # connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)))
+                            # channel = connection.channel()
+
+                            # # Declare exchange and queue
+                            # channel.exchange_declare(exchange=RABBITMQ_SELL_EXCHANGE, exchange_type='fanout')
+                            # channel.queue_declare(queue=RABBITMQ_SELL_QUEUE)
+                            # channel.queue_bind(exchange=RABBITMQ_SELL_EXCHANGE, queue=RABBITMQ_SELL_QUEUE)
+                            # # Publish order to exchange
+                            # order = {'sell_price': current_coin_pricing, 'sell_quantity': sell['sell_quantity'], 'ordercoin': sell['ordercoin'], 'total_amount_earned': total_amount_gain}
+                            # channel.basic_publish(exchange=RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # # Close RabbitMQ connection
+                            # connection.close()
+
                             print('donezseller')
                     else:
                         pass
                 else:
-                    return 0
-
-fb = pyrebase.initialize_app(firebase_config)
-database = fb.database()
+                    pass
 checkBuyOrderStatus()
 checkSellOrderStatus()
-
-
-
 
 if __name__ == '__main__':
     app.run(port=5200, debug=True)
