@@ -93,7 +93,7 @@ Returns json in format of "updated <coin>" : updated balance
 '''
 def updateWallet(from_currency, from_amount, to_currency, to_amount):
     coin = None
-    wallet_URL = "http://localhost:5100/wallet/{coin}"
+    wallet_URL = "http://127.0.0.1:5100/wallet/{coin}"
     id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
 
     old_from_balance = None

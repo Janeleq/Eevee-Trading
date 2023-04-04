@@ -115,13 +115,19 @@ def processTopUp():
         status = 200
         print('Top Up Amount: ', top_up_amt)
         return render_template('thanks.html', top_up_amt=top_up_amt, status=status, transaction_id=transaction_id)
+        
     else:
         status = 'Error! Try topping up again!'
         profile_page_URL = "http://localhost:5000/profile"
         return redirect(profile_page_URL)
 
-    
+@app.route('/thanksbuy')
+def processBuy():
+    return render_template('buy_thanks.html')
 
+@app.route('/thankssell')
+def processSell():
+    return render_template('sell_thanks.html')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
