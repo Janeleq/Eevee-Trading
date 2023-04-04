@@ -18,8 +18,8 @@ def fetchDetails():
     host_ip = socket.gethostbyname(hostname)
     return str(hostname) , str(host_ip)
 
-# if os.path.exists('helpers.txt'):
-#     os.remove('helpers.txt')
+if os.path.exists('helpers.txt'):
+    os.remove('helpers.txt')
 
 # endpoints
 @app.route("/")
@@ -145,6 +145,22 @@ def processBuyError():
 @app.route('/errorsell')
 def processSellError():
     return render_template('sell_error.html')
+
+@app.route('/errorbuyorder')
+def processBuyOrderError():
+    return render_template('buyorder_error.html')
+
+@app.route('/errorsellorder')
+def processSellOrderError():
+    return render_template('sellorder_error.html')
+
+@app.route('/thanksbuyorder')
+def processBuyOrder():
+    return render_template('buyorder_thanks.html')
+
+@app.route('/thankssellorder')
+def processSellOrder():
+    return render_template('sellorder_thanks.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

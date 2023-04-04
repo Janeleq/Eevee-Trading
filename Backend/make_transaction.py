@@ -125,26 +125,13 @@ def buycc(coin):
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
             transaction_type = 'buy'
             time = datetime.now()
-            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount }
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount, 'coin': coin }
             print(data)
             database.child("users").child(id).child('transactions').push(data)
-            result = {
-                "code":200,
-                "message": "Transaction successful!"
-            }, 200
-
             code = 200
-            # redirect(f'http://host.docker.internal:5000/thanks?status={result}')
-        
         else:
-            return "haha"
             code = 400
     else:
-        result = {
-            "code" : 400,
-            "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
-        }, 400
-
         code = 400
 
     if code == 200:
@@ -193,28 +180,13 @@ def sellcc(coin):
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": decrease})
             transaction_type = 'sell'
             time = datetime.now()
-            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount }
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount, 'coin': coin }
             print(data)
-            database.child("users").child(id).child('transactions').push(data)
-            result = {
-                "code":200,
-                "message": "Transaction successful!"
-            }, 200
-            
+            database.child("users").child(id).child('transactions').push(data)          
             code = 200
         else:
-            result = {
-                "code" : 400,
-                "message": "Transaction failed, please try again."
-            }, 400
-            
             code = 400
     else:
-        result = {
-            "code" : 400,
-            "message": "Transaction failed, please try again as you do not have enough balance."
-        }, 400
-        
         code = 400
     
     if code == 200:
@@ -245,14 +217,23 @@ def buyordercc(coin):
         total_usd_owned = total_usd_owned.json()
         total_usd_owned = getNumber(total_usd_owned)
 
-    if total_usd_owned >= total_amount_needed:
-        #place order
-        id = helpers.retrieveHelperVal('uID','helpers.txt')
-        database.child('users').child(id).child('buyorders').child(coin).update({"ordercoin":coin})
-        database.child('users').child(id).child('buyorders').child(coin).update({"buy_price":boprice})
-        database.child('users').child(id).child('buyorders').child(coin).update({"buy_quantity":boqty})
-        database.child('users').child(id).child('buyorders').child(coin).update({"total_amount_required":total_amount_needed})
-        return "Buy order has been placed :D"
+        if total_usd_owned >= total_amount_needed:
+            #place order
+            id = helpers.retrieveHelperVal('uID','helpers.txt')
+            database.child('users').child(id).child('buyorders').child(coin).update({"ordercoin":coin})
+            database.child('users').child(id).child('buyorders').child(coin).update({"buy_price":boprice})
+            database.child('users').child(id).child('buyorders').child(coin).update({"buy_quantity":boqty})
+            database.child('users').child(id).child('buyorders').child(coin).update({"total_amount_required":total_amount_needed})
+            code = 200
+        else:
+            code = 400
+    else:
+            code = 400
+
+    if code == 200:
+        return redirect(f'http://host.docker.internal:5000/thanksbuyorder')
+    else:
+        return redirect(f'http://host.docker.internal:5000/errorbuyorder')
 
 @app.route("/<string:coin>/sellorder")
 def sellordercc(coin):
@@ -280,8 +261,16 @@ def sellordercc(coin):
             database.child('users').child(id).child('sellorders').child(coin).update({"sell_price":soprice})
             database.child('users').child(id).child('sellorders').child(coin).update({"sell_quantity":soqty})
             database.child('users').child(id).child('sellorders').child(coin).update({"total_amount_earned":total_amount_gained})
-            return "Sell order has been placed :D"
+            code = 200
+        else:
+            code = 400
+    else:
+        code = 400
 
+    if code == 200:
+        return redirect(f'http://host.docker.internal:5000/thankssellorder')
+    else:
+        return redirect(f'http://host.docker.internal:5000/errorsellorder')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5010, debug=True)
