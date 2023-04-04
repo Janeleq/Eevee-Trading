@@ -89,7 +89,7 @@ Returns json in format of "updated <coin>" : updated balance
 
 @app.route("/update", methods = ['GET'])
 def updateWallet():
-    wallet_URL = "http://localhost:5100/wallet/"
+    wallet_URL = "http://host.docker.internal:5100/wallet/"
     id = helpers.retrieveHelperVal('uID','helpers.txt')
     from_currency = request.args.get('from_currency')
     from_amount = request.args.get('from_amount')

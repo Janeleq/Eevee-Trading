@@ -53,7 +53,7 @@ def topUpWallet():
 
     return redirect(session.url, code=303)
     # return redirect("https://buy.stripe.com/test_00g5nJ2nW3GC1zO288")
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
+    # result = invoke_http("http:host.docker.internal:5000/transaction", method='POST')
     # print(result)
 
 @app.route('/thanks')
@@ -74,7 +74,6 @@ def processTopUp():
             }
             
         )
-
   # Update Wallet amount
         retrieved_bal = database.child("users").child(id).child('wallet_coins').get()
         print(retrieved_bal)
@@ -89,26 +88,26 @@ def processTopUp():
 
         
         print('Top Up Amount: ', top_up_amt)
-        return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
+        return redirect(f'http://host.docker.internal:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
     else:
         status = 'Error! Try topping up again!'
-        profile_page_URL = "http://localhost:5000/profile"
+        profile_page_URL = "http://host.docker.internal:5000/profile"
         return redirect(profile_page_URL)
 
 
 @app.route("/profile")
 def profile():
-    profile_page_URL = "http://localhost:5000/profile"
+    profile_page_URL = "http://host.docker.internal:5000/profile"
     return redirect(profile_page_URL)
 
 @app.route("/swap")
 def swap():
-    swap_URL = "http://localhost:5000/swap"
+    swap_URL = "http://host.docker.internal:5000/swap"
     return redirect(swap_URL)
 
 @app.route("/marketplace")
 def marketplace():
-    marketplace_URL = "http://localhost:5000/marketplace"
+    marketplace_URL = "http://host.docker.internal:5000/marketplace"
     return redirect(marketplace_URL)
 
 if __name__ == '__main__':

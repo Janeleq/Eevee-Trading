@@ -32,13 +32,13 @@ database = fb.database()
 
 
 #set up RabbitMQ Connec tion
-# connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+# connection = pika.BlockingConnection(pika.ConnectionParameters('host.docker.internal'))
 # channel = connection.channel()
 # channel.queue_declare(queue='buy_order_queue')
-marketplace_URL = "http://localhost:5000/marketplace"
-price_URL = "http://localhost:5001" 
-# buy_transaction_URL = "http://localhost:5004/" 
-# sell_transaction_URL = "http://localhost:5004/" 
+marketplace_URL = "http://host.docker.internal:5000/marketplace"
+price_URL = "http://host.docker.internal:5001" 
+# buy_transaction_URL = "http://host.docker.internal:5004/" 
+# sell_transaction_URL = "http://host.docker.internal:5004/" 
 
 
 
@@ -90,8 +90,8 @@ def buycc(coin):
     qty = dummy(qty)
     price_URL = "http://host.docker.internal:5001" 
     price_URL = price_URL + "/coin/" + coin
-    wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet/" + coin
+    wallet_USD = "http://host.docker.internal:5100/wallet/USD"
+    wallet_URL = "http://host.docker.internal:5100/wallet/" + coin
     #get price
     response = requests.get(price_URL, timeout=10)
     #get USD owned
@@ -134,7 +134,7 @@ def buycc(coin):
             }, 200
 
             code = 200
-            # redirect(f'http://localhost:5000/thanks?status={result}')
+            # redirect(f'http://host.docker.internal:5000/thanks?status={result}')
         
         else:
             return "haha"
@@ -148,19 +148,19 @@ def buycc(coin):
         code = 400
 
     if code == 200:
-        return redirect(f'http://localhost:5000/thanksbuy')
+        return redirect(f'http://host.docker.internal:5000/thanksbuy')
     else:
-        return redirect(f'http://localhost:5000/errorbuy')
+        return redirect(f'http://host.docker.internal:5000/errorbuy')
     
 
 @app.route("/<string:coin>/sell")
 def sellcc(coin):
     qty = request.args.get('sellqty')
     qty = dummy(qty)
-    price_URL = "http://localhost:5001" 
+    price_URL = "http://host.docker.internal:5001" 
     price_URL = price_URL + "/coin/" + coin
-    wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet/" + coin
+    wallet_USD = "http://host.docker.internal:5100/wallet/USD"
+    wallet_URL = "http://host.docker.internal:5100/wallet/" + coin
     #get price
     response = requests.get(price_URL, timeout=10)
     coin_owned = requests.get(wallet_URL)
@@ -218,9 +218,9 @@ def sellcc(coin):
         code = 400
     
     if code == 200:
-        return redirect(f'http://localhost:5000/thankssell')
+        return redirect(f'http://host.docker.internal:5000/thankssell')
     else:
-        return redirect(f'http://localhost:5000/errorsell')
+        return redirect(f'http://host.docker.internal:5000/errorsell')
 
 
 @app.route("/<string:coin>/buyorder")
@@ -229,10 +229,10 @@ def buyordercc(coin):
     boqty = dummy(boqty)
     boprice = request.args.get('buyorderprice')
     boprice = dummy(boprice)
-    wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet/" + coin
+    wallet_USD = "http://host.docker.internal:5100/wallet/USD"
+    wallet_URL = "http://host.docker.internal:5100/wallet/" + coin
 
-    price_URL = "http://localhost:5001" 
+    price_URL = "http://host.docker.internal:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
 
@@ -260,9 +260,9 @@ def sellordercc(coin):
     soqty = dummy(soqty)
     soprice = request.args.get('sellorderprice')
     soprice = dummy(soprice)
-    wallet_USD = "http://localhost:5100/wallet/USD"
-    wallet_URL = "http://localhost:5100/wallet/" + coin
-    price_URL = "http://localhost:5001" 
+    wallet_USD = "http://host.docker.internal:5100/wallet/USD"
+    wallet_URL = "http://host.docker.internal:5100/wallet/" + coin
+    price_URL = "http://host.docker.internal:5001" 
     price_URL = price_URL + "/coin/" + coin
     response = requests.get(price_URL, timeout=10)
     #get USD owned

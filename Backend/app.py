@@ -63,42 +63,42 @@ def swap():
 # #BINANCE
 @app.route("/BNB")
 def binance():
-    return redirect("http://localhost:5010/BNB")
+    return redirect("http://host.docker.internal:5010/BNB")
 
 #BITCOIN
 @app.route("/BTC")
 def bitcoin():
-    return redirect("http://localhost:5010/BTC")
+    return redirect("http://host.docker.internal:5010/BTC")
 
 #CARDANO
 @app.route("/ADA")
 def cardano():
-    return redirect("http://localhost:5010/ADA")
+    return redirect("http://host.docker.internal:5010/ADA")
 
 #DOGE
 @app.route("/DOGE")
 def doge():
-    return redirect("http://localhost:5010/DOGE")
+    return redirect("http://host.docker.internal:5010/DOGE")
 
 #ETHEREUM
 @app.route("/ETH")
 def ethereum():
-    return redirect("http://localhost:5010/ETH")
+    return redirect("http://host.docker.internal:5010/ETH")
 
 # SOLANA
 @app.route("/SOL")
 def solana():
-    return redirect("http://localhost:5010/SOL")
+    return redirect("http://host.docker.internal:5010/SOL")
 
 @app.route('/topup', methods=['GET', 'POST'])
 def topup():
-    topUpURL = 'http://localhost:5005/processtopup'
+    topUpURL = 'http://host.docker.internal:5005/processtopup'
     print("\n--- Invoking Topup Microservice ---")
     return redirect(topUpURL)
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def checkTransactions():
-    TransactionURL = 'http://localhost:5006/transactions'
+    TransactionURL = 'http://host.docker.internal:5006/transactions'
     print("\n--- Invoking Transaction Log Microservice to get transactions ---")
     retrieved_transactions = requests.get(TransactionURL)
     print(retrieved_transactions)
@@ -118,7 +118,7 @@ def processTopUp():
         
     else:
         status = 'Error! Try topping up again!'
-        profile_page_URL = "http://localhost:5000/profile"
+        profile_page_URL = "http://host.docker.internal:5000/profile"
         return redirect(profile_page_URL)
 
 @app.route('/thanksbuy')

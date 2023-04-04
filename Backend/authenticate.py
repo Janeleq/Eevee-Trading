@@ -38,10 +38,10 @@ def authenticateUser():
 
         writeToText('helpers.txt','uID:'+uID)
 
-        return redirect('http://localhost:5000/home')
+        return redirect('http://host.docker.internal:5000/home')
     except:
         print("Invalid email or password")
-        return redirect('http://localhost:5000/login')
+        return redirect('http://host.docker.internal:5000/login')
 
 def writeToText(filename, text):
     with open(filename, 'w') as f:

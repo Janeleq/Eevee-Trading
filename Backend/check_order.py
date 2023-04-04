@@ -42,11 +42,11 @@ def checkBuyOrderStatus():
             for order in orderlist:
                 order = order.val()
                 coin_of_interest = order['ordercoin']
-                current_coin_pricing = requests.get('http://localhost:5001/coin/' + coin_of_interest)
+                current_coin_pricing = requests.get('http://host.docker.internal:5001/coin/' + coin_of_interest)
                 if current_coin_pricing:
                     current_coin_pricing = dummy(current_coin_pricing)
                     if current_coin_pricing <= order['buy_price']:
-                        buy=requests.get('http://localhost:5010/'+ coin_of_interest + '/buy?buyqty=' + str(order['buy_quantity']))
+                        buy=requests.get('http://host.docker.internal:5010/'+ coin_of_interest + '/buy?buyqty=' + str(order['buy_quantity']))
                         if buy:
                             total_amount_spent = float(order['buy_quantity']) * current_coin_pricing
                             database.child('users').child(id).child('buyorders').remove(coin_of_interest)
@@ -56,7 +56,6 @@ def checkBuyOrderStatus():
                             # # Close RabbitMQ connection
                             # amqp_setup.connection.close()
 
-                            print('donezbuyer')
                     else:
                         pass
                 else:
@@ -71,18 +70,16 @@ def checkSellOrderStatus():
         orderlist = database.child('users').child(id).child('sellorders').get()
         print(orderlist.val())
         if orderlist.val() == None:
-            print('loserseller')
             pass
         else:
             for order in orderlist:
                 order = order.val()
                 coin_of_interest = order['ordercoin']
-                current_coin_pricing = requests.get('http://localhost:5001/coin/' + coin_of_interest)
+                current_coin_pricing = requests.get('http://host.docker.internal:5001/coin/' + coin_of_interest)
                 if current_coin_pricing:
                     current_coin_pricing = dummy(current_coin_pricing)
                     if current_coin_pricing >= order['sell_price']:
-                        print('wassupseller')
-                        sell=requests.get('http://localhost:5010/'+ coin_of_interest + '/sell?sellqty='+str(order['sell_quantity']))
+                        sell=requests.get('http://host.docker.internal:5010/'+ coin_of_interest + '/sell?sellqty='+str(order['sell_quantity']))
                         if sell:
                             total_amount_gain = float(order['sell_quantity']) * current_coin_pricing
                             database.child('users').child(id).child('sellorders').remove(coin_of_interest)
@@ -92,7 +89,7 @@ def checkSellOrderStatus():
                             # # Close RabbitMQ connection
                             # amqp_setup.connection.close()
 
-                            print('donezseller')
+
                     else:
                         pass
                 else:
