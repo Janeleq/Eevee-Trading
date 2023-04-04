@@ -14,7 +14,7 @@ from datetime import datetime
 import pika
 import json
 
-app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
+app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static', static_url_path='')
 CORS(app)
 
 firebase_config = {
@@ -284,7 +284,7 @@ def sellordercc(coin):
 
 
 if __name__ == '__main__':
-    app.run(port=5010, debug=True)
+    app.run(host="0.0.0.0", port=5010, debug=True)
 
 
 

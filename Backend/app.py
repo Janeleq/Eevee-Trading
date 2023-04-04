@@ -9,7 +9,7 @@ import stripe
 # from invokes import invoke_http
 
 
-app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
+app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static', static_url_path='')
 CORS(app)
 
 # function to fetch hostname and ip to check different instances currently running 
@@ -38,7 +38,7 @@ def login():
 def register():
     hostname, host_ip = fetchDetails()
     print(hostname, host_ip)
-    return render_template('Register.html', HOSTNAME=hostname, IP=host_ip)
+    return render_template('register.html', HOSTNAME=hostname, IP=host_ip)
 
 @app.route("/home")
 def home():
@@ -58,7 +58,7 @@ def marketplace():
 @app.route("/swap")
 def swap():
     hostname, host_ip = fetchDetails()
-    return render_template('Swap.html', HOSTNAME=hostname, IP=host_ip)
+    return render_template('swap.html', HOSTNAME=hostname, IP=host_ip)
 
 # #BINANCE
 @app.route("/BNB")
@@ -139,4 +139,4 @@ def processSellError():
     return render_template('sell_error.html')
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
