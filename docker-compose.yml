@@ -16,15 +16,16 @@ services:
     depends_on:
       - price
       - authenticate
-      - swap
+      # - swap
       - topup
       - make_transaction
-      - transaction_log
     environment:
       # price_URL: http://price:5000/price
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5000:5000
+      - 5000:5000 
+
+      # : - (- is for microservice port to expose it to localhost port of #)
       
   ##################################
   # Price: The Price microservice
@@ -39,7 +40,7 @@ services:
       # price_URL: http://price:5000/price
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5001:5000
+      - 5001:5001
 
 
   ##################################
@@ -55,7 +56,7 @@ services:
       # topup_URL: http://topup:5000/process_topup
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5005:5000
+      - 5005:5005
 
       
   ##################################
@@ -73,7 +74,7 @@ services:
       # swap_URL: http://swap:5000/swap
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5004:5000
+      - 5004:5004
 
   ##################################
   # Authenticate: The Authenticate microservice
@@ -88,22 +89,8 @@ services:
       # authenticate_URL: http://authenticate:5000/authenticate
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5050:5000
+      - 5050:5050
 
-
-  ##################################
-  # Transaction Log: The Transaction Log microservice
-  ##################################
-  transaction_log:
-    build: 
-      dockerfile: transaction_log.Dockerfile
-    image: janeleq/transactionlog:eevee
-    restart: always
-    environment:
-      # transactionLog_URL: http://transactionLog:5000/transactions
-      PYTHONUNBUFFERED: 1
-    ports: 
-      - 5006:5000
     
   ##################################
   # Make Transaction: The Make Transaction microservice
@@ -120,4 +107,28 @@ services:
       # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
       PYTHONUNBUFFERED: 1
     ports: 
-      - 5010:5000
+      - 5010:5010
+
+  checkOrder:
+    build: 
+      context: ./
+      dockerfile: checkOrder.Dockerfile
+    image: janeleq/checkorder:eevee
+    restart: always
+    environment:
+      # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
+      PYTHONUNBUFFERED: 1
+    ports: 
+      - 5200:5200
+
+  access_wallet:
+    build: 
+      context: ./
+      dockerfile: access_wallet.Dockerfile
+    image: janeleq/access_wallet:eevee
+    restart: always
+    environment:
+      # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
+      PYTHONUNBUFFERED: 1
+    ports: 
+      - 5100:5100

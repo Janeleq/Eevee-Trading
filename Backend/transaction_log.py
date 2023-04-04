@@ -38,4 +38,4 @@ def checkTransactionLog():
 
 if __name__ == "__main__":
     print("\nThis is " + os.path.basename(__file__) + " microservice", end='')
-    app.run(port=5006, debug=True)
+    app.run(host='0.0.0.0', port=5006, debug=True)

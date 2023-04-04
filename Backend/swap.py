@@ -159,4 +159,4 @@ def getNumber(amount_owned,coin):
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__))
-    app.run(port=5004, debug=True)
+    app.run(host="0.0.0.0", port=5004, debug=True)

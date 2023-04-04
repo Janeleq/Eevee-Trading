@@ -7,7 +7,8 @@ RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY ./Frontend ../Frontend
 
 # Backend
-COPY ./Backend/swap.py .
-COPY ./Backend/invokes.py .
-COPY ./Backend/amqp_setup.py .
-CMD [ "python", "./swap.py"]
+COPY ./Backend/checkOrder.py .
+COPY ./Backend/access_wallet.py .
+COPY ./Backend/price.py .
+COPY ./Backend/helpers.py .
+CMD [ "python", "./checkOrder.py"]
