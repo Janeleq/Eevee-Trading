@@ -129,5 +129,14 @@ def processBuy():
 def processSell():
     return render_template('sell_thanks.html')
 
+
+@app.route('/errorbuy')
+def processBuyError():
+    return render_template('buy_error.html')
+
+@app.route('/errorsell')
+def processSellError():
+    return render_template('sell_error.html')
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

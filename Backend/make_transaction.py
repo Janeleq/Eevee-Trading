@@ -150,9 +150,7 @@ def buycc(coin):
     if code == 200:
         return redirect(f'http://localhost:5000/thanksbuy')
     else:
-        status = 'Error! Try again!'
-        profile_page_URL = f"http://localhost:5000/profile?status={status}"
-        return redirect(profile_page_URL)
+        return redirect(f'http://localhost:5000/errorbuy')
     
 
 @app.route("/<string:coin>/sell")
@@ -222,9 +220,7 @@ def sellcc(coin):
     if code == 200:
         return redirect(f'http://localhost:5000/thankssell')
     else:
-        status = 'Error! Try again!'
-        profile_page_URL = f"http://localhost:5000/profile?status={status}"
-        return redirect(profile_page_URL)
+        return redirect(f'http://localhost:5000/errorsell')
 
 
 @app.route("/<string:coin>/buyorder")
