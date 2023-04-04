@@ -4,7 +4,7 @@ COPY requirements.txt ./
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Frontend
-# COPY ./Frontend ../Frontend
+COPY ./Frontend ../Frontend
 
 # Backend
 COPY ./Backend/check_order.py .
