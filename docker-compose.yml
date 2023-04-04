@@ -5,19 +5,58 @@ volumes:
 
 services:
   ##################################
+  # App: The App Interface
+  ##################################
+  interface:
+    build:
+      context: ./
+      dockerfile: app.Dockerfile
+    image: janeleq/app:eevee
+    restart: always
+    depends_on:
+      - price
+      - authenticate
+      - swap
+      - topup
+      - make_transaction
+      - transaction_log
+    environment:
+      # price_URL: http://price:5000/price
+      PYTHONUNBUFFERED: 1
+    ports: 
+      - 5000:5000
+      
+  ##################################
   # Price: The Price microservice
   ##################################
   price:
     build:
       context: ./
       dockerfile: price.Dockerfile
-    image: <dockerid>/price:eevee
+    image: janeleq/price:eevee
     restart: always
     environment:
-      price_URL: http://price:5000/price
+      # price_URL: http://price:5000/price
       PYTHONUNBUFFERED: 1
-    ports:
-      - "5000:5000"
+    ports: 
+      - 5001:5000
+
+
+  ##################################
+  # Topup: The Topup microservice
+  ##################################
+  topup:
+    build: 
+      context: ./
+      dockerfile: topup.Dockerfile
+    image: janeleq/topup:eevee
+    restart: always
+    environment:
+      # topup_URL: http://topup:5000/process_topup
+      PYTHONUNBUFFERED: 1
+    ports: 
+      - 5005:5000
+
       
   ##################################
   # Swap: The Swap microservice
@@ -26,13 +65,15 @@ services:
     build: 
       context: ./
       dockerfile: swap.Dockerfile
-    image: <dockerid>/swap:eevee
+    image: janeleq/swap:eevee
     restart: always
+    depends_on:
+      - price
     environment:
-      swap_URL: http://swap:5000/swap
+      # swap_URL: http://swap:5000/swap
       PYTHONUNBUFFERED: 1
-    ports:
-      - "5000:5004"
+    ports: 
+      - 5004:5000
 
   ##################################
   # Authenticate: The Authenticate microservice
@@ -40,42 +81,43 @@ services:
   authenticate:
     build: 
       context: ./
-      dockerfile: swap.Dockerfile
-    image: <dockerid>/authenticate:eevee
+      dockerfile: authenticate.Dockerfile
+    image: janeleq/authenticate:eevee
     restart: always
     environment:
-      authenticate_URL: http://authenticate:5000/authenticate
+      # authenticate_URL: http://authenticate:5000/authenticate
       PYTHONUNBUFFERED: 1
-    ports:
-      - "5000:5004"
+    ports: 
+      - 5050:5000
 
 
   ##################################
   # Transaction Log: The Transaction Log microservice
   ##################################
-  transactionLog:
+  transaction_log:
     build: 
-      context: ./
-      dockerfile: transactionLog.Dockerfile
-    image: <dockerid>/transactionLog:eevee
+      dockerfile: transaction_log.Dockerfile
+    image: janeleq/transactionlog:eevee
     restart: always
     environment:
-      transactionLog_URL: http://transactionLog:5000/transactionLog
+      # transactionLog_URL: http://transactionLog:5000/transactions
       PYTHONUNBUFFERED: 1
-    ports:
-      - "5000:5004"
-      
+    ports: 
+      - 5006:5000
+    
   ##################################
   # Make Transaction: The Make Transaction microservice
   ##################################
-  makeTransaction:
+  make_transaction:
     build: 
       context: ./
-      dockerfile: makeTransaction.Dockerfile
-    image: <dockerid>/makeTransaction:eevee
+      dockerfile: make_transaction.Dockerfile
+    image: janeleq/maketransaction:eevee
     restart: always
+    depends_on:
+      - price
     environment:
-      makeTransaction_URL: http://makeTransaction:5000/makeTransaction
+      # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
       PYTHONUNBUFFERED: 1
-    ports:
-      - "5000:5004"
+    ports: 
+      - 5010:5000

@@ -8,6 +8,7 @@ from flask_cors import CORS
 import stripe
 # from invokes import invoke_http
 
+
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 
@@ -17,8 +18,8 @@ def fetchDetails():
     host_ip = socket.gethostbyname(hostname)
     return str(hostname) , str(host_ip)
 
-if os.path.exists('helpers.txt'):
-    os.remove('helpers.txt')
+# if os.path.exists('helpers.txt'):
+#     os.remove('helpers.txt')
 
 # endpoints
 @app.route("/")
@@ -98,9 +99,10 @@ def topup():
 @app.route('/transactions', methods=['GET', 'POST'])
 def checkTransactions():
     TransactionURL = 'http://localhost:5006/transactions'
-    print("\n--- Invoking Transaction Log Microservice ---")
-    return redirect(TransactionURL)
-
+    print("\n--- Invoking Transaction Log Microservice to get transactions ---")
+    retrieved_transactions = requests.get(TransactionURL)
+    print(retrieved_transactions)
+    return render_template('coins/profilepage.html', retrieved_transactions = retrieved_transactions)
 
 @app.route('/thanks')
 def processTopUp():
