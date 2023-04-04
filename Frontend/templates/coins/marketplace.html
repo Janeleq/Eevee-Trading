@@ -146,22 +146,22 @@
       
               <ol id="cryptolinks" style="color:white">
                 <li>
-                  <a href="BTC"><span><img src="{{url_for('static', filename='images/coins/btc.png')}}" alt="" class="img"></span>Bitcoin (BTC)</a>
+                  <a href="BTC"><span><img src="{{url_for('static', filename='images/coins/btc.png')}}" alt="BTC" class="img"></span>Bitcoin (BTC)</a>
                 </li>
                 <li>
-                  <a href="ETH"><span><img src="{{url_for('static', filename='images/coins/eth.png')}}" alt="" class="img"></span>Ethereum (ETH)</a>
+                  <a href="ETH"><span><img src="{{url_for('static', filename='images/coins/eth.png')}}" alt="ETH" class="img"></span>Ethereum (ETH)</a>
                 </li>
                 <li>
-                  <a href="BNB"><span><img src="{{url_for('static', filename='images/coins/bnb.png')}}" alt="" class="img"></span>Binance (BNB)</a>
+                  <a href="BNB"><span><img src="{{url_for('static', filename='images/coins/bnb.png')}}" alt="BNB" class="img"></span>Binance (BNB)</a>
                 </li>
                 <li>
-                  <a href="DOGE"><span><img src="{{url_for('static', filename='images/coins/doge.png')}}" alt="" class="img"></span>DOGE Coin (Doge)</a>
+                  <a href="DOGE"><span><img src="{{url_for('static', filename='images/coins/doge.png')}}" alt="Doge" class="img"></span>DOGE Coin (Doge)</a>
                 </li>
                 <li>
-                  <a href="SOL"><span><img src="{{url_for('static', filename='images/coins/sol.png')}}" alt="" class="img"></span> Solana (SOL)</a>
+                  <a href="SOL"><span><img src="{{url_for('static', filename='images/coins/sol.png')}}" alt="SOL" class="img"></span> Solana (SOL)</a>
                 </li>
                 <li>
-                  <a href="ADA"><span><img src="{{url_for('static', filename='images/coins/ada.png')}}" alt="" class="img"></span>Cardano (ADA)</a>
+                  <a href="ADA"><span><img src="{{url_for('static', filename='images/coins/ada.png')}}" alt="ADA" class="img"></span>Cardano (ADA)</a>
                 </li>
               </ol>
               </div>
@@ -224,12 +224,13 @@
     
     function generateRow(name, assetWebsite, whitepaper, coinName, proofType, symbol) {
       console.log(symbol)
+      img = 'images/coins/' + symbol + '.png'
       document.getElementById(name).innerHTML = `
                           <td>
                             <a href="${symbol}">${coinName} (${symbol})</a>
                           </td>
                           <td>
-                              <img src="static/images/coins/${symbol}.png" width="40" height="40">
+                              <img src="${img}" alt="${symbol}" width="40" height="40">
                           </td>
                           <td id=${name}price> 
                             ${getSinglePrice(name)}
