@@ -125,13 +125,24 @@ def buycc(coin):
             data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount, 'coin': coin }
             print(data)
             database.child("users").child(id).child('transactions').push(data)
-            code = 200
-        else:
-            code = 400
-    else:
-        code = 400
+            result = {
+                        "code": 200,
+                        "message": "Buy transaction successful!"
+                        }
 
-    if code == 200:
+        else:
+            result = {
+                "code": 404,
+                "message": "Buy transaction unsuccessful!"
+                }
+    else:
+        result = {
+            "code": 404,
+            "message": "Buy transaction unsuccessful!"
+            }
+        
+
+    if result['code'] == 200:
         return redirect(f'http://host.docker.internal:5000/thanksbuy')
     else:
         return redirect(f'http://host.docker.internal:5000/errorbuy')
@@ -180,14 +191,26 @@ def sellcc(coin):
             time = datetime.now()
             data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount, 'coin': coin }
             print(data)
-            database.child("users").child(id).child('transactions').push(data)          
-            code = 200
+            database.child("users").child(id).child('transactions').push(data)    
+            result = {
+            "code": 200,
+            "message": "Buy transaction successful!"
+            }      
+
         else:
-            code = 400
+            result = {
+            "code": 404,
+            "message": "Buy transaction unsuccessful!"
+            }
+
     else:
-        code = 400
+        result = {
+            "code": 404,
+            "message": "Buy transaction unsuccessful!"
+            }
+ 
     
-    if code == 200:
+    if result['code'] == 200:
         return redirect(f'http://host.docker.internal:5000/thankssell')
     else:
         return redirect(f'http://host.docker.internal:5000/errorsell')
@@ -223,13 +246,25 @@ def buyordercc(coin):
             database.child('users').child(id).child('buyorders').child(coin).update({"buy_price":boprice})
             database.child('users').child(id).child('buyorders').child(coin).update({"buy_quantity":boqty})
             database.child('users').child(id).child('buyorders').child(coin).update({"total_amount_required":total_amount_needed})
-            code = 200
+            result = {
+            "code": 200,
+            "message": "Buy order transaction successful!"
+            }    
+            
         else:
-            code = 400
-    else:
-        code = 400
+            result = {
+            "code": 404,
+            "message": "Buy order transaction unsuccessful!"
+            }    
 
-    if code == 200:
+    else:
+        result = {
+            "code": 404,
+            "message": "Buy order transaction unsuccessful!"
+            }    
+
+
+    if result['code'] == 200:
         return redirect(f'http://host.docker.internal:5000/thanksbuyorder')
     else:
         return redirect(f'http://host.docker.internal:5000/errorbuyorder')
@@ -262,13 +297,24 @@ def sellordercc(coin):
             database.child('users').child(id).child('sellorders').child(coin).update({"sell_price":soprice})
             database.child('users').child(id).child('sellorders').child(coin).update({"sell_quantity":soqty})
             database.child('users').child(id).child('sellorders').child(coin).update({"total_amount_earned":total_amount_gained})
-            code = 200
+            result = {
+            "code": 200,
+            "message": "Sell order transaction successful!"
+            }    
+        
         else:
-            code = 400
-    else:
-        code = 400
+            result = {
+            "code": 404,
+            "message": "Sell order transaction unsuccessful!"
+            }    
 
-    if code == 200:
+    else:
+        result = {
+            "code": 404,
+            "message": "Sell order transaction unsuccessful!"
+            }    
+
+    if result['code'] == 200:
         return redirect(f'http://host.docker.internal:5000/thankssellorder')
     else:
         return redirect(f'http://host.docker.internal:5000/errorsellorder')
