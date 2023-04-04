@@ -129,6 +129,14 @@ def processBuy():
 def processSell():
     return render_template('sell_thanks.html')
 
+@app.route('/swapsuccess')
+def processSwapSuccess():
+    return render_template('swap_success.html')
+
+@app.route('/swapfail')
+def processSwapFail():
+    return render_template('swap_fail.html')
+
 
 @app.route('/errorbuy')
 def processBuyError():
