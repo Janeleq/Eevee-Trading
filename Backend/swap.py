@@ -164,7 +164,7 @@ def updateWallet():
                 }
             
             if not updated_to_data.val()['qty']:
-                code = '400'
+                code = '404'
                 message = 'unsuccessful update of swap transaction in wallet.'
                 reply = {
                         'code' : code,
