@@ -10,7 +10,7 @@ from os import environ
 import helpers
 import requests
 from invokes import invoke_http
-
+from datetime import datetime
 import pika
 import json
 
@@ -101,23 +101,33 @@ def buycc(coin):
         #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
+        print(price)
         total_amount = round(float(qty) * float(price),2)
+        print(total_amount)
 
     if amount_owned:
         amount_owned = amount_owned.json()
         qty_usd_owned = getNumber(amount_owned)
+        print(qty_usd_owned)
 
     if qty_usd_owned >= total_amount:
         qty_coin_owned = requests.get(wallet_URL)
         if qty_coin_owned:
-            # id = 'DsU3Gmoe1McjyXU8JA66GfiBG7L2'
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             ownedcoin = qty_coin_owned.json()
             ownedcoin = getNumber(ownedcoin)
+            print(ownedcoin)
             decrease = qty_usd_owned - total_amount
+            print(decrease)
             increase = float(ownedcoin) + float(qty)
+            print(increase)
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":decrease})
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
+            transaction_type = 'buy'
+            time = datetime.now()
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount }
+            print(data)
+            database.child("users").child(id).child('transactions').push(data)
             result = {
                 "code":200,
                 "message": "Transaction successful!"
@@ -148,12 +158,15 @@ def sellcc(coin):
     if coin_owned:
         coin_owned = coin_owned.json()
         qty_coin_owned = getNumber(coin_owned)
+        print(qty_coin_owned)
 
     if response:
         #get total price needed to pay with current price + quantity
         response = response.json()
         price = getPrice(response)
+        print(price)
         total_amount = round(float(qty) * float(price),2)
+        print(total_amount)
 
     if qty_coin_owned >= float(qty):
         amount_owned = requests.get(wallet_USD)
@@ -161,10 +174,18 @@ def sellcc(coin):
             id = helpers.retrieveHelperVal('uID','helpers.txt')
             qty_usd_owned = amount_owned.json()
             qty_usd_owned = getNumber(qty_usd_owned)
+            print(qty_usd_owned)
             decrease = float(qty_coin_owned) - float(qty)
             increase = qty_usd_owned + total_amount
+            print(decrease)
+            print(increase)
             database.child("users").child(id).child('wallet_coins').child("USD").update({"qty":increase})
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": decrease})
+            transaction_type = 'sell'
+            time = datetime.now()
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount }
+            print(data)
+            database.child("users").child(id).child('transactions').push(data)
             result = {
                 "code":200,
                 "message": "Transaction successful!"

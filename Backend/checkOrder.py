@@ -7,23 +7,10 @@ import os
 import helpers
 import requests
 import threading
-
+# import amqp_setup
 
 app = Flask(__name__)
 CORS(app)
-
-# RABBITMQ_HOST = 'localhost'
-# RABBITMQ_PORT = 5672
-# RABBITMQ_USER = 'guest'
-# RABBITMQ_PASS = 'guest'
-# RABBITMQ_BUY_EXCHANGE = 'buyorders'
-# RABBITMQ_BUY_QUEUE = 'buyordersqueue'
-# RABBITMQ_SELL_EXCHANGE = 'sellorders'
-# RABBITMQ_SELL_QUEUE = 'sellordersqueue'
-
-# connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)))
-
-# channel = connection.channel()
 
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
@@ -63,15 +50,12 @@ def checkBuyOrderStatus():
                         if buy:
                             total_amount_spent = float(order['buy_quantity']) * current_coin_pricing
                             database.child('users').child(id).child('buyorders').remove(coin_of_interest)
-                            # Declare exchange and queue
-                            # channel.exchange_declare(exchange=RABBITMQ_BUY_EXCHANGE, exchange_type='fanout')
-                            # channel.queue_declare(queue=RABBITMQ_BUY_QUEUE)
-                            # channel.queue_bind(exchange=RABBITMQ_BUY_EXCHANGE, queue=RABBITMQ_BUY_QUEUE)
-                            # # Publish order to exchange
-                            # order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
-                            # channel.basic_publish(exchange=RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+
+                            order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
+                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
                             # # Close RabbitMQ connection
-                            # connection.close()
+                            # amqp_setup.connection.close()
+
                             print('donezbuyer')
                     else:
                         pass
@@ -102,18 +86,11 @@ def checkSellOrderStatus():
                         if sell:
                             total_amount_gain = float(order['sell_quantity']) * current_coin_pricing
                             database.child('users').child(id).child('sellorders').remove(coin_of_interest)
-                            # connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)))
-                            # channel = connection.channel()
 
-                            # # Declare exchange and queue
-                            # channel.exchange_declare(exchange=RABBITMQ_SELL_EXCHANGE, exchange_type='fanout')
-                            # channel.queue_declare(queue=RABBITMQ_SELL_QUEUE)
-                            # channel.queue_bind(exchange=RABBITMQ_SELL_EXCHANGE, queue=RABBITMQ_SELL_QUEUE)
-                            # # Publish order to exchange
-                            # order = {'sell_price': current_coin_pricing, 'sell_quantity': sell['sell_quantity'], 'ordercoin': sell['ordercoin'], 'total_amount_earned': total_amount_gain}
-                            # channel.basic_publish(exchange=RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            order = {'sell_price': current_coin_pricing, 'sell_quantity': sell['sell_quantity'], 'ordercoin': sell['ordercoin'], 'total_amount_earned': total_amount_gain}
+                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
                             # # Close RabbitMQ connection
-                            # connection.close()
+                            # amqp_setup.connection.close()
 
                             print('donezseller')
                     else:
