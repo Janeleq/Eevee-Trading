@@ -3,11 +3,12 @@ from flask import Flask, request, jsonify
 import os, json
 import requests
 from flask_cors import CORS
+# import amqp_setup
 
 import pyrebase
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=['http://localhost:5000'])
 
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
@@ -30,19 +31,14 @@ def swap():
 
     from_price_URL = f"http://127.0.0.1:5001/coin/{from_currency}"
     to_price_URL = f"http://127.0.0.1:5001/coin/{to_currency}"
-    email = ""
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
-
     gas_fee = 0.01
     if from_currency == to_currency:
         gas_fee = 0 
 
     conversion_amount = float(from_amount) * float(conversion_ratio) * float(1 - gas_fee)
     to_amount = request.args.get("to_amount")
-
-    #Updates wallet
-    updateWallet(from_currency, from_amount, to_currency, to_amount)
 
     #Status of successful swap
     if conversion_amount:
@@ -58,7 +54,7 @@ def swap():
         #AMQP activity
 
         return {
-            "code": 500,
+            "code": 400,
             "message": "Swap failure sent for error handling."
         }
     
@@ -91,10 +87,16 @@ def getNumber(amount_owned,coin):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-def updateWallet(from_currency, from_amount, to_currency, to_amount):
+@app.route("/update")
+def updateWallet():
     coin = None
-    wallet_URL = "http://127.0.0.1:5100/wallet/{coin}"
-    id = "DsU3Gmoe1McjyXU8JA66GfiBG7L2"
+    wallet_URL = "http://localhost:5100/wallet/{coin}"
+    id = "P2lTOnotbgfpU8ThbATf0Lx6D9G2"
+
+    from_amount = request.args.get('from_amount')
+    from_currency = request.args.get("from_currency")
+    to_currency = request.args.get("to_currency")
+    to_amount = request.args.get("to_amount")
 
     old_from_balance = None
     old_to_balance = None
@@ -111,7 +113,8 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
         changed_amt = ownedcoin - from_amount
         updated_from_balance = changed_amt
         database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt})
-
+    
+    # transaction, transaction_log, amqp, docker
     # Calls access_wallet to update to_amount and get new balance
     coin = to_currency
     old_to_balance = requests.get(wallet_URL)
@@ -122,14 +125,23 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
         changed_amt = ownedcoin + to_amount
         updated_to_balance = changed_amt
         database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
+    
+    # Checks swap status and publish message
+    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+
 
     # Returns new and old wallet balance for to and from currency
-    return {
-        "old" + from_currency : old_from_balance,
-        "old" + to_currency : old_to_balance,
-        "updated " + from_currency : updated_from_balance,
-        "updated" + to_currency : updated_to_balance,
-    }
+    response = {
+            "old " + from_currency : old_from_balance,
+            "old " + to_currency : old_to_balance,
+            "updated " + from_currency : updated_from_balance,
+            "updated" + to_currency : updated_to_balance,
+        }
+    return response
+
+def getNumber(amount_owned,coin):
+    amount_owned = amount_owned[coin]
+    return amount_owned
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__))
