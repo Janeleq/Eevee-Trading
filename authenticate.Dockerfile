@@ -5,6 +5,7 @@ COPY ./Backend/helpers.txt ./
 RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY ./Backend/authenticate.py .
 COPY ./Backend/helpers.py .
+# COPY ./Backend/amqp_setup.py .
 # COPY ./Backend/app.py .
 COPY ./Backend/swap.py .
 COPY ./Backend/price.py .

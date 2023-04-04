@@ -5,4 +5,5 @@ COPY ./Backend/helpers.txt ./
 RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY ./Backend/access_wallet.py .
 COPY ./Backend/helpers.py .
+# COPY ./Backend/amqp_setup.py .
 CMD [ "python", "./access_wallet.py"]

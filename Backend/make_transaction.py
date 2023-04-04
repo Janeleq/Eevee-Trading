@@ -1,12 +1,13 @@
 # make_transaction complex Microservice
 # have to invoke wallet.py to check wheter got enough $$ to eg buy cc defined
 
-from flask import Flask, redirect, render_template, request
-from flask_cors import CORS
 import pyrebase
 import helpers
 import requests
 from datetime import datetime
+# import pika
+from flask import Flask, redirect, render_template, request
+from flask_cors import CORS
 #setup Flask
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static', static_url_path='')
 CORS(app)
@@ -25,16 +26,8 @@ firebase_config = {
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
-
-#set up RabbitMQ Connec tion
-# connection = pika.BlockingConnection(pika.ConnectionParameters('host.docker.internal'))
-# channel = connection.channel()
-# channel.queue_declare(queue='buy_order_queue')
 marketplace_URL = "http://host.docker.internal:5000/marketplace"
 price_URL = "http://host.docker.internal:5001" 
-# buy_transaction_URL = "http://host.docker.internal:5004/" 
-# sell_transaction_URL = "http://host.docker.internal:5004/" 
-
 
 #dummy function
 def dummy(qty):

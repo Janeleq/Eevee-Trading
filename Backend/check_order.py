@@ -6,6 +6,8 @@ import helpers
 import requests
 import threading
 # import amqp_setup
+# import pika
+# import json
 #set up flask
 app = Flask(__name__)
 CORS(app)
@@ -54,7 +56,7 @@ def checkBuyOrderStatus():
                             database.child('users').child(id).child('buyorders').remove(coin_of_interest)
 
                             order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
-                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='', body=json.dumps(order))
                             # # Close RabbitMQ connection
                             # amqp_setup.connection.close()
 
@@ -86,7 +88,7 @@ def checkSellOrderStatus():
                             database.child('users').child(id).child('sellorders').remove(coin_of_interest)
 
                             order = {'sell_price': current_coin_pricing, 'sell_quantity': sell['sell_quantity'], 'ordercoin': sell['ordercoin'], 'total_amount_earned': total_amount_gain}
-                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key='', body=json.dumps(order))
                             # # Close RabbitMQ connection
                             # amqp_setup.connection.close()
                     else:

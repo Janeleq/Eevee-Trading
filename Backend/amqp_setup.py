@@ -5,32 +5,38 @@ RABBITMQ_PASS = 'guest'
 import pika
 from os import environ ###
 
-#local RABBITMQ
-hostname = environ.get('rabbit_host') or 'host.docker.internal'
-port = environ.get('rabbit_port') or 5672
 # connect to the broker and set up a communication channel in the connection
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='host.docker.internal'))
+
+#local RABBITMQ
+hostname = 'host.docker.internal'
+port =  5672
+# connect to the broker and set up a communication channel in the connection
+connection = pika.BlockingConnection(
+    pika.ConnectionParameters(
+        host=hostname, port=port,
+        heartbeat=3600, blocked_connection_timeout=3600, # these parameters to prolong the expiration time (in seconds) of the connection
+))
 
 #################
 channel = connection.channel()
 #==================================================== Buy Order ========================================================================================================
 
-exchangetype="fanout"
-exchangename = 'buyorders'
-RABBITMQ_BUY_QUEUE = 'buyordersqueue'
-channel.exchange_declare(exchangename=exchangename, exchange_type=exchangetype, durable=True)
-channel.queue_bind(exchange = exchangename, queue=RABBITMQ_BUY_QUEUE) 
+
+exchangename = 'buyorder'
+RABBITMQ_BUY_QUEUE = 'buyorderqueue'
+channel.exchange_declare(exchangename=exchangename, durable=True)
+channel.queue_bind(exchange = exchangename, queue=RABBITMQ_BUY_QUEUE, routing_key='#') 
 
     
 #====================================================End Buy Order ========================================================================================================
 #==================================================== Sell Order ========================================================================================================
 
-exchangetype="fanout"
-exchangename = 'sellorders'
-RABBITMQ_SELL_QUEUE = 'sellordersqueue'
-channel.exchange_declare(exchange= exchangename, exchange_type=exchangetype, durable=True)
+
+exchangename = 'sellorder'
+RABBITMQ_SELL_QUEUE = 'sellorderqueue'
+channel.exchange_declare(exchange= exchangename, durable=True)
     # 'durable' makes the queue survive broker restarts
-channel.queue_bind(exchange = exchangename, queue=RABBITMQ_SELL_QUEUE) 
+channel.queue_bind(exchange = exchangename, queue=RABBITMQ_SELL_QUEUE, routing_key='#') 
 
     
 #==================================================== End Sell Order ========================================================================================================
