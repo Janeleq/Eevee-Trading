@@ -146,25 +146,38 @@
         // get form data as URLSearchParams object
         const inputs = new URLSearchParams(new FormData(form)); 
         let from_currency = inputs.get("from_currency"); 
-        let from_amount = parseInt(inputs.get("from_amount"), 10);
-        let to_currency = inputs.get("to_currency");
+        let from_amount = parseFloat(inputs.get("from_amount"), 10);
+        let to_currency = inputs.get("to_currency").toString();
         let to_amount = document.getElementById('to_amount').value;
-
+        url = 'http://localhost:5004/update?' + 'from_currency=' + from_currency + '&from_amount=' + from_amount + '&to_currency=' + to_currency + '&to_amount=' + to_amount
         // fetching updating of from and to currency before and after swap and displays in UI
-        fetch('http://localhost:5004/update')
+        fetch(url)
           .then(data => {
             const jsonData = data;
-            console.log(data);
+            console.log(jsonData);
             const from_currency_status_element = document.getElementById('from_currency_status');
             const to_currency_status_element = document.getElementById('to_currency_status');
             // console.log(jsonData["updated " + from_currency].toFixed(2).toString());
+            console.log('happyface')
+            //input
+            console.log(from_currency)
+            console.log(from_amount)
+            console.log(to_currency)
+            console.log(to_amount)
 
+          
             from_currency_status_element.innerText = from_currency + " - Old Balance: " + jsonData["old " + from_currency].toFixed(2).toString() 
             + " New Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
             to_currency_status_element.innerText = to_currency + " - Old Balance: " + jsonData["old " + to_currency].toFixed(2).toString() 
             + " New Balance: " + jsonData["updated " + to_currency].toFixed(2).toString();
           })  
-          .catch(error => console.log(error));
+          .catch(
+            error => {
+              console.log(error)
+              console.log('hello')
+            }
+          );
+          
         }
       </script>
 
