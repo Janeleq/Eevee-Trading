@@ -145,11 +145,14 @@
 
         // get form data as URLSearchParams object
         const inputs = new URLSearchParams(new FormData(form)); 
-        let from_currency = inputs.get("from_currency"); 
-        let from_amount = parseFloat(inputs.get("from_amount"), 10);
-        let to_currency = inputs.get("to_currency").toString();
-        let to_amount = document.getElementById('to_amount').value;
-        url = 'http://localhost:5004/update?' + 'from_currency=' + from_currency + '&from_amount=' + from_amount + '&to_currency=' + to_currency + '&to_amount=' + to_amount
+        var from_currency = inputs.get("from_currency"); 
+        var from_amount = inputs.get("from_amount");
+        var to_currency = inputs.get("to_currency");
+        var to_amount = document.getElementById('to_amount').value;
+        from_amount = from_amount.toString()
+        to_amount = to_amount.toString()
+        urlext = from_currency + '/' + from_amount + '/' + to_currency + '/' + to_amount
+        url = 'http://localhost:5004/update/' + urlext
         // fetching updating of from and to currency before and after swap and displays in UI
         fetch(url)
           .then(data => {
@@ -166,10 +169,10 @@
             console.log(to_amount)
 
           
-            from_currency_status_element.innerText = from_currency + " - Old Balance: " + jsonData["old " + from_currency].toFixed(2).toString() 
-            + " New Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
-            to_currency_status_element.innerText = to_currency + " - Old Balance: " + jsonData["old " + to_currency].toFixed(2).toString() 
-            + " New Balance: " + jsonData["updated " + to_currency].toFixed(2).toString();
+            // from_currency_status_element.innerText = from_currency + " - Old Balance: " + jsonData["old " + from_currency].toFixed(2).toString() 
+            // + " New Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
+            // to_currency_status_element.innerText = to_currency + " - Old Balance: " + jsonData["old " + to_currency].toFixed(2).toString() 
+            // + " New Balance: " + jsonData["updated " + to_currency].toFixed(2).toString();
           })  
           .catch(
             error => {
