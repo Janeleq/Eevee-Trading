@@ -68,7 +68,7 @@ function getTransaction(data, uid){
 
         result1 += `</tr><td>${transaction_id}</td><td>${amount}</td></tr>`
       }
-      else{
+      else if (transactions[transaction].transaction_type == 'buy'){
         var date = transactions[transaction]['date']
         date = date.substring(0, date.length - 7)
         var purchase_price = transactions[transaction]['purchase_price']
@@ -77,6 +77,15 @@ function getTransaction(data, uid){
         var transaction_type = transactions[transaction]['transaction_type']
 
         result2 += `<tr><td>${date}</td><td>${transaction_type}</td><td>${purchase_quantity}</td><td>${purchase_price}</td><td>${total_spent}</td></tr>`
+      }
+      else{
+        var date = transactions[transaction]['date']
+        date = date.substring(0, date.length - 7)
+        var sell_price = transactions[transaction]['sell_price']
+        var sell_quantity = transactions[transaction]['sell_quantity']
+        var total_earned = transactions[transaction]['total_earned']
+        var transaction_type = transactions[transaction]['transaction_type']
+        result2 += `<tr><td>${date}</td><td>${transaction_type}</td><td>${sell_quantity}</td><td>${sell_price}</td><td>${total_earned}</td></tr>`
       }
     }
 
