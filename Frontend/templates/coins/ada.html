@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="./images/logo.png">
   <title>Cardano</title>
   <link rel="stylesheet" href="{{url_for('static', filename='css/homepagewithLogin.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Light-Dark.css')}}">
   <!-- Axios -->
   <script src='https://unpkg.com/axios/dist/axios.js'></script>
   <!-- Bootstrap CSS -->
@@ -88,7 +89,7 @@
       <div class="col-xl-6 col-sm-12" id="app">
       </div>
       <div class="col-xl-4 col-lg-12">
-        <h3 style="color:white; padding-top:30px">List of Cryptocurrencies</h3>
+        <h3 style="color:white; padding-top:20px">List of Cryptocurrencies</h3>
         <ol id="cryptolinks" style="color:white">
           <li>
             <a href="BTC">Bitcoin (BTC) <span><img src="{{url_for('static', filename='images/coins/btc.png')}}" alt="" class="img"></span></a>
