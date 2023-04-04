@@ -12,5 +12,5 @@ COPY ./Backend/helpers.py .
 COPY ./Backend/invokes.py .
 COPY ./Backend/price.py .
 COPY ./Backend/authenticate.py .
-COPY ./Backend/checkOrder.py .
+COPY ./Backend/check_order.py .
 CMD [ "python", "./make_transaction.py"]
