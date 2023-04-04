@@ -1,5 +1,5 @@
 from invokes import invoke_http
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 import os, json
 import requests
 from flask_cors import CORS
@@ -95,16 +95,11 @@ def updateWallet():
     from_amount = request.args.get('from_amount')
     to_currency = request.args.get('to_currency')
     to_amount = request.args.get('to_amount')
-    print(from_currency)
-    print(from_amount)
-    print(to_currency)
-    print(to_amount)
 
     old_from_balance = None
     old_to_balance = None
     updated_from_balance = None
     updated_to_balance = None
-    updated_from_data = None
 
     # Calls access_wallet to update from_amount and get new balance
     coin = from_currency
@@ -118,7 +113,7 @@ def updateWallet():
         changed_amt = ownedcoin - float(from_amount)
         updated_from_balance = changed_amt
         print(changed_amt)
-        database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt})
+        database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
         
         # Retrieves updated balance from firebase 
         updated_from_data = database.child("users").child(id).child('wallet_coins').child(from_currency).get()
@@ -135,43 +130,37 @@ def updateWallet():
             print(old_to_balance)
             changed_amt2 = ownedcoin + float(to_amount)
             updated_to_balance = changed_amt2
-            print(changed_amt2)
-            database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
+            database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt2})
 
             # Retrieves updated balance from firebase 
             updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
 
         # Checks db update status and publishes message to rabbitmq
-            if updated_from_data != None and updated_to_data != None:
-                if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
-                    message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
-                else:   
-                    message = jsonify({"success": False, "message": "Failed to update new to balance!"})
-                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            # if updated_from_data != None and updated_to_data != None:
+            #     if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
+            #         message = jsonify({"success": True, "message": "New to balance updated successfully!"})
+            #         # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            #     else:   
+            #         message = jsonify({"success": False, "message": "Failed to update new to balance!"})
+            #         # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
             # Returns new and old wallet balance for to and from currency
             input1 = "old " + from_currency
             input2 = "old " + to_currency
             input3 = "updated " + from_currency
             input4 = "updated " + to_currency
+
             reply = {
                     input1 : old_from_balance,
                     input2 : old_to_balance,
                     input3 : updated_from_balance,
                     input4 : updated_to_balance,
                 }
-            print(input1)
-            print(input2)
-            print(input3)
-            print(input4)
-            print(old_from_balance)
-            print(old_to_balance)
-            print(updated_from_balance)
-            print(updated_to_balance)
-            return reply
-
-
+            
+            if updated_to_data.val()['qty']:
+                return redirect('http://127.0.0.1:5000/swapsuccess')
+            else:
+                return redirect('http://127.0.0.1:5000/swapfail')
 
 def getNumber(amount_owned):
     return amount_owned
