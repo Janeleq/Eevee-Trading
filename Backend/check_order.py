@@ -6,7 +6,7 @@ import os
 import helpers
 import requests
 import threading
-import amqp_setup
+# import amqp_setup
 #set up flask
 app = Flask(__name__)
 CORS(app)
@@ -55,9 +55,9 @@ def checkBuyOrderStatus():
                             database.child('users').child(id).child('buyorders').remove(coin_of_interest)
 
                             order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
-                            amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
-                            # Close RabbitMQ connection
-                            amqp_setup.connection.close()
+                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # # Close RabbitMQ connection
+                            # amqp_setup.connection.close()
 
                     else:
                         pass

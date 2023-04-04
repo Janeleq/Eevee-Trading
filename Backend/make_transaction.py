@@ -227,7 +227,7 @@ def buyordercc(coin):
         else:
             code = 400
     else:
-            code = 400
+        code = 400
 
     if code == 200:
         return redirect(f'http://host.docker.internal:5000/thanksbuyorder')

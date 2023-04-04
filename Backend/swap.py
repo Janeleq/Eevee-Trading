@@ -4,8 +4,8 @@ import os
 import requests
 from flask_cors import CORS
 import helpers
-import amqp_setup
-import pika
+# import amqp_setup
+# import pika
 import pyrebase
 
 #flask setup
@@ -140,10 +140,10 @@ def updateWallet():
             if updated_from_data != None and updated_to_data != None:
                 if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
                     message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-                    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
                 else:   
                     message = jsonify({"success": False, "message": "Failed to update new to balance!"})
-                    amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
             # Returns new and old wallet balance for to and from currency
             input1 = "old " + from_currency

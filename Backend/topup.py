@@ -49,16 +49,7 @@ def topUpWallet():
         )
     except Exception as e:
         return str(e)
-    # render_template( 
-    #         'coins/profilepage.html',
-    #         checkout_session_id=session['id'],
-    #         checkout_public_key=['STRIPE_PUBLIC_KEY']
-    #         )
-
     return redirect(session.url, code=303)
-    # return redirect("https://buy.stripe.com/test_00g5nJ2nW3GC1zO288")
-    # result = invoke_http("http:host.docker.internal:5000/transaction", method='POST')
-    # print(result)
 
 #successful topup
 @app.route('/thanks')
