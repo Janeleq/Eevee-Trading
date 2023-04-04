@@ -36,7 +36,7 @@ database = fb.database()
 # channel = connection.channel()
 # channel.queue_declare(queue='buy_order_queue')
 marketplace_URL = "http://localhost:5000/marketplace"
-price_URL = "http://127.0.0.1:5001" 
+price_URL = "http://localhost:5001" 
 # buy_transaction_URL = "http://localhost:5004/" 
 # sell_transaction_URL = "http://localhost:5004/" 
 
@@ -132,15 +132,25 @@ def buycc(coin):
                 "code":200,
                 "message": "Transaction successful!"
             }, 200
-            return result
+
+            code = 200
+            # redirect(f'http://localhost:5000/thanks?status={result}')
+        
         else:
             return "haha"
+            code = 400
     else:
         result = {
             "code" : 400,
             "message": "Transaction failed, please try again as you do not have enough balance in your wallet to make the transaction."
         }, 400
-        return result 
+
+        code = 400
+
+    if code == 200:
+        return redirect(f'http://localhost:5000/thanksbuy')
+    else:
+        return redirect(f'http://localhost:5000/errorbuy')
     
 
 @app.route("/<string:coin>/sell")
@@ -190,19 +200,27 @@ def sellcc(coin):
                 "code":200,
                 "message": "Transaction successful!"
             }, 200
-            return result
+            
+            code = 200
         else:
             result = {
                 "code" : 400,
                 "message": "Transaction failed, please try again."
             }, 400
-            return result
+            
+            code = 400
     else:
         result = {
             "code" : 400,
             "message": "Transaction failed, please try again as you do not have enough balance."
         }, 400
-        return result 
+        
+        code = 400
+    
+    if code == 200:
+        return redirect(f'http://localhost:5000/thankssell')
+    else:
+        return redirect(f'http://localhost:5000/errorsell')
 
 
 @app.route("/<string:coin>/buyorder")
