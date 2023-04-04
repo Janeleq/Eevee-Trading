@@ -3,13 +3,14 @@ from flask import Flask, request, jsonify
 import os, json
 import requests
 from flask_cors import CORS
+import helpers
 # import amqp_setup
 # import pika
 
 import pyrebase
 
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:5000'])
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
@@ -88,18 +89,13 @@ def getNumber(amount_owned,coin):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-@app.route("/update?from_currency=<string:from_currency>&from_amount=<string:from_amount>&to_currency=<string:to_currency>&to_amount=<string:to_amount>")
+@app.route("/update/<from_currency>/<from_amount>/<to_currency>/<to_amount>")
 def updateWallet(from_currency, from_amount, to_currency, to_amount):
     coin = None
     wallet_URL = "http://localhost:5100/wallet/{coin}"
-    # id = "P2lTOnotbgfpU8ThbATf0Lx6D9G2"
-
-    from_amount = request.args.get('from_amount')
-    from_currency = request.args.get("from_currency")
-    to_currency = request.args.get("to_currency")
-    to_amount = request.args.get("to_amount")
-    print(from_amount)
+    id = helpers.retrieveHelperVal('uID','helpers.txt')
     print(from_currency)
+    print(from_amount)
     print(to_currency)
     print(to_amount)
 
@@ -155,6 +151,7 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
             "updated " + to_currency : updated_to_balance,
         }
     return response
+
 
 def getNumber(amount_owned,coin):
     amount_owned = amount_owned[coin]
