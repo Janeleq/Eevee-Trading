@@ -10,7 +10,7 @@ import stripe
 
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static', static_url_path='')
-CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # function to fetch hostname and ip to check different instances currently running 
 def fetchDetails():

@@ -80,20 +80,21 @@ def getRatio(from_url, to_url):
         from_price = getPrice(from_price_data) 
     return (from_price / to_price)
 
-def getNumber(amount_owned,coin):
-    amount_owned = amount_owned[coin]
-    return amount_owned
 
 # Calls wallet to update balance and retrieve . 
 '''
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-@app.route("/update/<from_currency>/<from_amount>/<to_currency>/<to_amount>")
-def updateWallet(from_currency, from_amount, to_currency, to_amount):
-    coin = None
-    wallet_URL = "http://localhost:5100/wallet/{coin}"
+
+@app.route("/update", methods = ['GET'])
+def updateWallet():
+    wallet_URL = "http://localhost:5100/wallet/"
     id = helpers.retrieveHelperVal('uID','helpers.txt')
+    from_currency = request.args.get('from_currency')
+    from_amount = request.args.get('from_amount')
+    to_currency = request.args.get('to_currency')
+    to_amount = request.args.get('to_amount')
     print(from_currency)
     print(from_amount)
     print(to_currency)
@@ -107,54 +108,72 @@ def updateWallet(from_currency, from_amount, to_currency, to_amount):
 
     # Calls access_wallet to update from_amount and get new balance
     coin = from_currency
-    old_from_balance = requests.get(wallet_URL)
+    url1 = wallet_URL+coin
+    old_from_balance = requests.get(url1)
     if old_from_balance:
         ownedcoin = old_from_balance.json()
-        ownedcoin = getNumber(ownedcoin, coin)
+        ownedcoin = getNumber(ownedcoin)
         old_from_balance = ownedcoin
-        changed_amt = ownedcoin - from_amount
+        print(old_from_balance)
+        changed_amt = ownedcoin - float(from_amount)
         updated_from_balance = changed_amt
+        print(changed_amt)
         database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt})
         
         # Retrieves updated balance from firebase 
         updated_from_data = database.child("users").child(id).child('wallet_coins').child(from_currency).get()
-    
+
     # transaction, transaction_log, amqp, docker
     # Calls access_wallet to update to_amount and get new balance
-    coin = to_currency
-    old_to_balance = requests.get(wallet_URL)
-    if old_to_balance:
-        ownedcoin = updated_to_balance.json()
-        ownedcoin = getNumber(ownedcoin, coin)
-        old_to_balance = ownedcoin
-        changed_amt = ownedcoin + to_amount
-        updated_to_balance = changed_amt
-        database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
+        coin = to_currency
+        url2 = wallet_URL + coin
+        old_to_balance = requests.get(url2)
+        if old_to_balance:
+            ownedcoin = old_to_balance.json()
+            ownedcoin = getNumber(ownedcoin)
+            old_to_balance = ownedcoin
+            print(old_to_balance)
+            changed_amt2 = ownedcoin + float(to_amount)
+            updated_to_balance = changed_amt2
+            print(changed_amt2)
+            database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
 
-        # Retrieves updated balance from firebase 
-        updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
+            # Retrieves updated balance from firebase 
+            updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
 
-    # Checks db update status and publishes message to rabbitmq
-    if updated_from_data != None and updated_to_data != None:
-        if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
-            message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
-        else:   
-            message = jsonify({"success": False, "message": "Failed to update new to balance!"})
-            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+        # Checks db update status and publishes message to rabbitmq
+            if updated_from_data != None and updated_to_data != None:
+                if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
+                    message = jsonify({"success": True, "message": "New to balance updated successfully!"})
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+                else:   
+                    message = jsonify({"success": False, "message": "Failed to update new to balance!"})
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
-    # Returns new and old wallet balance for to and from currency
-    response = {
-            "old " + from_currency : old_from_balance,
-            "old " + to_currency : old_to_balance,
-            "updated " + from_currency : updated_from_balance,
-            "updated " + to_currency : updated_to_balance,
-        }
-    return response
+            # Returns new and old wallet balance for to and from currency
+            input1 = "old " + from_currency
+            input2 = "old " + to_currency
+            input3 = "updated " + from_currency
+            input4 = "updated " + to_currency
+            reply = {
+                    input1 : old_from_balance,
+                    input2 : old_to_balance,
+                    input3 : updated_from_balance,
+                    input4 : updated_to_balance,
+                }
+            print(input1)
+            print(input2)
+            print(input3)
+            print(input4)
+            print(old_from_balance)
+            print(old_to_balance)
+            print(updated_from_balance)
+            print(updated_to_balance)
+            return reply
 
 
-def getNumber(amount_owned,coin):
-    amount_owned = amount_owned[coin]
+
+def getNumber(amount_owned):
     return amount_owned
 
 if __name__ == "__main__":

@@ -50,11 +50,10 @@
     <div class="card mx-auto m-5" style="width: 70%">
       <div class="card-body">
         <h5 class="card-title">Coin Swap</h5>
-        <form method="GET" action="http://localhost:5004/swap" id="rate-form">
+        <form method="get" id="rate-form" action="http://localhost:5004/update">
           <div>
             Amount: <input class="form-control" type="number" name="from_amount" min="0"> 
           </div>
-  
           <div class="">
             From Currency: 
             <select name="from_currency" class="form-select my-1">
@@ -82,20 +81,17 @@
           <div class="my-2">Gas Fee: 1%</div>
           <div>
             <h5 id="swap_amount_message" class="my-2 text-success"></h5>
-            <input type="hidden" value="" id="to_amount">
+            <input type="text" name="to_amount" id="to_amount" class="form-select my-1" readonly>
             <button class="btn btn-primary" onclick="submitRateForm(event)">Get Rates</button>
           </div>
-      </form>
       </div>
     </div>
-
     <div class="card mx-auto" style="width: 70%">
       <div class="card-body">
         <h5 class="card-title">Transaction</h5>
-        <form method="GET" id="swap-form"> 
           <div id="from_currency_status"></div>
           <div id="to_currency_status"></div>
-          <button type="submit" class="btn btn-primary" onclick="submitSwapForm(event)">Make Swap</button>
+          <input type="submit" class="btn btn-primary" value="Make Swap"></button>
         </form>
       </div>
     </div>
@@ -118,7 +114,7 @@
       // get form data as URLSearchParams object
       const inputs = new URLSearchParams(new FormData(form)); 
       let from_currency = inputs.get("from_currency"); 
-      let from_amount = parseInt(inputs.get("from_amount"), 10);
+      let from_amount = parseFloat(inputs.get("from_amount"), 10);
       let to_currency = inputs.get("to_currency");
       let to_amount = 0;
 
@@ -137,52 +133,6 @@
     }
     </script>
 
-    <script>
-      function submitSwapForm(event) {
-        // prevent the form from submitting normally
-        event.preventDefault(); 
-        const form = document.getElementById('rate-form');
-
-        // get form data as URLSearchParams object
-        const inputs = new URLSearchParams(new FormData(form)); 
-        var from_currency = inputs.get("from_currency"); 
-        var from_amount = inputs.get("from_amount");
-        var to_currency = inputs.get("to_currency");
-        var to_amount = document.getElementById('to_amount').value;
-        from_amount = from_amount.toString()
-        to_amount = to_amount.toString()
-        urlext = from_currency + '/' + from_amount + '/' + to_currency + '/' + to_amount
-        url = 'http://localhost:5004/update/' + urlext
-        // fetching updating of from and to currency before and after swap and displays in UI
-        fetch(url)
-          .then(data => {
-            const jsonData = data;
-            console.log(jsonData);
-            const from_currency_status_element = document.getElementById('from_currency_status');
-            const to_currency_status_element = document.getElementById('to_currency_status');
-            // console.log(jsonData["updated " + from_currency].toFixed(2).toString());
-            console.log('happyface')
-            //input
-            console.log(from_currency)
-            console.log(from_amount)
-            console.log(to_currency)
-            console.log(to_amount)
-
-          
-            // from_currency_status_element.innerText = from_currency + " - Old Balance: " + jsonData["old " + from_currency].toFixed(2).toString() 
-            // + " New Balance: " + jsonData["updated " + from_currency].toFixed(2).toString();
-            // to_currency_status_element.innerText = to_currency + " - Old Balance: " + jsonData["old " + to_currency].toFixed(2).toString() 
-            // + " New Balance: " + jsonData["updated " + to_currency].toFixed(2).toString();
-          })  
-          .catch(
-            error => {
-              console.log(error)
-              console.log('hello')
-            }
-          );
-          
-        }
-      </script>
 
     <footer class="text-center" style="font-size:12px">
       <p class="text-muted mb-0 small">Copyright ©EEVEE Trading 2023</p>
