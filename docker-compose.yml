@@ -1,7 +1,5 @@
 version: "3.8"
 
-volumes:
-  rabbitmq_data:
 
 services:
   ##################################
@@ -87,6 +85,7 @@ services:
     restart: always
     environment:
       # authenticate_URL: http://authenticate:5000/authenticate
+      HOST: host.docker.internal
       PYTHONUNBUFFERED: 1
     ports: 
       - 5050:5050

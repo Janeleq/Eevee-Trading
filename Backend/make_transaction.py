@@ -125,7 +125,7 @@ def buycc(coin):
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": increase})
             transaction_type = 'buy'
             time = datetime.now()
-            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount }
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "purchase_quantity": qty, "purchase_price": price, "total_spent": total_amount, 'coin': coin }
             print(data)
             database.child("users").child(id).child('transactions').push(data)
             result = {
@@ -193,7 +193,7 @@ def sellcc(coin):
             database.child("users").child(id).child('wallet_coins').child(coin).update({"qty": decrease})
             transaction_type = 'sell'
             time = datetime.now()
-            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount }
+            data = {"userid": id, "date": str(time), "transaction_type": transaction_type, "sell_quantity": qty, "sell_price": price, "total_earned": total_amount, 'coin': coin }
             print(data)
             database.child("users").child(id).child('transactions').push(data)
             result = {

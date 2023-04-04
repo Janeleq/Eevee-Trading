@@ -276,23 +276,23 @@
     function generateBuySell() {
       document.getElementById('buysellid').innerHTML = `
       <div>
-        <form action="BNB/buy" methods="POST">
+        <form action="ADA/buy" methods="POST">
           <small>Quantity</small><input name="buyqty" type="text" placeholder="Quantity" style="margin-left: 10px; margin-right:10px"></input></small>
           <small><input type="submit" id="buy" class="btn btn-primary" value="Buy"></small>
         </form>
 
-        <form action="BNB/sell" methods="POST">
+        <form action="ADA/sell" methods="POST">
           <small>Quantity</small><input name="sellqty" type="text" placeholder="Quantity" style="margin-left: 10px; margin-right:10px"></input></small>
           <small><input type="submit" id="sell" class="btn btn-primary" value="Sell"></small>
         </form>
 
-        <form action="BNB/buyorder" methods="POST">
+        <form action="ADA/buyorder" methods="POST">
           <small>Quantity</small><input name="buyorderqty" type="text" placeholder="Quantity" style="margin-left: 10px; margin-right:10px"></input></small>
           <small>Price</small><input name="buyorderprice" type="text" placeholder="Price" style="margin-left: 10px; margin-right:10px"></input></small>
           <input type="submit" id="buy" class="btn btn-primary" value="Buy Limit Order"></small>
         </form>
           
-        <form action="BNB/sellorder" methods="POST">
+        <form action="ADA/sellorder" methods="POST">
           <small>Quantity</small><input name="sellorderqty" type="text" placeholder="Quantity" style="margin-left: 10px; margin-right:10px"></input></small>
           <small>Price</small><input name="sellorderprice" type="text" placeholder="Price" style="margin-left: 10px; margin-right:10px"></input></small>
           <input type="submit" id="sellorder" class="btn btn-primary" value="Sell Limit Order"></form>
