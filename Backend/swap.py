@@ -155,10 +155,12 @@ def updateWallet():
             reply = {
                     'code' : code,
                     'message' : message,
+                    'data':{
                     input1 : old_from_balance,
                     input2 : old_to_balance,
                     input3 : updated_from_balance,
                     input4 : updated_to_balance,
+                    }   
                 }
             
             if not updated_to_data.val()['qty']:
