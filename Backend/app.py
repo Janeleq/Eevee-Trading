@@ -1,13 +1,8 @@
-import os
 import socket 
-import requests
-import json
 from invokes import invoke_http
 from flask import Flask, redirect, render_template, url_for, request, jsonify
 from flask_cors import CORS
-import stripe
 # from invokes import invoke_http
-
 
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static', static_url_path='')
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -18,8 +13,6 @@ def fetchDetails():
     host_ip = socket.gethostbyname(hostname)
     return str(hostname) , str(host_ip)
 
-if os.path.exists('helpers.txt'):
-    os.remove('helpers.txt')
 
 # endpoints
 @app.route("/")
@@ -28,33 +21,36 @@ def main():
     print(hostname, host_ip)
     return render_template('starterpage.html', HOSTNAME=hostname, IP=host_ip)
 
+#login page
 @app.route("/login")
 def login():
     hostname, host_ip = fetchDetails()
     print(hostname, host_ip)
     return render_template('Login+Register Page/Login.html', HOSTNAME=hostname, IP=host_ip)
 
+#register page
 @app.route("/register")
 def register():
     hostname, host_ip = fetchDetails()
     print(hostname, host_ip)
     return render_template('register.html', HOSTNAME=hostname, IP=host_ip)
 
+#home page
 @app.route("/home")
 def home():
     return render_template('homepageWithLogin/homepageWithLogin.html')
 
+#profile page
 @app.route("/profile")
 def profile():
     return render_template('coins/profilepage.html')
 
-
+#marketplace page
 @app.route("/marketplace")
 def marketplace():
-    status = '\n --- Invoking pricing microservice to display various CC prices ---'
-    print(status)
-    return render_template('coins/marketplace.html', data = status)
+    return render_template('coins/marketplace.html')
 
+#swap page
 @app.route("/swap")
 def swap():
     hostname, host_ip = fetchDetails()
@@ -90,20 +86,14 @@ def ethereum():
 def solana():
     return redirect("http://host.docker.internal:5010/SOL")
 
+#Top up 
 @app.route('/topup', methods=['GET', 'POST'])
 def topup():
     topUpURL = 'http://host.docker.internal:5005/processtopup'
     print("\n--- Invoking Topup Microservice ---")
     return redirect(topUpURL)
 
-@app.route('/transactions', methods=['GET', 'POST'])
-def checkTransactions():
-    TransactionURL = 'http://host.docker.internal:5006/transactions'
-    print("\n--- Invoking Transaction Log Microservice to get transactions ---")
-    retrieved_transactions = requests.get(TransactionURL)
-    print(retrieved_transactions)
-    return render_template('coins/profilepage.html', retrieved_transactions = retrieved_transactions)
-
+#Topup success/fail
 @app.route('/thanks')
 def processTopUp():
     top_up_amt = request.args.get('top_up_amt')
@@ -121,43 +111,52 @@ def processTopUp():
         profile_page_URL = "http://host.docker.internal:5000/profile"
         return redirect(profile_page_URL)
 
+#buy success
 @app.route('/thanksbuy')
 def processBuy():
     return render_template('buy_thanks.html')
 
+#sell success
 @app.route('/thankssell')
 def processSell():
     return render_template('sell_thanks.html')
 
+#swap success
 @app.route('/swapsuccess')
 def processSwapSuccess():
     return render_template('swap_success.html')
 
+#swap fail
 @app.route('/swapfail')
 def processSwapFail():
     return render_template('swap_fail.html')
 
-
+#buy error
 @app.route('/errorbuy')
 def processBuyError():
     return render_template('buy_error.html')
 
+#sell error
 @app.route('/errorsell')
 def processSellError():
     return render_template('sell_error.html')
 
+#buy order error
 @app.route('/errorbuyorder')
 def processBuyOrderError():
     return render_template('buyorder_error.html')
 
+#sell order error
 @app.route('/errorsellorder')
 def processSellOrderError():
     return render_template('sellorder_error.html')
 
+#buy order success
 @app.route('/thanksbuyorder')
 def processBuyOrder():
     return render_template('buyorder_thanks.html')
 
+#sell order success
 @app.route('/thankssellorder')
 def processSellOrder():
     return render_template('sellorder_thanks.html')

@@ -5,14 +5,17 @@ import helpers
 from flask_cors import CORS
 from datetime import datetime
 
+#flask
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 
+#stripe
 app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX'
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX'
 
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
+#firebase configuration
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     "authDomain": "cryptobuds-ba428.firebaseapp.com",
@@ -24,10 +27,11 @@ firebase_config = {
     "measurementId": "G-BVXDMYJR2K"
 }
 
-
+#initialise firebase
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
+#top up process
 @app.route("/processtopup", methods = ['GET', 'POST'])
 def topUpWallet():
     
@@ -56,6 +60,7 @@ def topUpWallet():
     # result = invoke_http("http:host.docker.internal:5000/transaction", method='POST')
     # print(result)
 
+#successful topup
 @app.route('/thanks')
 def processTopUp():
     session_id = request.args.get("session_id")

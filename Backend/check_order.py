@@ -1,17 +1,17 @@
 from flask import Flask
 from flask_cors import CORS
-import pika
 import json
 import pyrebase
 import os
 import helpers
 import requests
 import threading
-# import amqp_setup
-
+import amqp_setup
+#set up flask
 app = Flask(__name__)
 CORS(app)
 
+#firebase configurations
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     "authDomain": "cryptobuds-ba428.firebaseapp.com",
@@ -23,13 +23,16 @@ firebase_config = {
     "measurementId": "G-BVXDMYJR2K"
 }
 
+#initialise firebase
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
+#dummy function
 def dummy(lel):
     price = lel.json()['data']['price']
     return float(price)
 
+#check buy order
 def checkBuyOrderStatus():
     threading.Timer(5.0, checkBuyOrderStatus).start()
     if os.path.exists('helpers.txt')==True:
@@ -52,17 +55,16 @@ def checkBuyOrderStatus():
                             database.child('users').child(id).child('buyorders').remove(coin_of_interest)
 
                             order = {'buy_price': current_coin_pricing, 'buy_quantity': buy['buy_quantity'], 'ordercoin': buy['ordercoin'], 'total_amount_spent': total_amount_spent}
-                            # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
-                            # # Close RabbitMQ connection
-                            # amqp_setup.connection.close()
+                            amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
+                            # Close RabbitMQ connection
+                            amqp_setup.connection.close()
 
                     else:
                         pass
                 else:
                     pass
 
-
-
+#check sell order
 def checkSellOrderStatus():
     threading.Timer(5.0, checkSellOrderStatus).start()
     if os.path.exists('helpers.txt')==True:
@@ -88,8 +90,6 @@ def checkSellOrderStatus():
                             # amqp_setup.channel.basic_publish(exchange=amqp_setup.RABBITMQ_BUY_EXCHANGE, routing_key='', body=json.dumps(order))
                             # # Close RabbitMQ connection
                             # amqp_setup.connection.close()
-
-
                     else:
                         pass
                 else:
