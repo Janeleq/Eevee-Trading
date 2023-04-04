@@ -5,23 +5,24 @@
 
 <div align="center"  style="background-color:white;>
   <a href="https://github.com/Janeleq/G4T4-Eevee">
-    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="250" height="280" title="Eevee logo" id="is213">
+    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="300" height="280" title="Eevee logo" id="is213">
   </a>
 
-<!--<h3 align="center">Mikro</h3> -->
+<h3 align="center">EEVEE Trading</h3>
 
   <p align="center">
     EEVEE is a project to make a enteprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
     <br />
-    <a href="https://github.com/qwtan98/DJMV-IS216Project"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Janeleq/G4T4-Eevee"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Janeleq/G4T4-Eevee">View Demo</a>
     ·
-    <a href="https://github.com/qwtan98/DJMV-IS216Project/issues">Report Bug</a>
+    <a href="https://github.com/Janeleq/G4T4-Eevee/issues">Report Bug</a>
     ·
     <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>
   </p>
+
 
 </div>
 
@@ -31,9 +32,9 @@
 | --------------------- | ---------------- | ------------------------------- | ------------------------------------------------------------ |
 | Jane Lim Enqi         | janelim.2021     | janelim2001@gmail.com           | [@LinkedIn](https://sg.linkedin.com/in/limenqi01)            |
 | Sim Jia Cheng Malcolm | malcolm.sim.2021 | malcolmsim7@hotmail.com         | [@LinkedIn](https://sg.linkedin.com/in/malcolm-sim-protocrux) |
-| Tan Jia Jin | jiajin.tan.2021  | jiajin.tan.2021@scis.smu.edu.sg | [@LinkedIn](https://www.linkedin.com/in/tan-jia-jin/) |
+| Tan Jia Jin | jiajin.tan.2021  | jjtan.com.jj@gmail.com | [@LinkedIn](https://www.linkedin.com/in/tan-jia-jin/) |
 | Tan Quan Wah          | quanwah.tan.2021 | qwtan98@gmail.com               | [@LinkedIn](https://sg.linkedin.com/in/qwtan98)              |
-| Weng Jia Yang Peter | jyweng.2021  | jyweng.2021@scis.smu.edu.sg | [@LinkedIn](https://www.linkedin.com/in/peter-wengjiayang/) |
+| Weng Jia Yang Peter | jyweng.2021  | weng.jiayang.peter@gmail.com | [@LinkedIn](https://www.linkedin.com/in/peter-wengjiayang/) |
 
 
 
@@ -49,52 +50,48 @@
 
 [Go To Top](#is213)
 
-### Our Problem Statement
-
-Today, the majority of migrant workers don't have easy access to resources for expanding their investment knowledge, which restricts their capacity to grow their wealth. They are faced with the constant challenge to find an essential platform where they can convieniently grow their investment knowledge.
-
 ### About the Project
-Mikro is a one-stop knowledge investment platform to increase financial inclsuion and literacy among migrant workers in Singapore, that helps to kickstart and improve their knowledge on investing. 
+EEVEE Trading, allows for buy/sell requests of currency through market order, buy/sell requests through limit order and swapping of one currency to another. Users are also able to top up their wallet balance to carry out their transactions. Notably, our cryptocurrency platform is meant for simulation purposes and is made in an attempt to closely depict how real trading would be.In the following, we will be covering 4 contextual user scenarios that are relevant in the aforementioned business scenario.
 
 ### Project Structure
 
 ```
-📦DJMV-IS216Project
- ┣ 📂 mikro-app
- ┃ ┣ 📂 dist
- ┃ ┣ 📂 docs
- ┃ ┣ 📂 node-modules
- ┃ ┣ 📂 public
- ┃ ┣ 📂 img
+📦G4T4-Eevee
+ ┣ 📂 Frontend
+ ┃ ┣ 📂 static
+ ┃ ┃ ┣ 📂 css
+ ┃ ┃ ┣ 📂 images
+ ┃ ┃ ┣ 📂 js
+ ┃ ┃ ┃ ┣ 📂 coins
+ ┃ ┃ ┃ ┣ 📂 homepageWithLogin
+ ┃ ┃ ┃ ┣ 📂 Login+Register Page
+ ┃ ┃ ┃ ┣ 📜 register.mjs
+ ┃ ┃ ┃ ┣ 📜 script-no-ajax.mjs
  ┃ ┃
- ┃ ┣ 📂 src
- ┃ ┃ ┣ 📂 assets
- ┃ ┃ ┣ 📂 components
- ┃ ┃ ┃ ┣ 📜 NavigationBar.vue
- ┃ ┃ ┃ ┣ 📜 TheFooter.vue
- ┃ ┃ ┃
- ┃ ┃ ┣ 📂 router
- ┃ ┃ ┃ ┣ 📜 router.js
- ┃ ┃ ┃
- ┃ ┃ ┣ 📂 views
- ┃ ┃ ┃ # 11 different pages
- ┃ ┃ ┃ ┣ 📜 RegisterPage.vue
- ┃ ┃ ┃ ┣ 📜 ConversionPage.vue
- ┃ ┃ ┃ ┣ ...
- ┃ ┃ ┃
- ┃ ┃ ┣ 📜 App.Vue
- ┃ ┃ ┣ 📜 main.js
+ ┃ ┣ 📂 template 
+ ┃ ┃ ┣ 📂 coins
+ ┃ ┃ ┣ 📂 homepageWithLogin
+ ┃ ┃ ┣ 📂 images
+ ┃ ┃ ┣ 📂 Login+Register Page
+ ┃ ┃ ┃ ┣ 📜 Login.html
+ ┃ ┃ ┣ 📜 buy_error.html
+ ┃ ┃ ┣ 📜 index.html
+ ┃ ┃ ┣ 📜 register.html
+ ┃ ┃ ┣ 📜 starterpage.html
  ┃ ┃
- ┃ ┃ # dependencies for the vue app
- ┃ ┣ 📜 package.json       
- ┃ ┣ 📜 package-lock.json
- ┃ ┣ 📜 package-lock.json
+ ┣ 📂 Backend
+ ┃ ┣ 📜 app.py
+ ┃ ┣ 📜 check_order.py
+ ┃ ┣ 📜 make_transaction.py
+ ┃ ┃ 
+ ┣ 📂 Kubernetes
+ ┃ ┣ 📜 deployment.yml
+ ┃ ┣ 📜 service.yml
  ┃ ┃
- ┃ ┃ # js config files
- ┃ ┣ 📜 vue.config.js
- ┃ ┣ 📜 babel.config.js
- ┃ ┃ # gitignore
- ┃ ┗ 📜.gitignore
+ ┣ 📜 .dockerignore
+ ┣ 📜 app.Dockerfile
+ ┣ # gitignore
+ ┣ 📜 .gitignore
  ┃
  ┗ 📜 README.md
 ```
@@ -111,18 +108,18 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 | Library   | Description                           | Link                                   |
 | --------- | ------------------------------------- | -------------------------------------- |
-| Flask     | Web Framework                             | [Vue CLI](https://cli.vuejs.org/)      |
-| Vuex      | State Management                      | [Vuex](https://next.vuex.vuejs.org/)   |
+| Flask     | Web Framework                             | [Flask](https://flask.palletsprojects.com/en/2.2.x/) |
 | Bootstrap | Tooltips, Toasts, Offcanvas, Carousel | [Bootstrap](https://getbootstrap.com/) |
-| Jinja2 | Templating for Dynamic Webpages | [Bootstrap](https://getbootstrap.com/) |
 
 ### Front End Styling
 
 > Bootstrap was the Main Library for styling
 
-| Library / Tool | Description          | Link                                   |
-| -------------- | -------------------- | -------------------------------------- |
-| Bootstrap CSS  | Grid, Flex Utilities | [Bootstrap](https://getbootstrap.com/) |
+| Library / Tool | Description          | Link                                     |
+| -------------- | -------------------- | ---------------------------------------- |
+| Bootstrap CSS  | Grid, Flex Utilities | [Bootstrap](https://getbootstrap.com/)   |
+| AOS            | Animations           | [AOS](https://michalsnik.github.io/aos/) |
+| Plotly         | Graphs               | [Plotly](https://plotly.com)             |
 
 ### Back End (Core Libraries)
 
@@ -130,10 +127,9 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 
 | Library | Description                                                | Link                             |
 | ------- | ---------------------------------------------------------- | -------------------------------- |
-| Flask  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
+| Flask  | Flask is a micro web framework written in Python. | [Flask](https://flask.palletsprojects.com/en/2.2.x/) |
 | NodeJS  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
-| WampServer  | consolidated package to provide the necessary programming language support | [NodeJS](https://nodejs.org/en/)|
-| Docker  | Open-source, cross-platform JavaScript runtime environment | [NodeJS](https://nodejs.org/en/) |
+| Docker  | Set of platform as a service products that use OS-level virtualization to deliver software in packages called containers. | [Docker](https://www.docker.com) |
 
 ### Version Control
 
@@ -156,7 +152,6 @@ Mikro is a one-stop knowledge investment platform to increase financial inclsuio
 ### External API Gateways
 
 ### External Messaging Brokers
-
 
 [Go To Top](#is213)
 
