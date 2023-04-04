@@ -25,6 +25,7 @@ onAuthStateChanged(auth, (user) => {
     onValue(coinRef, (snapshot) => {
       const data = snapshot.val();
       getValues(data, uid)
+      getTransaction(data,uid)
     });
   }
 });
@@ -53,6 +54,37 @@ function getValues(data, uid) {
   document.getElementById('SOLquantity').innerHTML = sol.qty
   document.getElementById('USDquantity').innerHTML = usd.qty
 }
+
+function getTransaction(data, uid){
+  var result1 = `<tr><th>TransactionId</th><th>Amount Received</th></tr>`
+  var result2 = `<tr><th>Date</th><th>Transaction Type</th><th>Purchase Quantity</th><th>Purchase Price</th><th>Total Spent</th></tr>`
+    var transactions = data[uid].transactions
+    for (var transaction in transactions){
+      if (transactions[transaction].transaction_type == 'topup'){
+
+        var amount = transactions[transaction]['amount']
+
+        var transaction_id = transactions[transaction]['transactionid']
+
+        result1 += `</tr><td>${transaction_id}</td><td>${amount}</td></tr>`
+      }
+      else{
+        var date = transactions[transaction]['date']
+        date = date.substring(0, date.length - 7)
+        var purchase_price = transactions[transaction]['purchase_price']
+        var purchase_quantity = transactions[transaction]['purchase_quantity']
+        var total_spent = transactions[transaction]['total_spent']
+        var transaction_type = transactions[transaction]['transaction_type']
+
+        result2 += `<tr><td>${date}</td><td>${transaction_type}</td><td>${purchase_quantity}</td><td>${purchase_price}</td><td>${total_spent}</td></tr>`
+      }
+    }
+
+    document.getElementById('topupdata').innerHTML = result1
+    document.getElementById('transactiondata').innerHTML = result2
+  }
+
+
 
 setTimeout(() => {
   addListener()
