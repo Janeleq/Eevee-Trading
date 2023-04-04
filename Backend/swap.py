@@ -3,8 +3,8 @@ from flask import Flask, request, jsonify
 import os, json
 import requests
 from flask_cors import CORS
-import amqp_setup
-import pika
+# import amqp_setup
+# import pika
 
 import pyrebase
 
@@ -88,16 +88,20 @@ def getNumber(amount_owned,coin):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-@app.route("/update")
-def updateWallet():
+@app.route("/update?from_currency=<string:from_currency>&from_amount=<string:from_amount>&to_currency=<string:to_currency>&to_amount=<string:to_amount>")
+def updateWallet(from_currency, from_amount, to_currency, to_amount):
     coin = None
     wallet_URL = "http://localhost:5100/wallet/{coin}"
-    id = "P2lTOnotbgfpU8ThbATf0Lx6D9G2"
+    # id = "P2lTOnotbgfpU8ThbATf0Lx6D9G2"
 
     from_amount = request.args.get('from_amount')
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
     to_amount = request.args.get("to_amount")
+    print(from_amount)
+    print(from_currency)
+    print(to_currency)
+    print(to_amount)
 
     old_from_balance = None
     old_to_balance = None
@@ -138,17 +142,17 @@ def updateWallet():
     if updated_from_data != None and updated_to_data != None:
         if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
             message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-            amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
         else:   
             message = jsonify({"success": False, "message": "Failed to update new to balance!"})
-            amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
     # Returns new and old wallet balance for to and from currency
     response = {
             "old " + from_currency : old_from_balance,
             "old " + to_currency : old_to_balance,
             "updated " + from_currency : updated_from_balance,
-            "updated" + to_currency : updated_to_balance,
+            "updated " + to_currency : updated_to_balance,
         }
     return response
 
