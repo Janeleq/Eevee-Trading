@@ -150,12 +150,26 @@ def updateWallet():
             input3 = "updated " + from_currency
             input4 = "updated " + to_currency
 
+            code = '200'
+            message = 'successfully updated swap transaction in wallet!'
             reply = {
+                    'code' : code,
+                    'message' : message,
+                    'data':{
                     input1 : old_from_balance,
                     input2 : old_to_balance,
                     input3 : updated_from_balance,
                     input4 : updated_to_balance,
+                    }   
                 }
+            
+            if not updated_to_data.val()['qty']:
+                code = '404'
+                message = 'unsuccessful update of swap transaction in wallet.'
+                reply = {
+                        'code' : code,
+                        'message' : message
+                    }
             
             if updated_to_data.val()['qty']:
                 return redirect('http://127.0.0.1:5000/swapsuccess')
