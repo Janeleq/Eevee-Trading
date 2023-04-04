@@ -1,17 +1,17 @@
 from invokes import invoke_http
 from flask import Flask, request, jsonify, redirect
-import os, json
+import os
 import requests
 from flask_cors import CORS
 import helpers
 # import amqp_setup
 # import pika
-
 import pyrebase
 
+#flask setup
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
+#firebase configuration
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     "authDomain": "cryptobuds-ba428.firebaseapp.com",
@@ -22,17 +22,18 @@ firebase_config = {
     "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
     "measurementId": "G-BVXDMYJR2K"
 }
+#initialise firebase
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
-
+#swap coins
 @app.route("/swap", methods = ['GET'])
 def swap():
     from_amount = request.args.get('from_amount')
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
 
-    from_price_URL = f"http://127.0.0.1:5001/coin/{from_currency}"
-    to_price_URL = f"http://127.0.0.1:5001/coin/{to_currency}"
+    from_price_URL = f"http://host.docker.internal/coin/{from_currency}"
+    to_price_URL = f"http://host.docker.internal/coin/{to_currency}"
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
     gas_fee = 0.01
@@ -59,7 +60,7 @@ def swap():
             "code": 400,
             "message": "Swap failure sent for error handling."
         }
-    
+#dummy function
 def getPrice(response):
     price = response['data']['price']
     return price
@@ -86,7 +87,7 @@ def getRatio(from_url, to_url):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-
+#update after coin swap
 @app.route("/update", methods = ['GET'])
 def updateWallet():
     wallet_URL = "http://host.docker.internal:5100/wallet/"
@@ -136,13 +137,13 @@ def updateWallet():
             updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
 
         # Checks db update status and publishes message to rabbitmq
-            # if updated_from_data != None and updated_to_data != None:
-            #     if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
-            #         message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-            #         # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
-            #     else:   
-            #         message = jsonify({"success": False, "message": "Failed to update new to balance!"})
-            #         # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            if updated_from_data != None and updated_to_data != None:
+                if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
+                    message = jsonify({"success": True, "message": "New to balance updated successfully!"})
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+                else:   
+                    message = jsonify({"success": False, "message": "Failed to update new to balance!"})
+                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
             # Returns new and old wallet balance for to and from currency
             input1 = "old " + from_currency
@@ -172,9 +173,9 @@ def updateWallet():
                     }
             
             if updated_to_data.val()['qty']:
-                return redirect('http://127.0.0.1:5000/swapsuccess')
+                return redirect('http://host.docker.internal/swapsuccess')
             else:
-                return redirect('http://127.0.0.1:5000/swapfail')
+                return redirect('http://host.docker.internal/swapfail')
 
 def getNumber(amount_owned):
     return amount_owned

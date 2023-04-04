@@ -10,7 +10,6 @@ COPY ./Backend/swap.py .
 COPY ./Backend/price.py .
 COPY ./Backend/access_wallet.py .
 COPY ./Backend/make_transaction.py .
-COPY ./Backend/helpers.py .
 COPY ./Backend/invokes.py .
 COPY ./Backend/price.py .
 COPY ./Backend/check_order.py .

@@ -5,10 +5,11 @@ from flask import Flask, request, redirect
 from flask_cors import CORS
 import os
 
+#Flask set-up
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 
-
+#Firebase configurations
 firebaseConfig = {
     'apiKey': "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     'authDomain': "cryptobuds-ba428.firebaseapp.com",
@@ -20,9 +21,11 @@ firebaseConfig = {
     'measurementId': "G-BVXDMYJR2K"
   }
 
+#Initialize firebase
 firebase=pyrebase.initialize_app(firebaseConfig)
 auth=firebase.auth()
 
+#authenticate login
 @app.route("/authenticate")
 def authenticateUser():
     print("\n--- Checking credentials ---")
@@ -35,17 +38,10 @@ def authenticateUser():
         login = auth.sign_in_with_email_and_password(email, password)
         idToken = auth.get_account_info(login['idToken'])
         uID = auth.current_user['localId']
-
-        writeToText('helpers.txt','uID:'+uID)
-
         return redirect('http://host.docker.internal:5000/home')
     except:
         print("Invalid email or password")
         return redirect('http://host.docker.internal:5000/login')
-
-def writeToText(filename, text):
-    with open(filename, 'w') as f:
-        f.write(text)
 # with app.app_context():
 
 if __name__ == "__main__":
