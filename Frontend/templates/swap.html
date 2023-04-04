@@ -21,7 +21,7 @@
   <nav id="nav" class="navbar navbar-expand-lg bg-dark sticky-top">
     <div class="container-fluid" id="header">
       <a class="navbar-brand text-white" href="/home"><img
-          src="{{url_for('static', filename='images/eevee_logo.PNG')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+          src="{{url_for('static', filename='images/eevee_logo.png')}}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -118,11 +118,12 @@
       let from_amount = parseFloat(inputs.get("from_amount"), 10);
       let to_currency = inputs.get("to_currency");
       let to_amount = 0;
-
+      console.log('click')
       // fetching new to_amount after swap and displaying in UI
       fetch('http://127.0.0.1:5004/swap?' + inputs.toString()) 
         .then(response => response.text())
         .then(data => {
+          
           const jsonData = JSON.parse(data);
           const element = document.getElementById('swap_amount_message');
           document.getElementById('to_amount').value = jsonData['conversion_amount'].toFixed(2);

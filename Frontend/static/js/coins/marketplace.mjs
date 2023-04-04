@@ -24,7 +24,6 @@ function getBNBInfo(){
   .then(response => {
       var accessData = response.data.Data['BNB']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
@@ -47,7 +46,6 @@ function getBTCInfo() {
   .then(response => {
       var accessData = response.data.Data['BTC']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
@@ -70,7 +68,6 @@ function getADAInfo(){
   .then(response => {
       var accessData = response.data.Data['ADA']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
@@ -93,7 +90,6 @@ function getDOGEInfo() {
   .then(response => {
       var accessData = response.data.Data['DOGE']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
@@ -117,7 +113,6 @@ function getETHInfo() {
   .then(response => {
       var accessData = response.data.Data['ETH']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
@@ -141,7 +136,6 @@ function getSOLInfo(){
   .then(response => {
       var accessData = response.data.Data['SOL']
       var name = accessData.Name
-      var imageurl = accessData.ImageUrl
       var assetWebsite = accessData.AssetWebsiteUrl
       var whitepaper = accessData.AssetWhitepaperUrl
       var coinName = accessData.CoinName
