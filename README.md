@@ -162,11 +162,12 @@ EEVEE Trading, allows for buy/sell requests of currency through market order, bu
 | Tool   | Download                                           |
 | ------ | -------------------------------------------------- |
 | Python3 | [Download Python3](https://www.python.org/downloads/) |
+| Docker | [Download Docker](https://www.docker.com) |
 
-1. Run Docker
-2. Run MAMP / WAMP
-3. Open 1 terminal (cd backend and run docker-compose up) 
-4. Visit the webpage by opening a browser (preferably Google Chrome) and enter http://localhost:5000
+1. Clone repository
+2. Change all id of dockerfile to your docker id
+3. Run docker compose up –build
+4. Visit the webpage by opening a browser (preferably Google Chrome) and enter host.docker.internal:5000
 
 pip install -r requirements.txt
 ```
