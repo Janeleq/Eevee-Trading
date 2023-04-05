@@ -163,8 +163,8 @@ EEVEE Trading, allows for buy/sell requests of currency through market order, bu
 | Docker | [Download Docker](https://www.docker.com) |
 
 1. Clone repository
-2. Change all id of dockerfile to your docker id
-3. Run docker compose up –build
+2. Change all id of dockerfile to your own docker id
+3. Run docker compose up –- build
 4. Visit the webpage by opening a browser (preferably Google Chrome) and enter host.docker.internal:5000
 5. Use username: testing@testing.com and password:123456 to login
 
