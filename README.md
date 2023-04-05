@@ -149,9 +149,7 @@ EEVEE Trading, allows for buy/sell requests of currency through market order, bu
 | Bootstrap Studio     | Drag and Drop designing of pages                     | [Bootstrap Studio](https://bootstrapstudio.io)               |
 | Typora               | README Editing and Formatting                        | [Typora](https://typora.io)                                  |
 
-### External API Gateways
 
-### External Messaging Brokers
 
 [Go To Top](#is213)
 
