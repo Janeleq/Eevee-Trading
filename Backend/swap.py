@@ -32,8 +32,8 @@ def swap():
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
 
-    from_price_URL = f"http://host.docker.internal/coin/{from_currency}"
-    to_price_URL = f"http://host.docker.internal/coin/{to_currency}"
+    from_price_URL = f"http://host.docker.internal:5001/coin/{from_currency}"
+    to_price_URL = f"http://host.docker.internal:5001/coin/{to_currency}"
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
     gas_fee = 0.01
@@ -137,12 +137,12 @@ def updateWallet():
             updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
 
         # Checks db update status and publishes message to rabbitmq
-            if updated_from_data != None and updated_to_data != None:
-                if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
-                    message = jsonify({"success": True, "message": "New to balance updated successfully!"})
-                    # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
-                else:   
-                    message = jsonify({"success": False, "message": "Failed to update new to balance!"})
+            # if updated_from_data != None and updated_to_data != None:
+            #     if updated_to_data.val()['qty'] == updated_to_balance and updated_from_balance.val()['qty'] == updated_from_balance:
+            #         message = jsonify({"success": True, "message": "New to balance updated successfully!"})
+            #         # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="*", body=message, properties=pika.BasicProperties(delivery_mode = 2))
+            #     else:   
+            #         message = jsonify({"success": False, "message": "Failed to update new to balance!"})
                     # amqp_setup.channel.basic_publish(exchange=amqp_setup.exchangename, routing_key="swap.error", body=message, properties=pika.BasicProperties(delivery_mode = 2))
 
             # Returns new and old wallet balance for to and from currency
@@ -173,9 +173,9 @@ def updateWallet():
                     }
             
             if updated_to_data.val()['qty']:
-                return redirect('http://host.docker.internal/swapsuccess')
+                return redirect('http://host.docker.internal:5000/swapsuccess')
             else:
-                return redirect('http://host.docker.internal/swapfail')
+                return redirect('http://host.docker.internal:5000/swapfail')
 
 def getNumber(amount_owned):
     return amount_owned

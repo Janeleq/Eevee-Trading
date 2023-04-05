@@ -118,12 +118,12 @@
       let from_amount = parseFloat(inputs.get("from_amount"), 10);
       let to_currency = inputs.get("to_currency");
       let to_amount = 0;
-      console.log('click')
+
       // fetching new to_amount after swap and displaying in UI
+
       fetch('http://127.0.0.1:5004/swap?' + inputs.toString()) 
         .then(response => response.text())
         .then(data => {
-          
           const jsonData = JSON.parse(data);
           const element = document.getElementById('swap_amount_message');
           document.getElementById('to_amount').value = jsonData['conversion_amount'].toFixed(2);
