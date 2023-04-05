@@ -1,5 +1,5 @@
 # Price Microservice to show different CC prices on diff cc pages
-from flask import Flask, redirect, render_template, url_for, jsonify
+from flask import Flask, jsonify
 import requests
 from flask_cors import CORS
 import os
@@ -162,13 +162,6 @@ def getETHSinglePrice():
         }
     ), 404
     
-# with app.app_context():
-#      print(getSOLSinglePrice())
-#      print(getETHSinglePrice())
-#      print(getADASinglePrice())
-#      print(getDOGESinglePrice())
-#      print(getBTCSinglePrice())
-#      print(getBNBSinglePrice())
 
 if __name__ == "__main__":
     print("This is flask " + os.path.basename(__file__) + " for placing an order...")

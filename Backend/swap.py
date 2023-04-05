@@ -1,17 +1,17 @@
 from invokes import invoke_http
-from flask import Flask, request, jsonify
-import os, json
+from flask import Flask, request, jsonify, redirect
+import os
 import requests
 from flask_cors import CORS
 import helpers
 # import amqp_setup
 # import pika
-
 import pyrebase
 
+#flask setup
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
+#firebase configuration
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     "authDomain": "cryptobuds-ba428.firebaseapp.com",
@@ -22,17 +22,18 @@ firebase_config = {
     "appId": "1:72206190161:web:bc8dbb3bf116fcc69fda70",
     "measurementId": "G-BVXDMYJR2K"
 }
+#initialise firebase
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
-
+#swap coins
 @app.route("/swap", methods = ['GET'])
 def swap():
     from_amount = request.args.get('from_amount')
     from_currency = request.args.get("from_currency")
     to_currency = request.args.get("to_currency")
 
-    from_price_URL = f"http://127.0.0.1:5001/coin/{from_currency}"
-    to_price_URL = f"http://127.0.0.1:5001/coin/{to_currency}"
+    from_price_URL = f"http://host.docker.internal/coin/{from_currency}"
+    to_price_URL = f"http://host.docker.internal/coin/{to_currency}"
 
     conversion_ratio = getRatio(from_price_URL, to_price_URL)
     gas_fee = 0.01
@@ -59,7 +60,7 @@ def swap():
             "code": 400,
             "message": "Swap failure sent for error handling."
         }
-    
+#dummy function
 def getPrice(response):
     price = response['data']['price']
     return price
@@ -86,25 +87,20 @@ def getRatio(from_url, to_url):
 Takes in four arguments - type (retrieve / update), from_currency, to_currency and user_email 
 Returns json in format of "updated <coin>" : updated balance 
 '''
-
+#update after coin swap
 @app.route("/update", methods = ['GET'])
 def updateWallet():
-    wallet_URL = "http://localhost:5100/wallet/"
+    wallet_URL = "http://host.docker.internal:5100/wallet/"
     id = helpers.retrieveHelperVal('uID','helpers.txt')
     from_currency = request.args.get('from_currency')
     from_amount = request.args.get('from_amount')
     to_currency = request.args.get('to_currency')
     to_amount = request.args.get('to_amount')
-    print(from_currency)
-    print(from_amount)
-    print(to_currency)
-    print(to_amount)
 
     old_from_balance = None
     old_to_balance = None
     updated_from_balance = None
     updated_to_balance = None
-    updated_from_data = None
 
     # Calls access_wallet to update from_amount and get new balance
     coin = from_currency
@@ -118,7 +114,7 @@ def updateWallet():
         changed_amt = ownedcoin - float(from_amount)
         updated_from_balance = changed_amt
         print(changed_amt)
-        database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt})
+        database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
         
         # Retrieves updated balance from firebase 
         updated_from_data = database.child("users").child(id).child('wallet_coins').child(from_currency).get()
@@ -135,8 +131,7 @@ def updateWallet():
             print(old_to_balance)
             changed_amt2 = ownedcoin + float(to_amount)
             updated_to_balance = changed_amt2
-            print(changed_amt2)
-            database.child("users").child(id).child('wallet_coins').child(from_currency).update({"qty":changed_amt})
+            database.child("users").child(id).child('wallet_coins').child(to_currency).update({"qty":changed_amt2})
 
             # Retrieves updated balance from firebase 
             updated_to_data = database.child("users").child(id).child('wallet_coins').child(to_currency).get()
@@ -155,23 +150,32 @@ def updateWallet():
             input2 = "old " + to_currency
             input3 = "updated " + from_currency
             input4 = "updated " + to_currency
+
+            code = '200'
+            message = 'successfully updated swap transaction in wallet!'
             reply = {
+                    'code' : code,
+                    'message' : message,
+                    'data':{
                     input1 : old_from_balance,
                     input2 : old_to_balance,
                     input3 : updated_from_balance,
                     input4 : updated_to_balance,
+                    }   
                 }
-            print(input1)
-            print(input2)
-            print(input3)
-            print(input4)
-            print(old_from_balance)
-            print(old_to_balance)
-            print(updated_from_balance)
-            print(updated_to_balance)
-            return reply
-
-
+            
+            if not updated_to_data.val()['qty']:
+                code = '404'
+                message = 'unsuccessful update of swap transaction in wallet.'
+                reply = {
+                        'code' : code,
+                        'message' : message
+                    }
+            
+            if updated_to_data.val()['qty']:
+                return redirect('http://host.docker.internal/swapsuccess')
+            else:
+                return redirect('http://host.docker.internal/swapfail')
 
 def getNumber(amount_owned):
     return amount_owned

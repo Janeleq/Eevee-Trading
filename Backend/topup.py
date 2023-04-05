@@ -5,14 +5,17 @@ import helpers
 from flask_cors import CORS
 from datetime import datetime
 
+#flask
 app = Flask(__name__, template_folder='../Frontend/templates', static_folder='../Frontend/static')
 CORS(app)
 
+#stripe
 app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51Mqv3mL81p6Fg6ebcfrJYprowuiyEYky8iILawOUGwdd7WEjxkQk6hJRfSXm02XdbgzBU0qGmhJxoA737LI0mDcm004m87jVGX'
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51Mqv3mL81p6Fg6ebxNqIERpNmaW1FIyE0Ps6EH6A3UHKI9pMVIlUR6ExCmOwlrrBXArZPTLu0GnF8wOppX16g2qq00hB17R6OX'
 
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
+#firebase configuration
 firebase_config = {
     "apiKey": "AIzaSyAUfijsgUQsPpdx5A21wO0wCS1qRkwh5o0",
     "authDomain": "cryptobuds-ba428.firebaseapp.com",
@@ -24,10 +27,11 @@ firebase_config = {
     "measurementId": "G-BVXDMYJR2K"
 }
 
-
+#initialise firebase
 fb = pyrebase.initialize_app(firebase_config)
 database = fb.database()
 
+#top up process
 @app.route("/processtopup", methods = ['GET', 'POST'])
 def topUpWallet():
     
@@ -45,17 +49,9 @@ def topUpWallet():
         )
     except Exception as e:
         return str(e)
-    # render_template( 
-    #         'coins/profilepage.html',
-    #         checkout_session_id=session['id'],
-    #         checkout_public_key=['STRIPE_PUBLIC_KEY']
-    #         )
-
     return redirect(session.url, code=303)
-    # return redirect("https://buy.stripe.com/test_00g5nJ2nW3GC1zO288")
-    # result = invoke_http("http:localhost:5000/transaction", method='POST')
-    # print(result)
 
+#successful topup
 @app.route('/thanks')
 def processTopUp():
     session_id = request.args.get("session_id")
@@ -74,7 +70,6 @@ def processTopUp():
             }
             
         )
-
   # Update Wallet amount
         retrieved_bal = database.child("users").child(id).child('wallet_coins').get()
         print(retrieved_bal)
@@ -89,26 +84,26 @@ def processTopUp():
 
         
         print('Top Up Amount: ', top_up_amt)
-        return redirect(f'http://localhost:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
+        return redirect(f'http://host.docker.internal:5000/thanks?status={status}&transaction_id={transaction_id}&top_up_amt={top_up_amt}')
     else:
         status = 'Error! Try topping up again!'
-        profile_page_URL = "http://localhost:5000/profile"
+        profile_page_URL = "http://host.docker.internal:5000/profile"
         return redirect(profile_page_URL)
 
 
 @app.route("/profile")
 def profile():
-    profile_page_URL = "http://localhost:5000/profile"
+    profile_page_URL = "http://host.docker.internal:5000/profile"
     return redirect(profile_page_URL)
 
 @app.route("/swap")
 def swap():
-    swap_URL = "http://localhost:5000/swap"
+    swap_URL = "http://host.docker.internal:5000/swap"
     return redirect(swap_URL)
 
 @app.route("/marketplace")
 def marketplace():
-    marketplace_URL = "http://localhost:5000/marketplace"
+    marketplace_URL = "http://host.docker.internal:5000/marketplace"
     return redirect(marketplace_URL)
 
 if __name__ == '__main__':

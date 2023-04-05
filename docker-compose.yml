@@ -1,9 +1,8 @@
 version: "3.8"
 
-volumes:
-  rabbitmq_data:
 
 services:
+
   ##################################
   # App: The App Interface
   ##################################
@@ -11,7 +10,7 @@ services:
     build:
       context: ./
       dockerfile: app.Dockerfile
-    image: janeleq/app:eevee
+    image: giumgium/app:eevee
     restart: always
     depends_on:
       - price
@@ -34,7 +33,7 @@ services:
     build:
       context: ./
       dockerfile: price.Dockerfile
-    image: janeleq/price:eevee
+    image: giumgium/price:eevee
     restart: always
     environment:
       # price_URL: http://price:5000/price
@@ -50,7 +49,7 @@ services:
     build: 
       context: ./
       dockerfile: topup.Dockerfile
-    image: janeleq/topup:eevee
+    image: giumgium/topup:eevee
     restart: always
     environment:
       # topup_URL: http://topup:5000/process_topup
@@ -66,7 +65,7 @@ services:
     build: 
       context: ./
       dockerfile: swap.Dockerfile
-    image: janeleq/swap:eevee
+    image: giumgium/swap:eevee
     restart: always
     depends_on:
       - price
@@ -83,10 +82,11 @@ services:
     build: 
       context: ./
       dockerfile: authenticate.Dockerfile
-    image: janeleq/authenticate:eevee
+    image: giumgium/authenticate:eevee
     restart: always
     environment:
       # authenticate_URL: http://authenticate:5000/authenticate
+      HOST: host.docker.internal
       PYTHONUNBUFFERED: 1
     ports: 
       - 5050:5050
@@ -99,7 +99,7 @@ services:
     build: 
       context: ./
       dockerfile: make_transaction.Dockerfile
-    image: janeleq/maketransaction:eevee
+    image: giumgium/maketransaction:eevee
     restart: always
     depends_on:
       - price
@@ -113,7 +113,7 @@ services:
     build: 
       context: ./
       dockerfile: checkOrder.Dockerfile
-    image: janeleq/checkorder:eevee
+    image: giumgium/checkorder:eevee
     restart: always
     environment:
       # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
@@ -125,7 +125,7 @@ services:
     build: 
       context: ./
       dockerfile: access_wallet.Dockerfile
-    image: janeleq/access_wallet:eevee
+    image: giumgium/access_wallet:eevee
     restart: always
     environment:
       # makeTransaction_URL: http://makeTransaction:5000/makeTransaction
