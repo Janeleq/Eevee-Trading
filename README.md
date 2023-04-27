@@ -28,7 +28,7 @@
 
 </div>
 
-[![Watch the video][https://user-images.githubusercontent.com/47893187/234927155-ca38ea85-9cec-44b2-a395-67a470e77b2f.mp4](https://youtu.be/ya0o4wrG5eE)]
+https://youtu.be/ya0o4wrG5eE
 
 ## Member Information
 
