@@ -23,9 +23,8 @@
     <a href="https://github.com/Janeleq/G4T4-Eevee/issues">Report Bug</a>
     ·
     <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>
-                                                         
-    [![IMAGE ALT TEXT](http://img.youtube.com/vi/ya0o4wrG5eE/0.jpg)](https://www.youtube.com/watch?v=ya0o4wrG5eE "Eevee")]
-                                                                                                                                         
+                                                        
+    Uploading EEVEE!.mp4…                                                                                                                       
                                                          
    </p>
 
