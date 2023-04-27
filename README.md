@@ -11,7 +11,9 @@
 <h3 align="center">EEVEE Trading</h3>
 
   <p align="center">
-    EEVEE is a project to make a enteprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
+
+
+   EEVEE is a project to make a enteprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
     <br />
     <a href="https://github.com/Janeleq/G4T4-Eevee"><strong>Explore the docs »</strong></a>
     <br />
@@ -25,6 +27,8 @@
 
 
 </div>
+
+https://user-images.githubusercontent.com/47893187/234927155-ca38ea85-9cec-44b2-a395-67a470e77b2f.mp4
 
 ## Member Information
 
