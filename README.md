@@ -24,7 +24,9 @@
     ·
     <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>
                                                         
-    Uploading EEVEE!.mp4…                                                                                                                       
+                        
+    https://github.com/Janeleq/G4T4-Eevee/assets/47893187/ac3917d2-485d-4de7-9deb-fa12cf65e8a9
+                                                                            
                                                          
    </p>
 
