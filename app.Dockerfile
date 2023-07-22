@@ -7,8 +7,6 @@ COPY ./Backend/app.py .
 COPY ./Backend/invokes.py .
 COPY ./Frontend ../Frontend
 COPY ./Backend/helpers.py .
-# COPY ./Backend/amqp_setup.py ./
-# COPY ./Frontend/templates/Login+Register Page ../Frontend
 COPY ./Backend/access_wallet.py .
 COPY ./Backend/authenticate.py .
 COPY ./Backend/swap.py .

@@ -8,12 +8,9 @@ RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY ./Frontend ../Frontend
 
 COPY ./Backend/price.py .
-
-# COPY ./Backend/app.py 
 COPY ./Backend/swap.py .
 COPY ./Backend/access_wallet.py .
 COPY ./Backend/make_transaction.py .
-# COPY ./Backend/amqp_setup.py .
 COPY ./Backend/invokes.py .
 COPY ./Backend/authenticate.py .
 COPY ./Backend/check_order.py .

@@ -4,10 +4,7 @@ COPY requirements.txt ./
 COPY ./Backend/helpers.txt ./
 RUN python -m pip install --no-cache-dir -r requirements.txt
 COPY ./Backend/helpers.py .
-# Frontend
 COPY ./Frontend ../Frontend
-# COPY ./Backend/amqp_setup.py ./
-# Backend
 COPY ./Backend/swap.py .
 COPY ./Backend/price.py .
 COPY ./Backend/access_wallet.py .

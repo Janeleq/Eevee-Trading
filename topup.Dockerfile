@@ -5,7 +5,6 @@ COPY ./Backend/helpers.txt ./
 RUN python -m pip install --no-cache-dir -r requirements.txt
 # Frontend
 # COPY ./Frontend ../Frontend
-
 # Backend
 COPY ./Backend/topup.py .
 COPY ./Backend/swap.py .
