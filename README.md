@@ -1,19 +1,16 @@
 ![](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)![](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)![](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)<img src="https://forthebadge.com/images/badges/uses-git.svg" style="zoom: 67%;" />
 
 
-# IS213 - G4T4 EEVEE
+# IS213 - G4T4 EEVEE Trading
 
 <div align="center"  style="background-color:white;>
   <a href="https://github.com/Janeleq/G4T4-Eevee">
-    <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png" width="300" height="280" title="Eevee logo" id="is213">
+    <img src="https://github.com/Janeleq/G4T4-Eevee/assets/47893187/6211835f-00d3-431c-b846-9c93982acbec" title="Eevee logo" id="is213"/>
   </a>
 
 <h3 align="center">EEVEE Trading</h3>
-
   <p align="center">
-
-
-   EEVEE is a project to make a enteprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
+   EEVEE is a project to make an enterprise solution based on the microservices architecture for a Cryptocurrency scenario using appropriate technologies and tools. 
     <br />
     <a href="https://github.com/Janeleq/G4T4-Eevee"><strong>Explore the docs »</strong></a>
     <br />
@@ -22,15 +19,11 @@
     ·
     <a href="https://github.com/Janeleq/G4T4-Eevee/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>
-                                                        
-                        
-    https://github.com/Janeleq/G4T4-Eevee/assets/47893187/ac3917d2-485d-4de7-9deb-fa12cf65e8a9
-                                                                            
-                                                         
+    <a href="https://github.com/Janeleq/G4T4-Eevee/pulls">Request Feature</a>       
+
+https://github.com/Janeleq/G4T4-Eevee/assets/47893187/9e25bb06-d133-4183-a5f3-c7b2c84d7196
+                                                 
    </p>
-
-
 </div>
 
 
